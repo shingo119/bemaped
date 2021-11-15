@@ -2,6 +2,7 @@
 //****************************************************************************************
 // BingMaps&BmapQuery マップのjQueryの部分
 //****************************************************************************************
+
 //Init
 function GetMap() {
     //------------------------------------------------------------------------
@@ -9,8 +10,10 @@ function GetMap() {
     //------------------------------------------------------------------------
     const map = new Bmap("#myMap");
     //------------------------------------------------------------------------
-    //2. Display Map
+    //2. Display Map（表示されるマップの設定）
+    //   スタートマップ（緯度、経度、マップの種類、ズームの度合い）
     //   startMap(lat, lon, "MapType", Zoom[1~20]);
+    //   マップの種類：↓色々ある
     //   MapType:[load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
     //--------------------------------------------------
     map.startMap(35.712772, 139.750443, "canvasLight", 10);
@@ -24,7 +27,8 @@ function GetMap() {
     // });
 
     //----------------------------------------------------
-    //3. Add Pushpin-Icon 
+    //3. Add Pushpin-Icon 好きな画像アイコンをマッピングできる
+    // （緯度、経度、アイコン画像、アイコン大きさ、アイコンと位置情報のリンクするところのX位置、アイコンと位置情報のリンクするところY位置）
     // pinIcon(lat, lon, icon, scale, anchor_x, anchor_y);
     //----------------------------------------------------
     //let pin = map.pinIcon(47.6130, -122.1945, "../img/poi_custom.png", 1.0, 0, 0);
@@ -34,10 +38,21 @@ function GetMap() {
         //console.log(data);                   //Get Geocode ObjectData
         const lat = data.location.latitude;  //Get latitude
         const lon = data.location.longitude; //Get longitude
-        console.log(lat + ':' + lon);
-        let pin1 = map.infobox(lat, lon, "この場所に動画をマッピングしますか？", "設定画面に移動");
-        //map.pinLayerClear(pin2);
+        //console.log(lat + ':' + lon);
+
+        //ローカルストレージへ緯度経度保存
+        // const obj = {
+        //     lat,
+        //     lon
+        // }
+        // const str = JSON.stringify(obj);
+        // localStorage.setItem("str",str);
+
+        map.infobox(lat, lon, "この場所に動画をマッピングしますか？", `<a href="up-load.html?sample1=${lat}&sample2=${lon}">設定画面に移動</a>`);
+        //map.pinLayerClear(pin2); ピンのレイヤーの時の削除コード
         //map.pinIcon(lat, lon, "BmapQuery-master/img/poi_custom.png", 1.0, 12, 39);
+        
+
     });
 
     //現在地表示
