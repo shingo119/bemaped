@@ -138,3 +138,4 @@ $(function () { //メイン画面に移管
         $(".main").css("display", "flex");
     }, 8500);
 });
+

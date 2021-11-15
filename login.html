@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/ress.css">
+    <link rel="stylesheet" href="css/login.css">
+    <title>ログイン画面</title>
+</head>
+<body>
+    <div class="formWrap">
+        <form>
+            <h1>bemaped</h1>
+            <input placeholder="Username" type="text" />
+            <input placeholder="Password" type="password" />
+            <button class="btn">Log in</button>
+            <h6>Oh, social?</h6>
+            <div class="social">
+                <button class="tw btn">Twitter</button>
+                <button class="fb btn">Facebook</button>
+                <button class="google fb btn">Google+</button>
+            </div>
+        </form>
+        <footer>
+            <h5>Right click and visit: <a target="_blank" href="http://lifes.gd">Life's Good</a></h5>
+        </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+        integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+    
+    <script>
+        $(document).ready(function (e) {
+            $('h6').on('click', function () {
+                $('.social').stop().slideToggle();
+            });
+        });
+    </script>
+    
+</body>
+</html>
