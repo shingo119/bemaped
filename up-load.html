@@ -21,20 +21,20 @@
             <div class="contact-form">
                 <h1>bemaped</h1>
                 <!-- Form -->
-                <form id="contact-us" method="post" action="#">
+                <!-- <form id="contact-us" method="#" action="#"> -->
                     <!-- Left Inputs -->
                     <div class="col-xs-6 wow animated slideInLeft" data-wow-delay=".5s">
                         <!-- Name -->
-                        <input type="text" name="name" id="name" required="required" class="form" placeholder="動画タイトル" />
+                        <input type="text" name="movie-title" id="movie-title" required="required" class="form" placeholder="動画タイトル" />
                         <!-- Email -->
-                        <input type="email" name="mail" id="mail" required="required" class="form" placeholder="動画URL" />
+                        <input type="text" name="movie-url" id="movie-url" required="required" class="form" placeholder="動画URL" />
                         <!-- Subject -->
-                        <input type="text" name="subject" id="subject" required="required" class="form" placeholder="＃タグ" />
+                        <input type="text" name="tag" id="tag" required="required" class="form" placeholder="＃タグ" />
                     </div><!-- End Left Inputs -->
                     <!-- Right Inputs -->
                     <div class="col-xs-6 wow animated slideInRight" data-wow-delay=".5s">
                         <!-- Message -->
-                        <textarea name="message" id="message" class="form textarea" placeholder="iflam"></textarea>
+                        <textarea name="ifram" id="ifram" class="form textarea" placeholder="ifram"></textarea>
                     </div><!-- End Right Inputs -->
                     <!-- Bottom Submit -->
                     <div class="relative fullwidth col-xs-12">
@@ -43,7 +43,7 @@
                     </div><!-- End Bottom Submit -->
                     <!-- Clear -->
                     <div class="clear"></div>
-                </form>
+                <!-- </form> -->
         
                 <!-- Your Mail Message -->
                 <div class="mail-message-area">
@@ -62,33 +62,19 @@
         integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
     
     <!-- bingmapのAPI読み込みCDN -->
-    <script
-        src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=ApPcFw7GdzTHXhj7erJNlk_tpn3P3DrjLSsbAPzasrG0b7f8_EDggHCOVS9brMbx'
+    <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=ApPcFw7GdzTHXhj7erJNlk_tpn3P3DrjLSsbAPzasrG0b7f8_EDggHCOVS9brMbx'
         async defer></script>
     
     <!-- 山崎先生のBmapQueryライブラリの読み込み -->
     <script src="js/BmapQuery.js"></script>
     
+    <!-- アップロードhtmlのメインJS -->
+    <script type="text/javascript" src="js/up-load.js"></script>
+    
     <!-- FirebaseのAPI読み込み -->
     <script type="module" src="js/Firebase.js"></script>
 
-    <script type="text/javascript">
+    
 
-        var urlPrm = new Object;
-        var urlSearch = location.search.substring(1).split('&');
-        for (i = 0; urlSearch[i]; i++) {
-            var kv = urlSearch[i].split('=');
-            urlPrm[kv[0]] = kv[1];
-        }
-        console.log(urlPrm.sample1);
-        console.log(urlPrm.sample2);
-
-        function GetMap() {
-            const map = new Bmap("#myMap");
-            map.startMap(Number(urlPrm.sample1), Number(urlPrm.sample2), "canvasLight", 10);
-            map.pinIcon(Number(urlPrm.sample1), Number(urlPrm.sample2), "img/red-pin.png", 1.0, 16, 16);
-        }
-
-    </script>
 </body>
 </html>

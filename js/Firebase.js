@@ -1,12 +1,11 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.2.0/firebase-app.js";
-import { getDatabase, ref, push, onChildAdded, remove, onChildRemoved }
-    from "https://www.gstatic.com/firebasejs/9.2.0/firebase-database.js";
+import { getDatabase, ref, push, set, onChildAdded, remove, onChildRemoved }from "https://www.gstatic.com/firebasejs/9.2.0/firebase-database.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // FirebaseAuthのログイン機能の使える関数インポート
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.2.0/firebase-auth.js";
+import { getAuth, signInAnonymously} from "https://www.gstatic.com/firebasejs/9.2.0/firebase-auth.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -24,6 +23,28 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const dbRef = ref(db, "Youtube-info");
+
+$("#submit").on("click", function () {
+    const movieTitle = document.querySelector("#movie-title").value;
+    const movieUrl = document.querySelector("#movie-url").value;
+    const tag = document.querySelector("#tag").value;
+    const ifram = document.querySelector("#ifram").value;
+    const msg = {
+        movieTitle:movieTitle,
+        movieUrl:movieUrl,
+        tag:tag,
+        ifram:ifram
+    }
+    const newPostRef = push(dbRef);
+    set(newPostRef,msg);
+
+    console.log(movieTitle);
+    console.log(movieUrl);
+    console.log(tag);
+    console.log(ifram);
+});
+
+
 
 const auth = getAuth();
 signInAnonymously(auth)

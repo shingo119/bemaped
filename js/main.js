@@ -47,7 +47,7 @@ function GetMap() {
         // }
         // const str = JSON.stringify(obj);
         // localStorage.setItem("str",str);
-
+        //map.pinIcon(lat, lon, "img/red-pin.png", 1.0, 16, 32);
         map.infobox(lat, lon, "この場所に動画をマッピングしますか？", `<a href="up-load.html?sample1=${lat}&sample2=${lon}">設定画面に移動</a>`);
         //map.pinLayerClear(pin2); ピンのレイヤーの時の削除コード
         //map.pinIcon(lat, lon, "BmapQuery-master/img/poi_custom.png", 1.0, 12, 39);
