@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>bemaped</title>
+    <style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;}</style>
+    <link rel="stylesheet" href="css/ress.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="img/favicon.png" sizes="16x16" type="image/png" />
+</head>
+
+<body>
+    <div class="top">
+        <h1>bemaped</h1>
+    </div>
+    <div class="top-announce">
+        <div class="announcewrap">
+            <h2>好きな動画のその場所へ</h2>
+        </div>
+    </div>
+
+    <div class="main">
+    <!-- 左側のメニューカラム -->
+        <div class="left-culmn">
+            <!-- メインメニュー -->
+            <div class="main-icon">
+                <h1>bemaped</h1>
+            </div>
+            <div class="left-main-menu">
+                <div class="menu-item">
+                    <img src="img/home-yellow.png" alt="">
+                    <p>ホーム</p>
+                    <div class="description">ホーム</div>
+                </div>
+                <div class="menu-item">
+                    <img src="img/megane3.png" alt="">
+                    <p>フォロー</p>
+                    <div class="description">フォロー</div>
+                </div>
+                <div class="menu-item">
+                    <img src="img/hurt-pink.png" alt="">
+                    <p>フォロワー</p>
+                    <div class="description">フォロワー</div>
+                </div>
+                <div class="menu-item">
+                    <img src="img/search.png" alt="">
+                    <p>検索</p>
+                    <div class="description">検索</div>
+                </div>
+                <div class="menu-item">
+                    <img src="img/login-icon.png" alt="">
+                    <p>ログイン</p>
+                    <div class="description">ログイン</div>
+                </div>
+            </div>
+            <!-- サブメニュー -->
+            <div class="left-sub-menu">
+                <div class="menu-item">
+                    <img src="img/runk-up.png" alt="">
+                    <p>急上昇</p>
+                    <div class="description">急上昇</div>
+                </div>
+                <div class="menu-item test">
+                    <img src="img/Youtube-icon2.png" alt="">
+                    <p>Youtube<br>マッピング</p>
+                    <div class="description">Youtubeマッピング</div>
+                </div>
+                <div class="menu-item">
+                    <img src="img/insta-icon.png" alt="">
+                    <p>Instagram<br>マッピング</p>
+                    <div class="description">Instagramマッピング</div>
+                </div>
+                <div class="menu-item">
+                    <img src="img/logo.png" alt="" style="border-radius: 5px;">
+                    <p>動画UP<br>マッピング</p>
+                    <div class="description">動画マッピング</div>
+                </div>
+            </div>
+            <!-- テスト -->
+            <div class="left-option-menu">
+                <div id="geocode"></div>
+            </div>
+
+        </div>
+        <!-- 右側のエリア -->
+        <div class="right-culmn">
+            <!-- 動画再生などのビューエリア -->
+            <div class="view-area">
+                
+            </div>
+            <!-- マップ表示エリア -->
+            <div class="map-area">
+                <div class="search-bar">
+                    <input type="text" id="search" placeholder="bemaped で 検索する">
+                    <div class="search-icon bar-icon">
+                        <img src="img/search-gray.png" alt="">
+                        <div class="description">住所</div>
+                    </div>
+                    <div class="youtube-icon bar-icon">
+                        <img src="img/Youtube-icon.png" alt="">
+                        <div class="description">動画</div>
+                    </div>
+                    <div class="insta-icon bar-icon">
+                        <img src="img/insta-icon.png" alt="">
+                        <div class="description">写真</div>
+                    </div>
+                    <div class="go-there-icon bar-icon">
+                        <img src="img/go-there-blue.png" alt="">
+                        <div class="description">経路</div>
+                    </div>
+                </div>
+
+                <!-- MAP[START] -->
+                <div id="myMap" style='width:100%;height:100%;float:right;'></div>
+                <!-- MAP[END] -->
+            </div>
+        </div>
+    </div>
+
+    
+    
+    <!-- jQuery読み込みCDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+        integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+    
+    <!-- bingmapのAPI読み込みCDN -->
+    <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=ApPcFw7GdzTHXhj7erJNlk_tpn3P3DrjLSsbAPzasrG0b7f8_EDggHCOVS9brMbx' async
+        defer></script>
+    
+    <!-- 山崎先生のBmapQueryライブラリの読み込み -->
+    <script src="js/BmapQuery.js"></script>
+    
+    <!-- FirebaseのAPI読み込み -->
+    <script type="module" src="js/Firebase.js"></script>
+
+    <!-- 以下が自分のJSを書くところ -->
+    <script>
+        //****************************************************************************************
+        // BingMaps&BmapQuery マップのjQueryの部分
+        //****************************************************************************************
+        //Init
+        function GetMap() {
+            //------------------------------------------------------------------------
+            //1. Instance
+            //------------------------------------------------------------------------
+            const map = new Bmap("#myMap");
+
+            //------------------------------------------------------------------------
+            //2. Display Map
+            //   startMap(lat, lon, "MapType", Zoom[1~20]);
+            //   MapType:[load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
+            //--------------------------------------------------
+            map.startMap(35.712772, 139.750443, "canvasLight", 10);
+            
+            // キーワード検索で座標を取ってきて、その座標を表示
+            // map.getGeocode("Seattle", function (data) {
+            //     console.log(data);          //Get Geocode ObjectData
+            //     const lat = data.latitude;  //Get latitude
+            //     const lon = data.longitude; //Get longitude
+            //     document.querySelector("#geocode").innerHTML = lat + '<br>' + lon;
+            // });
+
+            //----------------------------------------------------
+            //3. Add Pushpin-Icon 
+            // pinIcon(lat, lon, icon, scale, anchor_x, anchor_y);
+            //----------------------------------------------------
+            //let pin = map.pinIcon(47.6130, -122.1945, "../img/poi_custom.png", 1.0, 0, 0);
+
+            //クリックすると座標を取ってくる
+            map.onGeocode("click", function (data) {
+                //console.log(data);                   //Get Geocode ObjectData
+                const lat = data.location.latitude;  //Get latitude
+                const lon = data.location.longitude; //Get longitude
+                console.log(lat+':'+lon);
+                let pin1 = map.infobox(lat, lon, "この場所に動画をマッピングしますか？", "設定画面に移動");
+                //map.pinLayerClear(pin2);
+                //map.pinIcon(lat, lon, "BmapQuery-master/img/poi_custom.png", 1.0, 12, 39);
+            });
+            
+            //現在地表示
+            map.geolocation(function (data) {
+                //location
+                const lat = data.coords.latitude;
+                const lon = data.coords.longitude;
+                //Map
+                // map.startMap(lat, lon, "load", 10);
+                //pin
+                map.pin(lat, lon, "#ff0000");
+            });
+
+            
+            
+        }
+
+        // ここまでがマップのjQueryの部分
+        $('.test').on('click',function(){
+            const dbobj = {
+                title: "uuu",
+                url: "https://www/uuuuu.ne.jp",
+                userID: 12345
+            }
+            const dbRef = ref(db, "Youtube-info");
+            set(dbRef, dbobj);
+        });
+        
+        
+
+
+        let mX = 0; //マウスのX軸位置情報をグローバル変数へ保存
+        let mY = 0; //マウスのY軸位置情報をグローバル変数へ保存
+        window.onload = function () {
+            //マウス移動時のイベントをBODYタグに登録する
+            document.body.addEventListener("mousemove", function (e) {
+                //座標を取得する
+                mX = e.pageX;  //X座標
+                mY = e.pageY;  //Y座標
+                return [mX,mY];
+            });
+        }
+
+        // 左のメニューアイテムにカーソルを乗せると案内が出る
+        $('.menu-item').mouseover(function(){
+            $(this).children(".description").css("left", mX+10);
+            $(this).children(".description").css("top", mY);
+            $(this).children(".description").show();       
+        });
+        // 左のメニューアイテムにカーソルが外れると案内が消える
+        $('.menu-item').mouseout(hideDescription);
+        
+        //検索バーのアイコンにカーソルを乗せると案内が出る
+        $('.search-icon').mouseover(showDescription);
+
+        //検索バーのアイコンからカーソルが外れると案内が消える
+        $('.search-icon').mouseout(hideDescription);
+
+        //検索バーのアイコンにカーソルを乗せると案内が出る
+        $('.youtube-icon').mouseover(showDescription);
+
+        //検索バーのアイコンからカーソルが外れると案内が消える
+        $('.youtube-icon').mouseout(hideDescription);
+
+        //検索バーのアイコンにカーソルを乗せると案内が出る
+        $('.insta-icon').mouseover(showDescription);
+
+        //検索バーのアイコンからカーソルが外れると案内が消える
+        $('.insta-icon').mouseout(hideDescription);
+
+        //経路検索アイコンにカーソルを乗せると案内が出る
+        $('.go-there-icon').mouseover(showDescription);
+
+        //経路検索アイコンからカーソルが外れると案内が消える
+        $('.go-there-icon').mouseout(hideDescription);
+
+        //デスクリプションクラスを隠す関数
+        function hideDescription(){ 
+            $(this).children(".description").hide();
+        }
+        // デスクリプションクラスを出す関数
+        function showDescription(){
+            $(this).children(".description").show();
+        }
+
+        $(function(){ //オープニング画面エフェクト
+                $(".top h1").addClass("is-fadein");
+                $(".top").addClass("is-fadein");
+            setTimeout(function(){
+                $(".top h1").css("display","none");
+                $(".top").css("display", "none");
+            },5500);
+        });
+
+        $(function(){ //メッセージ画面移管
+            setTimeout(function(){
+                $(".top-announce").css("display","flex");
+                $(".top-announce").css("justify-content","center");
+                $(".top-announce").css("align-items","center");                
+            },5500);
+        });
+
+        $(function(){ //メイン画面に移管
+            setTimeout(function(){
+                $(".top-announce").css("display", "none");
+                $(".main").css("display", "flex");
+            },8500);
+        });
+
+
+
+       
+       
+        
+    </script>
+</body>
+
+</html>
