@@ -7,6 +7,10 @@ for (i = 0; urlSearch[i]; i++) {
 console.log(urlPrm.sample1);
 console.log(urlPrm.sample2);
 
+sessionStorage.setItem('lat',urlPrm.sample1);
+sessionStorage.setItem('lon',urlPrm.sample2);
+
+
 function GetMap() {
     const map = new Bmap("#myMap");
     map.startMap(Number(urlPrm.sample1), Number(urlPrm.sample2), "canvasLight", 10);

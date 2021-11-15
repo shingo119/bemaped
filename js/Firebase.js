@@ -29,11 +29,15 @@ $("#submit").on("click", function () {
     const movieUrl = document.querySelector("#movie-url").value;
     const tag = document.querySelector("#tag").value;
     const ifram = document.querySelector("#ifram").value;
+    const lat = sessionStorage.getItem('lat');
+    const lon = sessionStorage.getItem('lon');
     const msg = {
         movieTitle:movieTitle,
         movieUrl:movieUrl,
         tag:tag,
-        ifram:ifram
+        ifram:ifram,
+        lat:lat,
+        lon:lon
     }
     const newPostRef = push(dbRef);
     set(newPostRef,msg);
@@ -42,6 +46,9 @@ $("#submit").on("click", function () {
     console.log(movieUrl);
     console.log(tag);
     console.log(ifram);
+    console.log(lat);
+    console.log(lon);
+
 });
 
 
