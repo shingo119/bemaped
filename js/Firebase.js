@@ -41,14 +41,9 @@ $("#submit").on("click", function () {
     }
     const newPostRef = push(dbRef);
     set(newPostRef,msg);
-
-    console.log(movieTitle);
-    console.log(movieUrl);
-    console.log(tag);
-    console.log(ifram);
-    console.log(lat);
-    console.log(lon);
-
+    if (confirm('ページ遷移しますか？')) {
+        window.location.href = 'index.html';
+    }
 });
 
 
