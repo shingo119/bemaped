@@ -88,7 +88,7 @@ h5 > a:hover {
   text-decoration:none;
 }
 
-form {
+.login-content {
   background:#fff;
   border-radius:6px;
   padding:20px;
