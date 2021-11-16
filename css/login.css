@@ -147,9 +147,11 @@ h6 {
   cursor:pointer;
 }
 
-.social {
+#social {
   display:none;
 }
+
+
 
 .fb {
   margin-top:15px;

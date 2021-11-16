@@ -14,40 +14,43 @@
             <h1>bemaped</h1>
             <input placeholder="Username" type="text" />
             <input placeholder="Password" type="password" />
+
             <button class="btn">Log in</button>
-            <h6>Oh, social?</h6>
-            <div class="social">
+            
+            <h6 id="ohSocial">Oh, social?</h6>
+            <div id="social">
                 <button class="tw btn">Twitter</button>
                 <button class="fb btn">Facebook</button>
                 <button class="google fb btn">Google+</button>
             </div>
         </form>
         <footer>
-            <h5>Right click and visit: <a target="_blank" href="http://lifes.gd">Life's Good</a></h5>
+            
         </footer>
     </div>
 
     <!-- jQuery読み込みCDN -->
-    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
-        integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
-    
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <!-- bingmapのAPI読み込みCDN -->
-    <script
+    <!-- <script
         src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=ApPcFw7GdzTHXhj7erJNlk_tpn3P3DrjLSsbAPzasrG0b7f8_EDggHCOVS9brMbx'
-        async defer></script>
+        async defer></script> -->
     
     <!-- 山崎先生のBmapQueryライブラリの読み込み -->
-    <script src="js/BmapQuery.js"></script>
+    <!-- <script src="js/BmapQuery.js"></script> -->
     
     <!-- FirebaseのAPI読み込み -->
     <script type="module" src="js/Firebase.js"></script>
     
-    <script>
-        $(document).ready(function (e) {
-            $('h6').on('click', function () {
-                $('.social').stop().slideToggle();
+    <script type="text/javascript">
+            // console.log($) 
+            // const s = $('#social')
+            // console.log(s)
+            // console.log(s.fadeOut)
+            $('#ohSocial').on('click', function () {
+                $('#social').slideToggle()
             });
-        });
     </script>
     
 </body>
