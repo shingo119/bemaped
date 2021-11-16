@@ -2,9 +2,9 @@
 //###############################################
 // 必要なJSを読み込み
 //###############################################
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.3.0/firebase-app.js";
-import { getDatabase, ref, push, set, onChildAdded, remove, onChildRemoved }from "https://www.gstatic.com/firebasejs/9.3.0/firebase-database.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.3.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
+import { getDatabase, ref, push, set, onChildAdded, remove, onChildRemoved }from "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 // Your web app's Firebase configuration
@@ -25,6 +25,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const dbRef = ref(db, "Youtube-info");
 
 //###############################################
 //GoogleAuth用
@@ -78,6 +80,34 @@ onAuthStateChanged(auth, (user) => {
             
             // uidをローカルストレージへ入れようとしている
             localStorage.setItem("uid", uid);
+
+            
+
+            $(document).on("click", "#submit", function () {
+                const movieTitle = document.querySelector("#movie-title").value;
+                const movieUrl = document.querySelector("#movie-url").value;
+                const tag = document.querySelector("#tag").value;
+                const ifram = document.querySelector("#ifram").value;
+                const lat = sessionStorage.getItem('lat');
+                const lon = sessionStorage.getItem('lon');
+                const uid = localStorage.getItem('uid');
+
+                const msg = {
+                    movieTitle: movieTitle,
+                    movieUrl: movieUrl,
+                    tag: tag,
+                    ifram: ifram,
+                    lat: lat,
+                    lon: lon,
+                    uid: uid
+                }
+                console.log(msg);//ちゃんとオブジェクトが吐かれる
+                const newPostRef = push(dbRef);
+                set(newPostRef, msg);
+                if (confirm('ページ遷移しますか？')) {
+                    window.location.href = 'index.html';
+                }
+            });
         }
     } else {
         // _redirect();  // User is signed out
@@ -119,36 +149,33 @@ function _redirect() {
 //     });
 
 
+// ログイン中の挙動に転記してみる↓
 
-const db = getDatabase(app);
-const dbRef = ref(db, "Youtube-info");
+// const db = getDatabase(app);
+// const dbRef = ref(db, "Youtube-info");
 
-$(document).on("click", "#submit", function () {
-    const movieTitle = document.querySelector("#movie-title").value;
-    const movieUrl = document.querySelector("#movie-url").value;
-    const tag = document.querySelector("#tag").value;
-    const ifram = document.querySelector("#ifram").value;
-    const lat = sessionStorage.getItem('lat');
-    const lon = sessionStorage.getItem('lon');
-    const uid = localStorage.getItem('uid');
+// $(document).on("click", "#submit", function () {
+//     const movieTitle = document.querySelector("#movie-title").value;
+//     const movieUrl = document.querySelector("#movie-url").value;
+//     const tag = document.querySelector("#tag").value;
+//     const ifram = document.querySelector("#ifram").value;
+//     const lat = sessionStorage.getItem('lat');
+//     const lon = sessionStorage.getItem('lon');
+//     const uid = localStorage.getItem('uid');
 
-    const msg = {
-        movieTitle:movieTitle,
-        movieUrl:movieUrl,
-        tag:tag,
-        ifram:ifram,
-        lat:lat,
-        lon:lon,
-        uid:uid
-    }
-    const str = JSON.stringify(msg);
-    console.log(msg);//ちゃんとオブジェクトが吐かれる
-    const newPostRef = push(dbRef);
-    set(newPostRef, str);
-    if (confirm('ページ遷移しますか？')) {
-        window.location.href = 'index.html';
-    }
-});
-
-
-
+//     const msg = {
+//         movieTitle:movieTitle,
+//         movieUrl:movieUrl,
+//         tag:tag,
+//         ifram:ifram,
+//         lat:lat,
+//         lon:lon,
+//         uid:uid
+//     }
+//     console.log(msg);//ちゃんとオブジェクトが吐かれる
+//     const newPostRef = push(dbRef);
+//     set(newPostRef, msg);
+//     if (confirm('ページ遷移しますか？')) {
+//         window.location.href = 'index.html';
+//     }
+// });
