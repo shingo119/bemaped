@@ -48,7 +48,9 @@ function GetMap() {
         // const str = JSON.stringify(obj);
         // localStorage.setItem("str",str);
         //map.pinIcon(lat, lon, "img/red-pin.png", 1.0, 16, 32);
+        if(uid !== null){
         map.infobox(lat, lon, "この場所に動画をマッピングしますか？", `<a href="up-load.html?sample1=${lat}&sample2=${lon}">設定画面に移動</a>`);
+        }
         //map.pinLayerClear(pin2); ピンのレイヤーの時の削除コード
         //map.pinIcon(lat, lon, "BmapQuery-master/img/poi_custom.png", 1.0, 12, 39);
         
@@ -74,9 +76,8 @@ function GetMap() {
 
 // データベースのuidをローカルストレージへ入れようとしている
 
-// const str = localStorage.getItem('uid');
-// const obj = JSON.parse(str);
-// console.log(obj);
+const uid = localStorage.getItem('uid');
+//console.log(uid);
 
 
 
@@ -136,7 +137,7 @@ function showDescription() {
 }
 
 let loginFlag = localStorage.getItem("loginFlag");
-console.log(loginFlag);
+//console.log(loginFlag);
 if (loginFlag == null) {
     $(function () { //オープニング画面エフェクト
         $(".top h1").addClass("is-fadein");

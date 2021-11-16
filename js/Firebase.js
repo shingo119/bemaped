@@ -2,9 +2,9 @@
 //###############################################
 // 必要なJSを読み込み
 //###############################################
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
-import { getDatabase, ref, push, set, onChildAdded, remove, onChildRemoved }from "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.3.0/firebase-app.js";
+import { getDatabase, ref, push, set, onChildAdded, remove, onChildRemoved }from "https://www.gstatic.com/firebasejs/9.3.0/firebase-database.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.3.0/firebase-auth.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 // Your web app's Firebase configuration
@@ -77,11 +77,7 @@ onAuthStateChanged(auth, (user) => {
             $('#login').css('display', 'none');//ログインボタンを非表示
             
             // uidをローカルストレージへ入れようとしている
-            // const obj = {
-            //     uid:profile.providerId
-            // }
-            // const str = JSON.stringify(obj);
-            // localStorage.setItem("uid", str);
+            localStorage.setItem("uid", uid);
         }
     } else {
         // _redirect();  // User is signed out
@@ -96,6 +92,7 @@ $("#logout").on("click", function () {
     signOut(auth).then(() => {
         // Sign-out successful.
         _redirect();
+        localStorage.removeItem("uid");
     }).catch((error) => {
         // An error happened.
         console.error(error);
@@ -111,38 +108,43 @@ function _redirect() {
 //###############################################
 //匿名認証
 //###############################################
-signInAnonymously(auth)
-    .then(() => {
-        // Signed in..
-    })
-    .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ...
-    });
+// signInAnonymously(auth)
+//     .then(() => {
+//         // Signed in..
+//     })
+//     .catch((error) => {
+//         const errorCode = error.code;
+//         const errorMessage = error.message;
+//         // ...
+//     });
 
 
 
 const db = getDatabase(app);
 const dbRef = ref(db, "Youtube-info");
 
-$("#submit").on("click", function () {
+$(document).on("click", "#submit", function () {
     const movieTitle = document.querySelector("#movie-title").value;
     const movieUrl = document.querySelector("#movie-url").value;
     const tag = document.querySelector("#tag").value;
     const ifram = document.querySelector("#ifram").value;
     const lat = sessionStorage.getItem('lat');
     const lon = sessionStorage.getItem('lon');
+    const uid = localStorage.getItem('uid');
+
     const msg = {
         movieTitle:movieTitle,
         movieUrl:movieUrl,
         tag:tag,
         ifram:ifram,
         lat:lat,
-        lon:lon
+        lon:lon,
+        uid:uid
     }
+    const str = JSON.stringify(msg);
+    console.log(msg);//ちゃんとオブジェクトが吐かれる
     const newPostRef = push(dbRef);
-    set(newPostRef,msg);
+    set(newPostRef, str);
     if (confirm('ページ遷移しますか？')) {
         window.location.href = 'index.html';
     }
