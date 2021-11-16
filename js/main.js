@@ -32,7 +32,7 @@ function GetMap() {
     // pinIcon(lat, lon, icon, scale, anchor_x, anchor_y);
     //----------------------------------------------------
     //let pin = map.pinIcon(47.6130, -122.1945, "../img/poi_custom.png", 1.0, 0, 0);
-
+    
     //クリックすると座標を取ってくる
     map.onGeocode("click", function (data) {
         //console.log(data);                   //Get Geocode ObjectData
@@ -72,6 +72,11 @@ function GetMap() {
 
 // ここまでがマップのjQueryの部分
 
+// データベースのuidをローカルストレージへ入れようとしている
+
+// const str = localStorage.getItem('uid');
+// const obj = JSON.parse(str);
+// console.log(obj);
 
 
 
@@ -130,27 +135,42 @@ function showDescription() {
     $(this).children(".description").show();
 }
 
-$(function () { //オープニング画面エフェクト
-    $(".top h1").addClass("is-fadein");
-    $(".top").addClass("is-fadein");
-    setTimeout(function () {
+let loginFlag = localStorage.getItem("loginFlag");
+console.log(loginFlag);
+if (loginFlag == null) {
+    $(function () { //オープニング画面エフェクト
+        $(".top h1").addClass("is-fadein");
+        $(".top").addClass("is-fadein");
+        setTimeout(function () {
+            $(".top h1").css("display", "none");
+            $(".top").css("display", "none");
+        }, 5500);
+    });
+
+    $(function () { //メッセージ画面移管
+        setTimeout(function () {
+            $(".top-announce").css("display", "flex");
+            $(".top-announce").css("justify-content", "center");
+            $(".top-announce").css("align-items", "center");
+        }, 5500);
+    });
+
+    $(function () { //メイン画面に移管
+        setTimeout(function () {
+            $(".top-announce").css("display", "none");
+            $(".main").css("display", "flex");
+        }, 8500);//ローカルストレージにフラグ設置
+        localStorage.setItem("loginFlag","true");
+    });
+}else{//サイトに来たことがある人はオープニングエフェクトなし
+    $(function(){
         $(".top h1").css("display", "none");
         $(".top").css("display", "none");
-    }, 5500);
-});
-
-$(function () { //メッセージ画面移管
-    setTimeout(function () {
-        $(".top-announce").css("display", "flex");
-        $(".top-announce").css("justify-content", "center");
-        $(".top-announce").css("align-items", "center");
-    }, 5500);
-});
-
-$(function () { //メイン画面に移管
-    setTimeout(function () {
         $(".top-announce").css("display", "none");
         $(".main").css("display", "flex");
-    }, 8500);
-});
+    });
+}
 
+$('#login').on('click', function(){
+    window.location.href = 'login.html';
+});
