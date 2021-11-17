@@ -84,11 +84,12 @@ function GetMap() {
 
 
 
+
+
+
 }
 
 // ここまでがマップのjQueryの部分
-
-// データベースのuidをローカルストレージへ入れようとしている
 
 const uid = localStorage.getItem('uid');
 //console.log(uid);
@@ -189,3 +190,19 @@ if (loginFlag == null) {
 $('#login').on('click', function(){
     window.location.href = 'login.html';
 });
+
+
+//function movie_mapping(){
+    //$('#movie-search-img').on('click',function(){
+        //let search_word = String(document.querySelector("#search").value);
+        // let movie_array = [];
+        // movie_array.push(
+        //let movie_data = document.querySelector('.贅沢');
+        //console.log(movie_data);
+        //const lat = data.latitude;  //Get latitude
+        //const lon = data.longitude; //Get longitude
+        //map.pin(lat, lon, "#ff0000");
+        //document.querySelector("#geocode").innerHTML = lat + ',' + lon;
+        
+    //});
+//}
