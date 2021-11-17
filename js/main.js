@@ -48,8 +48,10 @@ function GetMap() {
         // const str = JSON.stringify(obj);
         // localStorage.setItem("str",str);
         //map.pinIcon(lat, lon, "img/red-pin.png", 1.0, 16, 32);
+        
         if(uid !== null){
             map.crearInfobox()
+            // map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 76);
             setTimeout(map.infobox(lat, lon, "この場所に動画をマッピングしますか？", `<a href="up-load.html?sample1=${lat}&sample2=${lon}">設定画面に移動</a>`),500);
         }
         //map.pinLayerClear(pin2); ピンのレイヤーの時の削除コード
@@ -83,9 +85,30 @@ function GetMap() {
     });
 
 
+ 
+    $('#movie-search-img').on('click', function () {
+        //ローカルストレージからデータ取得
+        for (let i = 1; i < sessionStorage.length; i++) {
 
+            const str = sessionStorage.getItem(i);
+            const obj = JSON.parse(str);
+            const lat = Number(obj.lat);  //Get latitude
+            const lon = Number(obj.lon); //Get longitude
+            map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 76);
+            //map.pin(lat, lon, "#ffffff");
+            // document.querySelector("#geocode").innerHTML = lat + ',' + lon;
+            // console.log(obj);
+            console.log(lat);
+            console.log(lon);
+        }
+        const str = sessionStorage.getItem(2);
+        const obj = JSON.parse(str);
+        const lat = Number(obj.lat);  //Get latitude
+        const lon = Number(obj.lon); //Get longitude
+        map.changeMap(lat, lon, "load", 9);
 
-
+    });
+    
 
 }
 
@@ -192,18 +215,6 @@ $('#login').on('click', function(){
 });
 
 
-//function movie_mapping(){
-    //$('#movie-search-img').on('click',function(){
-        //let search_word = String(document.querySelector("#search").value);
-        // let movie_array = [];
-        // movie_array.push(
-        //let movie_data = document.querySelector('.贅沢');
-        //console.log(movie_data);
-        //const lat = data.latitude;  //Get latitude
-        //const lon = data.longitude; //Get longitude
-        //map.pin(lat, lon, "#ff0000");
-        //document.querySelector("#geocode").innerHTML = lat + ',' + lon;
-        
-    //});
-//}
 
+
+//movie_mapping();

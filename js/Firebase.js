@@ -144,6 +144,8 @@ $(document).on("click", "#submit", function () {
     const newPostRef = push(dbRef);
     set(newPostRef, msg);
     if (confirm('ページ遷移しますか？')) {
+        sessionStorage.removeItem('lat');
+        sessionStorage.removeItem('lon');
         window.location.href = 'index.html';
     }
 });
@@ -201,6 +203,10 @@ $(document).on("click", "#submit", function () {
     // }
 //}
 
+window.onload = function() {
+    sessionStorage.clear();
+}
+
 let num = 0;
 onChildAdded(dbRef, function(data){
     num++
@@ -208,7 +214,7 @@ onChildAdded(dbRef, function(data){
     const key = data.key;
     //console.log(obj);
     const str = JSON.stringify(obj);
-    localStorage.setItem(num,str);
+    sessionStorage.setItem(num,str);
 });
 
 
