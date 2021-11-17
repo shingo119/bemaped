@@ -186,8 +186,8 @@ onChildAdded(dbRef, function (data) {
     const obj = data.val();    //オブジェクトデータを取得し、変数msgに代入
     const key = data.key;      //データのユニークキー（削除や更新に使用可能）
 //     //表示用テキスト・HTMLを作成
-    let movieOut = `<div class='movie-output-list' id='${key}'>`;
-    movieOut += '<p>';
+    let movieOut = `<div class='movie-output-list ${obj.movieTitle} ${obj.tag}' id='${key}'>`;
+    movieOut += `<p>`;
     movieOut += obj.movieTitle;
     movieOut += '</p><p>';
     movieOut += obj.movieUrl;
@@ -197,16 +197,14 @@ onChildAdded(dbRef, function (data) {
     movieOut += obj.ifram;
     movieOut += '</p><p>';
     movieOut += obj.uid;
+    movieOut += '</p><p>';
+    movieOut += obj.lat;
+    movieOut += '</p><p>';
+    movieOut += obj.lon;
     movieOut += '</p></div>';
-    let mapOut = `<div class='map-output-list' id='${key}'>`;
-    mapOut += '<p>';
-    mapOut += obj.lat;
-    mapOut += '</p><p>';
-    mapOut += obj.lon;
-    mapOut += '</p></div>';
     $("#movie-date").append(movieOut); //#outputの最後に追加
-    $("#map-date").append(mapOut); //#outputの最後に追加
     console.log(obj);
 });
+
 
 
