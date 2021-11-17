@@ -2,9 +2,9 @@
 //###############################################
 // 必要なJSを読み込み
 //###############################################
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
-import { getDatabase, ref, push, set, onChildAdded, remove, onChildRemoved }from "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.3.0/firebase-app.js";
+import { getDatabase, ref, push, set, onChildAdded, remove, onChildRemoved }from "https://www.gstatic.com/firebasejs/9.3.0/firebase-database.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.3.0/firebase-auth.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 // Your web app's Firebase configuration
@@ -83,36 +83,37 @@ onAuthStateChanged(auth, (user) => {
 
             
 
-            $(document).on("click", "#submit", function () {
-                const movieTitle = document.querySelector("#movie-title").value;
-                const movieUrl = document.querySelector("#movie-url").value;
-                const tag = document.querySelector("#tag").value;
-                const ifram = document.querySelector("#ifram").value;
-                const lat = sessionStorage.getItem('lat');
-                const lon = sessionStorage.getItem('lon');
-                const uid = localStorage.getItem('uid');
+            // $("#submit").on("click", function () {
+            //     const movieTitle = document.querySelector("#movie-title").value;
+            //     const movieUrl = document.querySelector("#movie-url").value;
+            //     const tag = document.querySelector("#tag").value;
+            //     const ifram = document.querySelector("#ifram").value;
+            //     const lat = sessionStorage.getItem('lat');
+            //     const lon = sessionStorage.getItem('lon');
+            //     const uid = localStorage.getItem('uid');
 
-                const msg = {
-                    movieTitle: movieTitle,
-                    movieUrl: movieUrl,
-                    tag: tag,
-                    ifram: ifram,
-                    lat: lat,
-                    lon: lon,
-                    uid: uid
-                }
-                console.log(msg);//ちゃんとオブジェクトが吐かれる
-                const newPostRef = push(dbRef);
-                set(newPostRef, msg);
-                if (confirm('ページ遷移しますか？')) {
-                    window.location.href = 'index.html';
-                }
-            });
+            //     const msg = {
+            //         movieTitle: movieTitle,
+            //         movieUrl: movieUrl,
+            //         tag: tag,
+            //         ifram: ifram,
+            //         lat: lat,
+            //         lon: lon,
+            //         uid: uid
+            //     }
+            //     console.log(msg);//ちゃんとオブジェクトが吐かれる
+            //     const newPostRef = push(dbRef);
+            //     set(newPostRef, msg);
+            //     if (confirm('ページ遷移しますか？')) {
+            //         window.location.href = 'index.html';
+            //     }
+            // });
         }
     } else {
         // _redirect();  // User is signed out
     }
 });
+
 
 //###############################################
 //Logout処理
@@ -154,28 +155,47 @@ function _redirect() {
 // const db = getDatabase(app);
 // const dbRef = ref(db, "Youtube-info");
 
-// $(document).on("click", "#submit", function () {
-//     const movieTitle = document.querySelector("#movie-title").value;
-//     const movieUrl = document.querySelector("#movie-url").value;
-//     const tag = document.querySelector("#tag").value;
-//     const ifram = document.querySelector("#ifram").value;
-//     const lat = sessionStorage.getItem('lat');
-//     const lon = sessionStorage.getItem('lon');
-//     const uid = localStorage.getItem('uid');
+$(document).on("click", "#submit", function () {
+    const movieTitle = document.querySelector("#movie-title").value;
+    const movieUrl = document.querySelector("#movie-url").value;
+    const tag = document.querySelector("#tag").value;
+    const ifram = document.querySelector("#ifram").value;
+    const lat = sessionStorage.getItem('lat');
+    const lon = sessionStorage.getItem('lon');
+    const uid = localStorage.getItem('uid');
 
-//     const msg = {
-//         movieTitle:movieTitle,
-//         movieUrl:movieUrl,
-//         tag:tag,
-//         ifram:ifram,
-//         lat:lat,
-//         lon:lon,
-//         uid:uid
-//     }
-//     console.log(msg);//ちゃんとオブジェクトが吐かれる
-//     const newPostRef = push(dbRef);
-//     set(newPostRef, msg);
-//     if (confirm('ページ遷移しますか？')) {
-//         window.location.href = 'index.html';
-//     }
+    const msg = {
+        movieTitle:movieTitle,
+        movieUrl:movieUrl,
+        tag:tag,
+        ifram:ifram,
+        lat:lat,
+        lon:lon,
+        uid:uid
+    }
+    console.log(msg);//ちゃんとオブジェクトが吐かれる
+    const newPostRef = push(dbRef);
+    set(newPostRef, msg);
+    if (confirm('ページ遷移しますか？')) {
+        window.location.href = 'index.html';
+    }
+});
+
+// //最初にデータ取得＆onSnapshotでリアルタイムにデータを取得
+// onChildAdded(dbRef, function (data) {
+//     const msg = data.val();    //オブジェクトデータを取得し、変数msgに代入
+//     const key = data.key;      //データのユニークキー（削除や更新に使用可能）
+//     //表示用テキスト・HTMLを作成
+//     let h = `<div class='li' id='${key}'>`;
+//     h += '<p>';
+//     h += msg.text;
+//     h += '</p>';
+//     h += msg.ymd;
+//     h += '<br>';
+//     h += msg.time;
+//     h += '</div>'
+//     $(".hub").append(h); //#outputの最後に追加
+//     console.log(document.query)
 // });
+
+

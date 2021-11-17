@@ -49,13 +49,27 @@ function GetMap() {
         // localStorage.setItem("str",str);
         //map.pinIcon(lat, lon, "img/red-pin.png", 1.0, 16, 32);
         if(uid !== null){
-        map.infobox(lat, lon, "この場所に動画をマッピングしますか？", `<a href="up-load.html?sample1=${lat}&sample2=${lon}">設定画面に移動</a>`);
+            map.crearInfobox()
+            setTimeout(map.infobox(lat, lon, "この場所に動画をマッピングしますか？", `<a href="up-load.html?sample1=${lat}&sample2=${lon}">設定画面に移動</a>`),500);
         }
         //map.pinLayerClear(pin2); ピンのレイヤーの時の削除コード
         //map.pinIcon(lat, lon, "BmapQuery-master/img/poi_custom.png", 1.0, 12, 39);
-        
-
     });
+
+    
+    //A. Address "Seattle"
+    
+    $('#search-img').on('click', function(){
+        let address = String(document.querySelector("#search").value);
+        map.getGeocode(address, function (data) {
+            console.log(data);          //Get Geocode ObjectData
+            const lat = data.latitude;  //Get latitude
+            const lon = data.longitude; //Get longitude
+            map.pin(lat, lon, "#ff0000");
+            //document.querySelector("#geocode").innerHTML = lat + ',' + lon;
+        });
+    });
+
 
     //現在地表示
     map.geolocation(function (data) {
@@ -65,7 +79,7 @@ function GetMap() {
         //Map
         // map.startMap(lat, lon, "load", 10);
         //pin
-        map.pin(lat, lon, "#ff0000");
+        map.pin(lat, lon, "#0000ff");
     });
 
 
