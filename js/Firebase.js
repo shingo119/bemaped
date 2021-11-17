@@ -181,21 +181,32 @@ $(document).on("click", "#submit", function () {
     }
 });
 
-// //最初にデータ取得＆onSnapshotでリアルタイムにデータを取得
-// onChildAdded(dbRef, function (data) {
-//     const msg = data.val();    //オブジェクトデータを取得し、変数msgに代入
-//     const key = data.key;      //データのユニークキー（削除や更新に使用可能）
+//最初にデータ取得＆onSnapshotでリアルタイムにデータを取得
+onChildAdded(dbRef, function (data) {
+    const obj = data.val();    //オブジェクトデータを取得し、変数msgに代入
+    const key = data.key;      //データのユニークキー（削除や更新に使用可能）
 //     //表示用テキスト・HTMLを作成
-//     let h = `<div class='li' id='${key}'>`;
-//     h += '<p>';
-//     h += msg.text;
-//     h += '</p>';
-//     h += msg.ymd;
-//     h += '<br>';
-//     h += msg.time;
-//     h += '</div>'
-//     $(".hub").append(h); //#outputの最後に追加
-//     console.log(document.query)
-// });
+    let movieOut = `<div class='movie-output-list' id='${key}'>`;
+    movieOut += '<p>';
+    movieOut += obj.movieTitle;
+    movieOut += '</p><p>';
+    movieOut += obj.movieUrl;
+    movieOut += '</p><p>';
+    movieOut += obj.tag;
+    movieOut += '</p><p>';
+    movieOut += obj.ifram;
+    movieOut += '</p><p>';
+    movieOut += obj.uid;
+    movieOut += '</p></div>';
+    let mapOut = `<div class='map-output-list' id='${key}'>`;
+    mapOut += '<p>';
+    mapOut += obj.lat;
+    mapOut += '</p><p>';
+    mapOut += obj.lon;
+    mapOut += '</p></div>';
+    $("#movie-date").append(movieOut); //#outputの最後に追加
+    $("#map-date").append(mapOut); //#outputの最後に追加
+    console.log(obj);
+});
 
 
