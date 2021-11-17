@@ -189,21 +189,21 @@ onChildAdded(dbRef, function (data) {
     let movieOut = `<div class='movie-output-list ${obj.movieTitle} ${obj.tag}' id='${key}'>`;
     movieOut += `<p>`;
     movieOut += obj.movieTitle;
-    movieOut += '</p><p>';
+    movieOut += `</p><p class="movie-url">`;
     movieOut += obj.movieUrl;
-    movieOut += '</p><p>';
+    movieOut += `</p><p>`;
     movieOut += obj.tag;
-    movieOut += '</p><p>';
+    movieOut += `</p><p class="ifram">`;
     movieOut += obj.ifram;
-    movieOut += '</p><p>';
+    movieOut += `</p><p class="uid">`;
     movieOut += obj.uid;
-    movieOut += '</p><p>';
+    movieOut += `</p><p class="lat">`;
     movieOut += obj.lat;
-    movieOut += '</p><p>';
+    movieOut += `</p><p class="lon">`;
     movieOut += obj.lon;
     movieOut += '</p></div>';
     $("#movie-date").append(movieOut); //#outputの最後に追加
-    console.log(obj);
+    //console.log(obj);
 });
 
 
