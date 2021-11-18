@@ -127,8 +127,8 @@ $(document).on("click", "#submit", function () {
     const movieUrl = document.querySelector("#movie-url").value;
     const tag = document.querySelector("#tag").value;
     const ifram = document.querySelector("#ifram").value;
-    const lat = sessionStorage.getItem('lat');
-    const lon = sessionStorage.getItem('lon');
+    // const lat = sessionStorage.getItem('lat');
+    // const lon = sessionStorage.getItem('lon');
     const uid = localStorage.getItem('uid');
 
     const msg = {
@@ -144,8 +144,8 @@ $(document).on("click", "#submit", function () {
     const newPostRef = push(dbRef);
     set(newPostRef, msg);
     if (confirm('ページ遷移しますか？')) {
-        sessionStorage.removeItem('lat');
-        sessionStorage.removeItem('lon');
+        // sessionStorage.removeItem('lat');
+        // sessionStorage.removeItem('lon');
         window.location.href = 'index.html';
     }
 });
@@ -203,18 +203,12 @@ $(document).on("click", "#submit", function () {
     // }
 //}
 
-window.onload = function() {
-    sessionStorage.clear();
-}
-
-let num = 0;
 onChildAdded(dbRef, function(data){
-    num++
     const obj = data.val();
     const key = data.key;
     //console.log(obj);
     const str = JSON.stringify(obj);
-    sessionStorage.setItem(num,str);
+    sessionStorage.setItem(obj.movieTitle,str);
 });
 
 
