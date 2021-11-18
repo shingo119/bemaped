@@ -88,13 +88,20 @@ function GetMap() {
  
     $('#movie-search-img').on('click', function () {
         //ローカルストレージからデータ取得
+        //
         for (let i = 1; i < sessionStorage.length; i++) {
 
             const str = sessionStorage.getItem(i);
             const obj = JSON.parse(str);
             const lat = Number(obj.lat);  //Get latitude
             const lon = Number(obj.lon); //Get longitude
-            map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 76);
+            map.onPin(map.pinText(lat, lon, " ", " ", " "), "click", function () {
+                if (confirm('ページ遷移しますか？')) {
+                    window.location.href = obj.movieUrl;
+                }
+            });
+
+            map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
             //map.pin(lat, lon, "#ffffff");
             // document.querySelector("#geocode").innerHTML = lat + ',' + lon;
             // console.log(obj);
