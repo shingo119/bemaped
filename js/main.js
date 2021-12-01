@@ -88,7 +88,8 @@ function GetMap() {
  
     $('#movie-search-img').on('click', function () {
         //ローカルストレージからデータ取得
-        //
+        //inputのデータ取得
+        let inputWord = String(document.querySelector("#search").value);
         for (let i = 1; i < sessionStorage.length; i++) {
 
             const str = sessionStorage.getItem(i);
@@ -97,7 +98,8 @@ function GetMap() {
             const lon = Number(obj.lon); //Get longitude
             map.onPin(map.pinText(lat, lon, " ", " ", " "), "click", function () {
                 if (confirm('ページ遷移しますか？')) {
-                    window.location.href = obj.movieUrl;
+                    const url = obj.movieUrl;
+                    window.open(url, '_blank')
                 }
             });
 
@@ -108,12 +110,21 @@ function GetMap() {
             console.log(lat);
             console.log(lon);
         }
+        //検索ワードが富山ならスタートマップは（２）
+        //検索ワードがタイならスタートマップは（９）
+        if(inputWord === "タイ 観光"){
+            const str = sessionStorage.getItem(9);
+            const obj = JSON.parse(str);
+            const lat = Number(obj.lat);  //Get latitude
+            const lon = Number(obj.lon); //Get longitude
+            map.changeMap(lat, lon, "load", 6);
+        }else if(inputWord === "富山 グルメ"){
         const str = sessionStorage.getItem(2);
         const obj = JSON.parse(str);
         const lat = Number(obj.lat);  //Get latitude
         const lon = Number(obj.lon); //Get longitude
-        map.changeMap(lat, lon, "load", 9);
-
+        map.changeMap(lat, lon, "load", 10);
+        }
     });
     
 
