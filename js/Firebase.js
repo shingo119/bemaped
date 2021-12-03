@@ -121,32 +121,34 @@ function _redirect() {
 //         // ...
 //     });
 
-
+//##############################################
+//Firebaseにデータ送信・保存
+//##############################################
 $(document).on("click", "#submit", function () {
-    const movieTitle = document.querySelector("#movie-title").value;
-    const movieUrl = document.querySelector("#movie-url").value;
-    const tag = document.querySelector("#tag").value;
-    const ifram = document.querySelector("#ifram").value;
-    const lat = sessionStorage.getItem('lat');
-    const lon = sessionStorage.getItem('lon');
-    const uid = localStorage.getItem('uid');
+    // const movieTitle = document.querySelector("#movie-title").value;
+    // const movieUrl = document.querySelector("#movie-url").value;
+    // const tag = document.querySelector("#tag").value;
+    // const ifram = document.querySelector("#ifram").value;
+    // const lat = sessionStorage.getItem('lat');
+    // const lon = sessionStorage.getItem('lon');
+    // const uid = localStorage.getItem('uid');
 
-    const msg = {
-        movieTitle:movieTitle,
-        movieUrl:movieUrl,
-        tag:tag,
-        ifram:ifram,
-        lat:lat,
-        lon:lon,
-        uid:uid
-    }
-    console.log(msg);//ちゃんとオブジェクトが吐かれる
-    const newPostRef = push(dbRef);
-    set(newPostRef, msg);
+    // const msg = {
+    //     movieTitle:movieTitle,
+    //     movieUrl:movieUrl,
+    //     tag:tag,
+    //     ifram:ifram,
+    //     lat:lat,
+    //     lon:lon,
+    //     uid:uid
+    // }
+    // console.log(msg);//ちゃんとオブジェクトが吐かれる
+    // const newPostRef = push(dbRef);
+    // set(newPostRef, msg);
     if (confirm('ページ遷移しますか？')) {
         sessionStorage.removeItem('lat');
         sessionStorage.removeItem('lon');
-        window.location.href = 'index.html';
+    //     window.location.href = 'index.html';
     }
 });
 

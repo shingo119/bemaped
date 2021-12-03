@@ -12,11 +12,12 @@
     <div class="formWrap">
         <div class="login-content">
             <h1>bemaped</h1>
-            <input placeholder="Username" type="text" />
-            <input placeholder="Password" type="password" />
-
-            <button class="btn">Log in</button>
-            
+            <form action="login_act.php" method="post">
+                <input placeholder="ユーザーID" type="text" name="u_id"/>
+                <input placeholder="Email" type="text" name="u_email"/>
+                <input placeholder="パスワード" type="password" name="u_pw"/>            
+                <button class="btn" type="submit">Log in</button>
+            </form>
             <h6 id="ohSocial">Or, social?</h6>
             <div id="social">
                 <button class="tw btn" id="tw">Twitter</button>

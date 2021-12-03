@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/ress.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/up-load.css">
+    <link rel="stylesheet" href="css/up_load.css">
     <title>Youtubeマッピング画面</title>
 </head>
 <body>
@@ -22,14 +22,17 @@
                 <h1>bemaped</h1>
                 <!-- Form -->
                 <!-- <form id="contact-us" method="#" action="#"> -->
-                    <!-- Left Inputs -->
+                <!-- Left Inputs -->
+                <form action="up_load_act.php" method="POST">
                     <div class="col-xs-6 wow animated slideInLeft" data-wow-delay=".5s">
                         <!-- Name -->
-                        <input type="text" name="movie-title" id="movie-title" required="required" class="form" placeholder="動画タイトル" />
+                        <input type="text" name="movie_title" id="movie-title" required="required" class="form" placeholder="動画タイトル" />
                         <!-- Email -->
-                        <input type="text" name="movie-url" id="movie-url" required="required" class="form" placeholder="動画URL" />
+                        <input type="text" name="movie_url" id="movie-url" required="required" class="form" placeholder="動画URL" />
                         <!-- Subject -->
                         <input type="text" name="tag" id="tag" required="required" class="form" placeholder="＃タグ" />
+                        <input type="hidden" name="lat" value="<?=$lat?>">
+                        <input type="hidden" name="lon" value="<?=$lon?>">
                     </div><!-- End Left Inputs -->
                     <!-- Right Inputs -->
                     <div class="col-xs-6 wow animated slideInRight" data-wow-delay=".5s">
@@ -41,8 +44,9 @@
                         <!-- Send Button -->
                         <button type="submit" id="submit" name="submit" class="form-btn semibold">動画をマッピング</button>
                     </div><!-- End Bottom Submit -->
-                    <!-- Clear -->
-                    <div class="clear"></div>
+                </form>
+                <!-- Clear -->
+                <div class="clear"></div>
                 <!-- </form> -->
         
                 <!-- Your Mail Message -->
@@ -72,7 +76,19 @@
     <script type="module" src="js/Firebase.js"></script>
 
     <!-- アップロードhtmlのメインJS -->
-    <script type="text/javascript" src="js/up-load.js"></script>
+    <script type="text/javascript" src="js/up_load.js"></script>
 
 </body>
 </html>
+
+<?php
+
+$lat = $_get["sample1"];
+$lon = $_get["sample2"];
+
+
+
+
+
+
+?>

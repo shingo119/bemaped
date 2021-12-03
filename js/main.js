@@ -52,7 +52,7 @@ function GetMap() {
         if(uid !== null){
             map.crearInfobox()
             // map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 76);
-            setTimeout(map.infobox(lat, lon, "この場所に動画をマッピングしますか？", `<a href="up-load.html?sample1=${lat}&sample2=${lon}">設定画面に移動</a>`),500);
+            setTimeout(map.infobox(lat, lon, "この場所に動画をマッピングしますか？", `<a href="up_load.php?sample1=${lat}&sample2=${lon}">設定画面に移動</a>`),500);
         }
         //map.pinLayerClear(pin2); ピンのレイヤーの時の削除コード
         //map.pinIcon(lat, lon, "BmapQuery-master/img/poi_custom.png", 1.0, 12, 39);
@@ -229,7 +229,7 @@ if (loginFlag == null) {
 }
 
 $('#login').on('click', function(){
-    window.location.href = 'login.html';
+    window.location.href = 'login.php';
 });
 
 
