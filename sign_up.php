@@ -13,7 +13,7 @@
         <div class="login-content">
             <h1>bemaped</h1>
             <form action="sign_up_act.php" method="post">
-                <input placeholder="ユーザーID" type="text" name="u_id"/>
+                <input placeholder="ユーザー名" type="text" name="u_name"/>
                 <input placeholder="Email" type="text" name="u_email"/>
                 <input placeholder="パスワード" type="password" name="u_pw"/>            
                 <button class="btn" type="submit" style="text-align:center;">新規登録</button>

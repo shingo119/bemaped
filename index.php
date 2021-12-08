@@ -3,10 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>bemaped</title>
     <style>html,body{height:100%;}body{padding:0;margin:0;}h1{padding:0;margin:0;font-size:50%;}</style>
     <link rel="stylesheet" href="css/ress.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style2.css">
     <link rel="icon" href="img/favicon.png" sizes="16x16" type="image/png" />
 </head>
 
@@ -28,11 +29,13 @@
                 <h1>bemaped</h1>
             </div>
             <div class="left-main-menu">
-                <div class="menu-item">
+                <a href="sign_up.php">
+                <div class="menu-item" id="signup">
                     <img src="img/home-yellow.png" alt="">
-                    <p>ホーム</p>
-                    <div class="description">ホーム</div>
+                    <p>登録</p>
+                    <div class="description">登録</div>
                 </div>
+                </a>
                 <div class="menu-item">
                     <img src="img/megane3.png" alt="">
                     <p>フォロー</p>
@@ -82,18 +85,11 @@
                     <div class="description">動画マッピング</div>
                 </div>
             </div>
-            <!-- テスト -->
-            <div class="hub">
-                <div id="movie-date"></div>
-            </div>
-
         </div>
         <!-- 右側のエリア -->
         <div class="right-culmn">
             <!-- 動画再生などのビューエリア -->
-            <div class="view-area">
-                
-            </div>
+            
             <!-- マップ表示エリア -->
             <div class="map-area">
                 <div class="search-bar">

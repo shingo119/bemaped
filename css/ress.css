@@ -1,9 +1,3 @@
-/*! destyle.css v3.0.0 | MIT License | https://github.com/nicolas-cusan/destyle.css */
-
-/* Reset box-model and set borders */
-/* ============================================ */
-
-*,
 ::before,
 ::after {
   box-sizing: border-box;
@@ -402,6 +396,7 @@ summary {
 
 table {
   border-color: inherit; /* 1 */
+  border-collapse: collapse;
 }
 
 caption {

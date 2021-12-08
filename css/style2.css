@@ -6,7 +6,7 @@
 /* MapとFirebaseのデータやり取りを経由するHUB HTMLクラス */
 
 body {
-    width: 115vw;
+    width: 100vw;
     height: 100%;
     display: flex;
     justify-content: center;

@@ -13,12 +13,11 @@
         <div class="login-content">
             <h1>bemaped</h1>
             <form action="login_act.php" method="post">
-                <input placeholder="ユーザーID" type="text" name="u_id"/>
                 <input placeholder="Email" type="text" name="u_email"/>
                 <input placeholder="パスワード" type="password" name="u_pw"/>            
                 <button class="btn" type="submit">Log in</button>
             </form>
-            <h6 id="ohSocial">Or, social?</h6>
+            <h6 id="ohSocial">social?</h6>
             <div id="social">
                 <button class="tw btn" id="tw">Twitter</button>
                 <button class="fb btn" id="fb">Facebook</button>
