@@ -236,9 +236,5 @@ if (loginFlag == null) {
 //     window.location.href = 'signup.php';
 // });
 
-console.log('こんにちは');
-
-
-
 
 //movie_mapping();

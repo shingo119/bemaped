@@ -18,21 +18,30 @@ function loginCheck(){
 //db接続
 function db_connect(){
   try {
-    $db_name = "bemaped_db";
-    $db_host = "localhost";
-    $db_id = "root";
-    $db_pw = "root";
-    //さくらサーバ－用
-    // $db_name = "bemaped_unit";
-    // $db_host = "mysql749.db.sakura.ne.jp";
-    // $db_id = "bemaped";
-    // $db_pw = "saibaba5072";
+    if($_SERVER['HTTP_HOST'] == "localhost"){
+      $db_name = "bemaped_db";
+      $db_host = "localhost";
+      $db_id = "root";
+      $db_pw = "root";
+    } else {
+      // さくらサーバ－用
+      $db_name = "bemaped_unit";
+      $db_host = "mysql749.db.sakura.ne.jp";
+      $db_id = "bemaped";
+      $db_pw = "saibaba5072";
+    }
 
   $pdo = new PDO('mysql:dbname='.$db_name.';charset=utf8;host='.$db_host,$db_id,$db_pw);
   } catch (PDOException $e) {
     exit('データベースに接続できませんでした。'.$e->getMessage());
   }
   return $pdo;
+}
+
+function login_flg(){
+  if($_SESSION["id"] != "" && $_SESSION["u_id"] != ""){
+    return 'style="display:block"'; //ここ途中！！！！！！
+  }
 }
 
 ?>

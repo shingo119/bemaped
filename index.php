@@ -1,3 +1,18 @@
+<?php
+
+session_start();
+include("funcs.php");
+
+
+$id = $_SESSION["id"];
+//1.  ローカルDB接続します
+$pdo = db_connect();
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -136,7 +151,7 @@
     <script type="module" src="js/Firebase.js"></script>
 
     <!-- mainJSを読み込み -->
-    <script src="js/main.js"></script>
+    <script src="js/main2.js"></script>
 </body>
 
 </html>

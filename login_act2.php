@@ -24,7 +24,6 @@ $stmt = $pdo->prepare($sql);
 // $stmt->bindValue(':lpw', $lpw, PDO::PARAM_STR);
 $stmt->bindValue(':u_email', $u_email, PDO::PARAM_STR);
 $status = $stmt->execute();
-
 // $login->execute();
 
 // sql文にエラーがある時
@@ -34,15 +33,14 @@ if($status == false){
 }
 
 
-$val = $stmt->fetch(PDO::FETCH_ASSOC);
+$val = $stmt->fetch();
 
 
 $pw = password_verify($lpw, $val["u_pw"]);
-
 if($pw){
     $_SESSION["chk_ssid"] = session_id();
     $_SESSION["id"] = $val["id"];
-    $_SESSION["u_email"] = $val["u_email"];
+    $_SESSION["email"] = $val["email"];
     // $_SESSION["u_id"] = $_POST["lid"];
     //$_SESSION["u_pw"] = $_POST["lpw"];
     header("Location: index.php");

@@ -14,7 +14,7 @@
             <h1>bemaped</h1>
             <form action="login_act.php" method="post">
                 <input placeholder="Email" type="text" name="u_email"/>
-                <input placeholder="パスワード" type="password" name="u_pw"/>            
+                <input placeholder="パスワード" type="password" name="lpw"/>            
                 <button class="btn" type="submit">Log in</button>
             </form>
             <h6 id="ohSocial">social?</h6>
