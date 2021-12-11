@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include("funcs.php");
 
 $movie_title = $_POST["movie_title"];
@@ -8,6 +8,7 @@ $tag = $_POST["tag"];
 $lat = $_POST["lat"];
 $lon = $_POST["lon"];
 $ifram = $_POST["ifram"];
+$u_id = $_POST["u_id"];
 
 if(
     !isset($_POST["movie_title"]) || $_POST["movie_title"]=="" ||
@@ -15,7 +16,8 @@ if(
     !isset($_POST["tag"]) || $_POST["tag"]=="" ||
     !isset($_POST["lat"]) || $_POST["lat"]=="" ||
     !isset($_POST["lon"]) || $_POST["lon"]=="" ||
-    !isset($_POST["ifram"]) || $_POST["ifram"]==""
+    !isset($_POST["ifram"]) || $_POST["ifram"]=="" ||
+    !isset($_POST["u_id"]) || $_POST["u_id"]==""
 ){
     exit("ParamErro");
 }
@@ -25,12 +27,12 @@ $pdo = db_connect();
 $sql = "INSERT INTO bemaped_data_table (movie_title, movie_url, tag, lat, lon, ifram, indate, u_id )VALUES(:movie_title, :movie_url, :tag, :lat, :lon, :ifram, sysdate(),:u_id)";
 $stmt = $pdo->prepare($sql);
 
-$stmt->bindValue(':movie_title', $book_name, PDO::PARAM_STR);
-$stmt->bindValue(':movie_url', $book_url, PDO::PARAM_STR);
-$stmt->bindValue(':tag', $author, PDO::PARAM_STR);
-$stmt->bindValue(':lat', $kansou, PDO::PARAM_STR);
-$stmt->bindValue(':lon', $u_id, PDO::PARAM_INT);
-$stmt->bindValue(':ifram', $u_id, PDO::PARAM_INT);
+$stmt->bindValue(':movie_title', $movie_title, PDO::PARAM_STR);
+$stmt->bindValue(':movie_url', $movie_url, PDO::PARAM_STR);
+$stmt->bindValue(':tag', $tag, PDO::PARAM_STR);
+$stmt->bindValue(':lat', $lat, PDO::PARAM_INT);
+$stmt->bindValue(':lon', $lon, PDO::PARAM_INT);
+$stmt->bindValue(':ifram', $ifram, PDO::PARAM_STR);
 $stmt->bindValue(':u_id', $u_id, PDO::PARAM_INT);
 $status = $stmt->execute();
 
@@ -38,7 +40,7 @@ if($status == false){
     $error = $stmt->errorInfo();
     exit("QueryError:".$error[2]);
 }else{
-    header("Location: index.html");
+    header("Location: index.php");
     exit;
 }
 ?>

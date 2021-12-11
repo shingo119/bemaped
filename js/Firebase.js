@@ -60,53 +60,53 @@ $("#google").on("click", function () {
 //###############################################
 // Loginしてる？
 //###############################################
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        const uid = user.uid;
-        console.log(uid);
-        // const user = auth.currentUser;
-        if (user !== null) {
-            user.providerData.forEach((profile) => {
-                console.log("Sign-in provider: " + profile.providerId);
-                console.log("  Provider-specific UID: " + profile.uid);
-                console.log("  Name: " + profile.displayName);
-                console.log("  Email: " + profile.email);
-                console.log("  Photo URL: " + profile.photoURL);
-            });
-            $('#logout').css('display', 'flex');//ログアウトボタンを表示
-            $('#login').css('display', 'none');//ログインボタンを非表示
+// onAuthStateChanged(auth, (user) => {
+//     if (user) {
+//         // User is signed in, see docs for a list of available properties
+//         // https://firebase.google.com/docs/reference/js/firebase.User
+//         const uid = user.uid;
+//         console.log(uid);
+//         // const user = auth.currentUser;
+//         if (user !== null) {
+//             user.providerData.forEach((profile) => {
+//                 console.log("Sign-in provider: " + profile.providerId);
+//                 console.log("  Provider-specific UID: " + profile.uid);
+//                 console.log("  Name: " + profile.displayName);
+//                 console.log("  Email: " + profile.email);
+//                 console.log("  Photo URL: " + profile.photoURL);
+//             });
+//             $('#logout').css('display', 'flex');//ログアウトボタンを表示
+//             $('#login').css('display', 'none');//ログインボタンを非表示
             
-            // uidをローカルストレージへ入れようとしている
-            localStorage.setItem("uid", uid);
-        }
-    } else {
-        // _redirect();  // User is signed out
-    }
-});
+//             // uidをローカルストレージへ入れようとしている
+//             localStorage.setItem("uid", uid);
+//         }
+//     } else {
+//         // _redirect();  // User is signed out
+//     }
+// });
 
 
 //###############################################
 //Logout処理
 //###############################################
-$("#logout").on("click", function () {
-    // signInWithRedirect(auth, provider);ß
-    signOut(auth).then(() => {
-        // Sign-out successful.
-        _redirect();
-        localStorage.removeItem("uid");
-    }).catch((error) => {
-        // An error happened.
-        console.error(error);
-    });
-});
+// $("#logout").on("click", function () {
+//     // signInWithRedirect(auth, provider);ß
+//     signOut(auth).then(() => {
+//         // Sign-out successful.
+//         _redirect();
+//         localStorage.removeItem("uid");
+//     }).catch((error) => {
+//         // An error happened.
+//         console.error(error);
+//     });
+// });
 //###############################################
 //Login画面へ
 //###############################################
-function _redirect() {
-    location.href = "index.html";
-}
+// function _redirect() {
+//     location.href = "index.html";
+// }
 
 //###############################################
 //匿名認証

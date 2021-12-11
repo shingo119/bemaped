@@ -38,10 +38,28 @@ function db_connect(){
   return $pdo;
 }
 
-function login_flg(){
-  if($_SESSION["id"] != "" && $_SESSION["u_id"] != ""){
-    return 'style="display:block"'; //ここ途中！！！！！！
+function logout_flg(){
+  if($_SESSION["id"] == "" || $_SESSION["id"] == NULL){
+    return NULL; 
+  }else{
+    return 'style="display:none"';
   }
+}
+
+function login_flg(){
+  if($_SESSION["id"] != "" || $_SESSION["id"] != NULL){
+    return NULL; 
+  }else{
+    return 'style="display:none"';
+  }
+}
+
+
+
+function console_log( $data ){
+  echo '<script>';
+  echo 'console.log('. json_encode( $data ) .')';
+  echo '</script>';
 }
 
 ?>

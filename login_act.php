@@ -1,10 +1,7 @@
 <?php
+session_start();//sessionを使うための関数
 
-//funcs読み込み
-include("funcs.php");
-
-//dbのsessionを使うための関数
-session_start();
+include("funcs.php");//funcs読み込み
 
 //postでid,pw受け取り
 // $lid = $_POST["lid"];
@@ -20,7 +17,6 @@ $pdo = db_connect();
 //id,pwが一致するレコードをとる
 $sql = "SELECT * FROM bemaped_users_table WHERE u_email=:u_email";
 $stmt = $pdo->prepare($sql);
-// $stmt = $pdo->prepare($sql);
 // $stmt->bindValue(':lpw', $lpw, PDO::PARAM_STR);
 $stmt->bindValue(':u_email', $u_email, PDO::PARAM_STR);
 $status = $stmt->execute();

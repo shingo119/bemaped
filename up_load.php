@@ -1,3 +1,16 @@
+<?php
+session_start();
+include("funcs.php");
+
+$lat = $_GET["sample1"];
+$lon = $_GET["sample2"];
+
+console_log($lat);
+console_log($lon);
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,6 +46,7 @@
                         <input type="text" name="tag" id="tag" required="required" class="form" placeholder="＃タグ" />
                         <input type="hidden" name="lat" value="<?=$lat?>">
                         <input type="hidden" name="lon" value="<?=$lon?>">
+                        <input type="hidden" name="u_id" value="<?= $_SESSION["id"]?>">
                     </div><!-- End Left Inputs -->
                     <!-- Right Inputs -->
                     <div class="col-xs-6 wow animated slideInRight" data-wow-delay=".5s">
@@ -76,19 +90,28 @@
     <script type="module" src="js/Firebase.js"></script>
 
     <!-- アップロードhtmlのメインJS -->
-    <script type="text/javascript" src="js/up_load.js"></script>
+    <script type="text/javascript">
+
+        var urlPrm = new Object;
+        var urlSearch = location.search.substring(1).split('&');
+        for (i = 0; urlSearch[i]; i++) {
+            var kv = urlSearch[i].split('=');
+            urlPrm[kv[0]] = kv[1];
+        }
+        console.log(urlPrm.sample1);
+        console.log(urlPrm.sample2);
+
+        sessionStorage.setItem('lat',urlPrm.sample1);
+        sessionStorage.setItem('lon',urlPrm.sample2);
+
+
+        function GetMap() {
+            const map = new Bmap("#myMap");
+            map.startMap(Number(urlPrm.sample1), Number(urlPrm.sample2), "canvasLight", 10);
+            map.pinIcon(Number(urlPrm.sample1), Number(urlPrm.sample2), "img/red-pin.png", 1.0, 16, 32);
+        }
+
+    </script>
 
 </body>
 </html>
-
-<?php
-
-$lat = $_get["sample1"];
-$lon = $_get["sample2"];
-
-
-
-
-
-
-?>

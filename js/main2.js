@@ -1,4 +1,3 @@
-
 //****************************************************************************************
 // BingMaps&BmapQuery マップのjQueryの部分
 //****************************************************************************************
@@ -48,7 +47,7 @@ function GetMap() {
         // const str = JSON.stringify(obj);
         // localStorage.setItem("str",str);
         //map.pinIcon(lat, lon, "img/red-pin.png", 1.0, 16, 32);
-
+        
         if (uid !== null) {
             map.crearInfobox()
             // map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 76);

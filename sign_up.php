@@ -18,12 +18,7 @@
                 <input placeholder="パスワード" type="password" name="u_pw"/>            
                 <button class="btn" type="submit" style="text-align:center;">新規登録</button>
             </form>
-            <h6 id="ohSocial">Or, social?</h6>
-            <div id="social">
-                <button class="tw btn" id="tw">Twitter</button>
-                <button class="fb btn" id="fb">Facebook</button>
-                <button class="google fb btn" id="google">Google+</button>
-            </div>
+            <a href="login.php"></a><h6 id="ohSocial">Or, login?</h6></a>
         </div>
         <footer>
             

@@ -1,11 +1,8 @@
 <?php
-//funcs読み込み
-include("funcs.php");
+session_start();//dbのsessionを使うための関数
 
-//dbのsessionを使うための関数
-session_start();
+include("funcs.php");//funcs読み込み
 
-//postでid,pw受け取り
 $u_email = $_POST["u_email"];
 $u_name = $_POST["u_name"];
 $u_pw = password_hash($_POST["u_pw"], PASSWORD_DEFAULT);
@@ -14,7 +11,6 @@ $life_flg = 0;
 //db接続
 $pdo = db_connect();
 
-//さくらサーバーDB接続
 // $pdo = sdb_connect();
 
 //user情報を送る
@@ -37,7 +33,7 @@ if($res == false){
     // echo $_SESSION["u_name"];
     // echo $_SESSION["sid"];
     // exit('ok');
-    header("Location: index.html");
+    header("Location: index.php");
 }
 exit();
 
