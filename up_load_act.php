@@ -13,7 +13,6 @@ $u_id = $_POST["u_id"];
 if(
     !isset($_POST["movie_title"]) || $_POST["movie_title"]=="" ||
     !isset($_POST["movie_url"]) || $_POST["movie_url"]=="" ||
-    !isset($_POST["tag"]) || $_POST["tag"]=="" ||
     !isset($_POST["lat"]) || $_POST["lat"]=="" ||
     !isset($_POST["lon"]) || $_POST["lon"]=="" ||
     !isset($_POST["ifram"]) || $_POST["ifram"]=="" ||

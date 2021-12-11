@@ -43,7 +43,7 @@ console_log($lon);
                         <!-- Email -->
                         <input type="text" name="movie_url" id="movie-url" required="required" class="form" placeholder="動画URL" />
                         <!-- Subject -->
-                        <input type="text" name="tag" id="tag" required="required" class="form" placeholder="＃タグ" />
+                        <input type="text" name="tag" id="tag" class="form" placeholder="＃タグ" />
                         <input type="hidden" name="lat" value="<?=$lat?>">
                         <input type="hidden" name="lon" value="<?=$lon?>">
                         <input type="hidden" name="u_id" value="<?= $_SESSION["id"]?>">

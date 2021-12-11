@@ -2,21 +2,42 @@
 
 session_start();
 include("funcs.php");
-
-
 $id = $_SESSION["id"];
-//1.  ローカルDB接続します
-$pdo = db_connect();
-$sql = "SELECT * FROM bemaped_users_table WHERE id=:id";
+// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+//     echo $_POST['search_word'];
+// }
+
+$pdo = db_connect();//1.  ローカルDB接続します
+$sql = "SELECT * FROM bemaped_users_table WHERE id=:id";//ログイン情報の取得
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(":id", $id, PDO::PARAM_INT);
-$status = $stmt->execute();
-$val = $stmt->fetch();
-console_log($id);
-console_log($val);
-console_log($status);
-?>
+$status = $stmt->execute(); //sql文にエラーがないか
+$val = $stmt->fetch(); //ユーザー情報を取得
 
+console_log("ID:".$id); //ログイン中のユーザーID
+console_log($val); //ユーザー情報が取れているか
+console_log("status:".$status); //sql文にエラーがないか
+
+$search_word = $_GET["search_word"]; //検索ワードを今のページからPOSTで取得
+$sql2 = "SELECT * FROM `bemaped_data_table` WHERE movie_title LIKE :search_word"; //あいまい検索
+$stmt2 = $pdo->prepare($sql2);
+$stmt2->bindValue(":search_word", "%{$search_word}%", PDO::PARAM_STR); //検索ワードをバインド変数化
+$status2 = $stmt2->execute(); //sql文にエラーがないか
+$val2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+
+$sql3 = "SELECT COUNT(*) FROM bemaped_data_table WHERE movie_title LIKE :search_word"; //あいまい検索
+$stmt3 = $pdo->prepare($sql3);
+$stmt3->bindValue(":search_word", "%{$search_word}%", PDO::PARAM_STR); //検索ワードをバインド変数化
+$status3 = $stmt3->execute(); //sql文にエラーがないか
+$val3 = $stmt3->fetch(PDO::FETCH_ASSOC);
+
+console_log("search_word:".$search_word);
+console_log("status2:".$status2);
+console_log("status3:".$status3);
+console_log($val2);
+console_log($val3);
+
+?>
 
 
 
@@ -54,7 +75,7 @@ console_log($status);
                 <a href="sign_up.php">
                 <div class="menu-item" id="signup">
                     <img src="img/home-yellow.png" alt="">
-                    <p>登録</p>
+                    <p>サインアップ</p>
                     <div class="description">登録</div>
                 </div>
                 </a>
@@ -70,7 +91,7 @@ console_log($status);
                 </div>
                 <div class="menu-item">
                     <img src="img/search.png" alt="">
-                    <p>検索</p>
+                    <p>サーチ</p>
                     <div class="description">検索</div>
                 </div>
                 <a href="login.php">
@@ -93,7 +114,7 @@ console_log($status);
             <div class="left-sub-menu">
                 <div class="menu-item">
                     <img src="img/runk-up.png" alt="">
-                    <p>急上昇</p>
+                    <p>ホットスポット</p>
                     <div class="description">急上昇</div>
                 </div>
                 <div class="menu-item" id="Youtube">
@@ -119,14 +140,17 @@ console_log($status);
             
             <!-- マップ表示エリア -->
             <div class="map-area">
+                <form action="" methode="POST">
                 <div class="search-bar">
-                    <input type="text" id="search" placeholder="bemaped で 検索する">
+                    <input type="text" id="search" name="search_word" placeholder="bemaped で 検索する">
                     <div class="search-icon bar-icon">
                         <img src="img/search-gray.png" id="search-img" alt="">
                         <div class="description">住所</div>
                     </div>
                     <div class="youtube-icon bar-icon">
-                        <img src="img/Youtube-icon.png" id="movie-search-img" alt="">
+                        <button type="submit">
+                            <img src="img/Youtube-icon.png" id="movie-search-img" alt="">
+                        </button>
                         <div class="description">動画</div>
                     </div>
                     <div class="insta-icon bar-icon">
@@ -138,7 +162,7 @@ console_log($status);
                         <div class="description">経路</div>
                     </div>
                 </div>
-
+                </form>
                 <!-- MAP[START] -->
                 <div id="myMap" style='width:100%;height:100%;float:right;'></div>
                 <!-- MAP[END] -->
@@ -255,46 +279,47 @@ console_log($status);
 
 
 
-            $('#movie-search-img').on('click', function () {
-                //ローカルストレージからデータ取得
-                //inputのデータ取得
-                let inputWord = String(document.querySelector("#search").value);
-                for (let i = 1; i < sessionStorage.length; i++) {
+            // $('#movie-search-img').on('click', function () {
+            //     //ローカルストレージからデータ取得
+            //     //inputのデータ取得
+            //     // let inputWord = String(document.querySelector("#search").value);
+            //     // for (let i = 1; i < sessionStorage.length; i++) {
+            //     //     const str = sessionStorage.getItem(i);
+            //     //     const obj = JSON.parse(str);
+            //     //     const lat = Number(obj.lat);  //Get latitude
+            //     //     const lon = Number(obj.lon); //Get longitude
 
-                    const str = sessionStorage.getItem(i);
-                    const obj = JSON.parse(str);
-                    const lat = Number(obj.lat);  //Get latitude
-                    const lon = Number(obj.lon); //Get longitude
-                    map.onPin(map.pinText(lat, lon, " ", " ", " "), "click", function () {
-                        if (confirm('ページ遷移しますか？')) {
-                            const url = obj.movieUrl;
-                            window.open(url, '_blank')
-                        }
-                    });
 
-                    map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
-                    //map.pin(lat, lon, "#ffffff");
-                    // document.querySelector("#geocode").innerHTML = lat + ',' + lon;
-                    // console.log(obj);
-                    console.log(lat);
-                    console.log(lon);
-                }
+            //         map.onPin(map.pinText(lat, lon, " ", " ", " "), "click", function () {
+            //             if (confirm('ページ遷移しますか？')) {
+            //                 const url = obj.movieUrl;
+            //                 window.open(url, '_blank')
+            //             }
+            //         });
+
+            //         map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
+            //         //map.pin(lat, lon, "#ffffff");
+            //         // document.querySelector("#geocode").innerHTML = lat + ',' + lon;
+            //         // console.log(obj);
+            //         console.log(lat);
+            //         console.log(lon);
+            // }
                 //検索ワードが富山ならスタートマップは（２）
                 //検索ワードがタイならスタートマップは（９）
-                if (inputWord === "タイ 観光") {
-                    const str = sessionStorage.getItem(9);
-                    const obj = JSON.parse(str);
-                    const lat = Number(obj.lat);  //Get latitude
-                    const lon = Number(obj.lon); //Get longitude
-                    map.changeMap(lat, lon, "load", 6);
-                } else if (inputWord === "富山 グルメ") {
-                    const str = sessionStorage.getItem(2);
-                    const obj = JSON.parse(str);
-                    const lat = Number(obj.lat);  //Get latitude
-                    const lon = Number(obj.lon); //Get longitude
-                    map.changeMap(lat, lon, "load", 10);
-                }
-            });
+                // if (inputWord === "タイ 観光") {
+                //     const str = sessionStorage.getItem(9);
+                //     const obj = JSON.parse(str);
+                //     const lat = Number(obj.lat);  //Get latitude
+                //     const lon = Number(obj.lon); //Get longitude
+                //     map.changeMap(lat, lon, "load", 6);
+                // } else if (inputWord === "富山 グルメ") {
+                //     const str = sessionStorage.getItem(2);
+                //     const obj = JSON.parse(str);
+                //     const lat = Number(obj.lat);  //Get latitude
+                //     const lon = Number(obj.lon); //Get longitude
+                //     map.changeMap(lat, lon, "load", 10);
+                // }
+            // });
 
 
         }
