@@ -18,22 +18,31 @@ console_log("ID:".$id); //ログイン中のユーザーID
 console_log($val); //ユーザー情報が取れているか
 console_log("status:".$status); //sql文にエラーがないか
 
-$search_word = $_GET["search_word"]; //検索ワードを今のページからPOSTで取得
+if(isset($_POST["search_word"])){
+$search_word = $_POST["search_word"]; //検索ワードを今のページからPOSTで取得
 $sql2 = "SELECT * FROM `bemaped_data_table` WHERE movie_title LIKE :search_word"; //あいまい検索
 $stmt2 = $pdo->prepare($sql2);
 $stmt2->bindValue(":search_word", "%{$search_word}%", PDO::PARAM_STR); //検索ワードをバインド変数化
 $status2 = $stmt2->execute(); //sql文にエラーがないか
-$val2 = $stmt2->fetch(PDO::FETCH_ASSOC);
-
+$val2 = $stmt2->fetchall(PDO::FETCH_ASSOC);
+$json_val2 = json_encode($val2);
+// $val2_array = [];
+// while($val2 = $stmt2->fetch(PDO::FETCH_ASSOC)){
+//     array_push($val2_array, $val2);
+// }
 $sql3 = "SELECT COUNT(*) FROM bemaped_data_table WHERE movie_title LIKE :search_word"; //あいまい検索
 $stmt3 = $pdo->prepare($sql3);
 $stmt3->bindValue(":search_word", "%{$search_word}%", PDO::PARAM_STR); //検索ワードをバインド変数化
 $status3 = $stmt3->execute(); //sql文にエラーがないか
-$val3 = $stmt3->fetch(PDO::FETCH_ASSOC);
+$val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
+// $culmn_count = (int)$val3["count(*)"];
+}
 
 console_log("search_word:".$search_word);
 console_log("status2:".$status2);
 console_log("status3:".$status3);
+// console_log($val2_array);
+// console_log($json_val2);
 console_log($val2);
 console_log($val3);
 
@@ -73,10 +82,17 @@ console_log($val3);
             </div>
             <div class="left-main-menu">
                 <a href="sign_up.php">
-                <div class="menu-item" id="signup">
+                <div class="menu-item" id="signup" <?=logout_flg()?>>
                     <img src="img/home-yellow.png" alt="">
                     <p>サインアップ</p>
                     <div class="description">登録</div>
+                </div>
+                </a>
+                <a href="mypage.php">
+                <div class="menu-item" id="mypage" <?=login_flg()?>>
+                    <img src="img/home-yellow.png" alt="">
+                    <p>マイページ</p>
+                    <div class="description">マイページ</div>
                 </div>
                 </a>
                 <div class="menu-item">
@@ -140,7 +156,7 @@ console_log($val3);
             
             <!-- マップ表示エリア -->
             <div class="map-area">
-                <form action="" methode="POST">
+                <form method="POST" action="">
                 <div class="search-bar">
                     <input type="text" id="search" name="search_word" placeholder="bemaped で 検索する">
                     <div class="search-icon bar-icon">
@@ -239,7 +255,7 @@ console_log($val3);
                 //map.pinIcon(lat, lon, "img/red-pin.png", 1.0, 16, 32);
 
                 let uid = "<?= $id ?>";
-                console.log(uid);
+                //console.log(uid);
                 if (uid !="") {
                     map.crearInfobox()
                     // map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 76);
@@ -283,18 +299,28 @@ console_log($val3);
             //     //ローカルストレージからデータ取得
             //     //inputのデータ取得
             //     // let inputWord = String(document.querySelector("#search").value);
-            //     // for (let i = 1; i < sessionStorage.length; i++) {
-            //     //     const str = sessionStorage.getItem(i);
-            //     //     const obj = JSON.parse(str);
-            //     //     const lat = Number(obj.lat);  //Get latitude
-            //     //     const lon = Number(obj.lon); //Get longitude
-            // window.addEventListener('DOMContentLoaded', function(){
-                const lat = <?= $val2["lat"]?>;
-                const lon = <?= $val2["lon"]?>;
+            let search_word = "<?= $_POST["search_word"] ?>";
+            let search_data_count = "<?=$val3?>";
+            if( search_word != ""){
+                for (let i = 0; i < search_data_count ; i++) {
+                // const str = <= $val2 ?>;
+                // const obj = JSON.parse(str);
+                // const lat = Number(obj.lat);  //Get latitude
+                // const lon = Number(obj.lon); //Get longitude
+                let json_val2 = JSON.parse(JSON.stringify(<?= $json_val2 ?>));
+                // let val2 = <= $val2 ?>;
+                //console.log(json_val2);
+                // console.log(val2);
+                // window.addEventListener('DOMContentLoaded', function(){
+                const lat = json_val2[i]["lat"];
+                const lon = json_val2[i]["lon"];
                 map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
-                map.changeMap(lat, lon, "load", 6);
-                console.log(lat);
-                console.log(lon);
+                map.changeMap(lat, lon, "load", 9);
+                // console.log(lat);
+                // console.log(lon);
+                }
+            }
+            
             // });
                 
 
@@ -336,7 +362,6 @@ console_log($val3);
 
         // const uid = localStorage.getItem('uid');
         //console.log(uid);
-
 
 
 

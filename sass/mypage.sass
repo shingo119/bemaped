@@ -1,0 +1,59 @@
+/* Card styles for rotation */
+.rotate-container
+     position: relative
+     // Height: 25em // Height can ensure height consitency between front and back cards
+     .card-front
+          width: 100%
+          height: 100%
+          transform: perspective(600px) rotateY(0deg)
+          backface-visibility: hidden
+          transition: all .5s linear 0s
+
+     .card-back
+          @extend .card-front
+          transform: perspective(1600px) rotateY(180deg)
+          position: absolute
+          top: 0
+          left: 0
+          right: 0
+
+     .rotate-card-front
+          transform: perspective(1600px) rotateY(-180deg)
+
+     .rotate-card-back
+          transform: perspective(1600px) rotateY(0deg)
+
+/* Modified card styles */
+.card
+     box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.5)
+
+     .card-header
+          p
+               margin: 0
+
+     .card-background
+          background: url('https://static.pexels.com/photos/443374/pexels-photo-443374.jpeg')
+          height: 8em
+          background-position: center center
+          background-size: cover
+      
+     // Absolute positioning can be used if negative margins are not preffered.
+     .avatar
+          max-width: 6em
+          max-height: 6em
+          margin-top: -4em
+          margin-bottom: 1em
+          border: 4px solid white
+          border-radius: 50%
+          background: radial-gradient(#e3e3e3, #329A7C, #109381)
+
+     .btn
+          margin-bottom: 1em
+          cursor: pointer
+      
+     .social-links
+          li
+               margin: .5em
+          a
+               font-size: 1.5em
+         
