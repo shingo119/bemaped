@@ -90,7 +90,7 @@ $val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
                             <a href="#" class="btn_02" id="follow_btn">フォローする</a>
                         </section>                          
                     </div>                    
-                    <iframe width="800" height="450" src="https://www.youtube.com/embed/EwLr8YoyqvM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <?= $val["ifram"];?>
                 </div>
             </div>
 
@@ -187,8 +187,6 @@ $val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
             const params = new URLSearchParams();
             params.append('followed', <?=$_SESSION["id"]?>);
             params.append('be_followed', <?= $val["u_id"]?>);
-            params.append('type', 'うんこ');
-
             //axiosでAjax送信
             axios.post('follow_act.php',params).then(function (response) {
                 console.log(response.data);//通信OK
