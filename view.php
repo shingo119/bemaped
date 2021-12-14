@@ -9,18 +9,18 @@ $pdo = db_connect();
 $movie_id = $_GET["movie_id"];
 // console_log($_SESSION["search_word"]);
 
-console_log($movie_id);
+// console_log($movie_id);
 
 $sql = "SELECT * FROM bemaped_users_table INNER JOIN bemaped_data_table ON bemaped_users_table.id = bemaped_data_table.u_id WHERE bemaped_data_table.id =:movie_id";
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(":movie_id", $movie_id, PDO::PARAM_INT);
 $status = $stmt->execute();
 $val = $stmt->fetch(); //ユーザー情報を取得
-console_log($status);
+// console_log($status);
 
 if(isset($_SESSION["search_word"])){
 $search_word = $_SESSION["search_word"]; //検索ワードを今のページからPOSTで取得
-$sql2 = "SELECT * FROM `bemaped_data_table` WHERE movie_title LIKE :search_word"; //あいまい検索
+$sql2 = "SELECT * FROM `bemaped_data_table` WHERE movie_title LIKE :search_word OR tag LIKE :search_word"; //あいまい検索
 $stmt2 = $pdo->prepare($sql2);
 $stmt2->bindValue(":search_word", "%{$search_word}%", PDO::PARAM_STR); //検索ワードをバインド変数化
 $status2 = $stmt2->execute(); //sql文にエラーがないか
@@ -30,7 +30,7 @@ $json_val2 = json_encode($val2);
 // while($val2 = $stmt2->fetch(PDO::FETCH_ASSOC)){
 //     array_push($val2_array, $val2);
 // }
-$sql3 = "SELECT COUNT(*) FROM bemaped_data_table WHERE movie_title LIKE :search_word"; //あいまい検索
+$sql3 = "SELECT COUNT(*) FROM bemaped_data_table WHERE movie_title LIKE :search_word OR tag LIKE :search_word"; //あいまい検索
 $stmt3 = $pdo->prepare($sql3);
 $stmt3->bindValue(":search_word", "%{$search_word}%", PDO::PARAM_STR); //検索ワードをバインド変数化
 $status3 = $stmt3->execute(); //sql文にエラーがないか
@@ -87,7 +87,7 @@ $val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
                         </div>
                         <div class="user_exp">みーもぐです。</div>
                         <section>
-                            <a href="#" class="btn_02">フォローする</a>
+                            <a href="#" class="btn_02" id="follow_btn">フォローする</a>
                         </section>                          
                     </div>                    
                     <iframe width="800" height="450" src="https://www.youtube.com/embed/EwLr8YoyqvM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -104,8 +104,8 @@ $val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
     </div>
 
     <!-- jQuery読み込みCDN -->
-    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
-        integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     
     <!-- bingmapのAPI読み込みCDN -->
     <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=ApPcFw7GdzTHXhj7erJNlk_tpn3P3DrjLSsbAPzasrG0b7f8_EDggHCOVS9brMbx'
@@ -163,6 +163,42 @@ $val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
             }
         }
 
+    // $(function(){
+    //     $("#follow_btn").on("click", function(){
+    //         $.ajax({
+    //             type:"POST",
+    //             url: "follow_act.php",
+    //             datatype: "json",
+    //             data:{
+    //                 "followed":<=$_SESSION["id"]?>,
+    //                 "be_followed":<= $val["u_id"]?>
+    //             }
+    //             }).done(function(data){
+    //                 console.log("通信成功");
+    //                 console.log(data);
+    //             }).fail(function(XMLHttpRequest, status, e){
+    //                 alert(e)
+    //             });
+    //         });
+    //     });
+
+        $("#follow_btn").on("click", function(){
+            //Ajax（非同期通信）
+            const params = new URLSearchParams();
+            params.append('followed', <?=$_SESSION["id"]?>);
+            params.append('be_followed', <?= $val["u_id"]?>);
+            params.append('type', 'うんこ');
+
+            //axiosでAjax送信
+            axios.post('follow_act.php',params).then(function (response) {
+                console.log(response.data);//通信OK
+                console.log("ajax_post.php/通信OK");
+            }).catch(function (error) {
+                console.log(error);//通信Error
+            }).then(function () {
+                console.log("Last");//通信OK/Error後に処理を必ずさせたい場合
+            });
+        });
     </script>
 
 </body>
