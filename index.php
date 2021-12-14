@@ -81,6 +81,7 @@ console_log($val3);
                 <h1>bemaped</h1>
             </div>
             <div class="left-main-menu">
+                <!-- サインアップタグ -->
                 <a href="sign_up.php">
                 <div class="menu-item" id="signup" <?=logout_flg()?>>
                     <img src="img/home-yellow.png" alt="">
@@ -88,6 +89,7 @@ console_log($val3);
                     <div class="description">登録</div>
                 </div>
                 </a>
+                <!-- マイページタグ -->
                 <a href="mypage.php">
                 <div class="menu-item" id="mypage" <?=login_flg()?>>
                     <img src="img/home-yellow.png" alt="">
@@ -95,21 +97,29 @@ console_log($val3);
                     <div class="description">マイページ</div>
                 </div>
                 </a>
+                <!-- フォローしてる人を確認するページ -->
+                <a href="follow_users.php">
                 <div class="menu-item">
                     <img src="img/megane3.png" alt="">
                     <p>フォロー</p>
                     <div class="description">フォロー</div>
                 </div>
+                </a>
+                <!-- フォローされている人を確認するページ -->
+                <a href="follower_users.php">
                 <div class="menu-item">
                     <img src="img/hurt-pink.png" alt="">
                     <p>フォロワー</p>
                     <div class="description">フォロワー</div>
                 </div>
+                </a>
+                <!-- いろいろ検索するページ -->
                 <div class="menu-item">
                     <img src="img/search.png" alt="">
                     <p>サーチ</p>
                     <div class="description">検索</div>
                 </div>
+                <!-- ログインタグ -->
                 <a href="login.php">
                 <div class="menu-item" id="login" <?=logout_flg()?>>
                     <img src="img/login-icon.png" alt="">
@@ -117,6 +127,7 @@ console_log($val3);
                     <div class="description">ログイン</div>
                 </div>
                 </a>
+                <!-- ログアウトタグ -->
                 <a href="logout.php">
                 <div class="menu-item" id="logout" <?=login_flg()?>>
                     <img src="img/logout-icon.png" alt="">
@@ -124,6 +135,8 @@ console_log($val3);
                     <div class="description">ログアウト</div>
                 </div>
                 </a>
+
+                <!-- ログイン中だけ表示されるメッセージ -->
                 <h3 class="youkoso" <?=login_flg()?>>ようこそ、<?= $val["u_name"];?>さん</h3> 
             </div>
             <!-- サブメニュー -->
