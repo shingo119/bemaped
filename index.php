@@ -3,9 +3,12 @@
 session_start();
 include("funcs.php");
 $id = $_SESSION["id"];
+$_SESSION["search_word"] = $_POST["search_word"];
 // if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 //     echo $_POST['search_word'];
 // }
+console_log($_SESSION["search_word"]);
+
 
 $pdo = db_connect();//1.  ローカルDB接続します
 $sql = "SELECT * FROM bemaped_users_table WHERE id=:id";//ログイン情報の取得
@@ -331,9 +334,16 @@ console_log($val3);
                 map.changeMap(lat, lon, "load", 9);
                 // console.log(lat);
                 // console.log(lon);
+                map.onPin(map.pinText(lat, lon, " ", " ", " "), "click", function () {
+                    if (confirm('ページ遷移しますか？')) {
+                        const url = "/bemaped/view.php?movie_id=" + json_val2[i]["id"];
+                        window.location.href = `${url}`;
+                    }
+                });
+
                 }
             }
-            
+        }
             // });
                 
 
@@ -369,7 +379,7 @@ console_log($val3);
             // });
 
 
-        }
+        
 
         // ここまでがマップのjQueryの部分
 

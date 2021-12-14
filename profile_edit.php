@@ -58,8 +58,8 @@ console_log($val3);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/ress.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/mypage_sub.css">
-    <link rel="stylesheet" href="sass/mypage.css">
+    <link rel="stylesheet" href="css/plofile_edit_sub.css">
+    <link rel="stylesheet" href="css/plofile_edit.css">
     <title>マイマップ</title>
 </head>
 <body>
@@ -81,7 +81,6 @@ console_log($val3);
                                     <div class="card-block"><img class="avatar" src="img/hurt2.png">
                                         <h3 class="card-title"><?= $val["u_name"]?></h3>
                                         <button class="btn btn-primary btn-rotate">Read more&nbsp;<i class="fa fa-long-arrow-right"></i></button>
-                                        <a href="profile_edit.php"><button class="btn btn-primary edit">編集</button></a>
                                     </div>
                                 </div>
                                 <div class="card card-back text-center">
@@ -122,12 +121,38 @@ console_log($val3);
                 </div>
             </div>
 
-            <!-- map表示エリア -->
-            <div class="mymap">
-            <div id="myMap" style='width:100%;height:100%;float:left;'></div>
-            </div>
-            <!-- map表示エリア -->
-
+            
+            <div class="contact-form">
+                
+                <!-- Form -->
+                <!-- <form id="contact-us" method="#" action="#"> -->
+                <!-- Left Inputs -->
+                <form action="up_load_act.php" method="POST" enctype="multipart/form-data">
+                    <div class="col-xs-6 wow animated slideInLeft" data-wow-delay=".5s">
+                        <!-- Name -->
+                        <input type="text" name="movie_title" id="movie-title" required="required" class="form" placeholder="ユーザー名" />
+                        <!-- Email -->
+                        <input type="text" name="movie_url" id="movie-url" required="required" class="form" placeholder="EMAIL" />
+                        <!-- Subject -->
+                        アイコン画像：<input type="file" accept="image/*" name="icon_upfile">
+                        背景画像：<input type="file" accept="image/*" name="backimage_upfile">
+                        <input type="hidden" name="u_id" value="<?= $_SESSION["id"]?>">
+                    </div><!-- End Left Inputs -->
+                    <!-- Right Inputs -->
+                    <div class="col-xs-6 wow animated slideInRight" data-wow-delay=".5s">
+                        <!-- Message -->
+                        <textarea name="ifram" id="ifram" class="form textarea" placeholder="説明"></textarea>
+                    </div><!-- End Right Inputs -->
+                    <!-- Bottom Submit -->
+                    <div class="relative fullwidth col-xs-12">
+                        <!-- Send Button -->
+                        <button type="submit" id="submit" name="submit" class="form-btn semibold">プロフィールを更新</button>
+                    </div><!-- End Bottom Submit -->
+                </form>
+                <!-- Clear -->
+                <div class="clear"></div>
+                <!-- </form> -->
+            </div><!-- End Contact Form Area -->
         </div><!-- End Inner -->
     </div>
 
@@ -148,48 +173,6 @@ console_log($val3);
     <!-- アップロードhtmlのメインJS -->
     <script type="text/javascript">
 
-        function GetMap() {
-
-            const map = new Bmap("#myMap");
-            
-            map.startMap(35.712772, 139.750443, "canvasLight", 10);
-
-            //現在地表示
-            map.geolocation(function (data) {
-                //location
-                const lat = data.coords.latitude;
-                const lon = data.coords.longitude;
-
-                console.log(lat);
-                console.log(lon);
-                //Map
-                // map.startMap(lat, lon, "load", 10);
-                //pin
-                map.pin(lat, lon, "#0000ff");
-            });
-
-            let movie_data_count = "<?= $val3 ?>";
-            if( movie_data_count != ""){
-                for (let i = 0; i < movie_data_count ; i++) {
-                // const str = <= $val2 ?>;
-                // const obj = JSON.parse(str);
-                // const lat = Number(obj.lat);  //Get latitude
-                // const lon = Number(obj.lon); //Get longitude
-                let json_val2 = JSON.parse(JSON.stringify(<?= $json_val2 ?>));
-                // let val2 = <= $val2 ?>;
-                // console.log(json_val2);
-                // console.log(val2);
-                // window.addEventListener('DOMContentLoaded', function(){
-                const lat = json_val2[i]["lat"];
-                const lon = json_val2[i]["lon"];
-                map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
-                map.changeMap(lat, lon, "load", 9);
-                // console.log(lat);
-                // console.log(lon);
-                }
-            }
-        }
-
         $(function() {
         // For card rotation
             $('.btn-rotate').click(function(){
@@ -197,6 +180,7 @@ console_log($val3);
                 $('.card-back').toggleClass(' rotate-card-back');
             });
         });
+
     </script>
 
 </body>
