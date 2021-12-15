@@ -101,7 +101,7 @@ if($val4 == "" || $val4 == null){
                         <div class="user_name">
                             <h3><?= $val["u_name"]?></h3>
                         </div>
-                        <div class="user_exp">説明文インサート欄</div>
+                        <div class="user_exp"></div>
                         <section>
                             <a href="#" class="btn_02" id="follow_btn"><?= $follow_btn?></a>
                         </section>                          

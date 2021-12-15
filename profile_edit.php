@@ -80,8 +80,8 @@ console_log($val3);
                                     <div class="card-header">
                                         <!-- <p>About You</p> -->
                                     </div>
-                                    <div class="card-background"></div>
-                                    <div class="card-block"><img class="avatar" src="img/hurt2.png">
+                                    <div class="card-background" style='background-size:contain; background-image: url("upload/<?=$val["back_ground"]?>")'></div>
+                                    <div class="card-block"><img class="avatar" src="upload/<?= $val["icon"]?>">
                                         <h3 class="card-title"><?= $val["u_name"]?></h3>
                                         <button class="btn btn-primary btn-rotate">Read more&nbsp;<i class="fa fa-long-arrow-right"></i></button>
                                     </div>
