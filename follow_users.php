@@ -32,14 +32,14 @@ if(isset($_SESSION["id"])){
     while($val2 = $stmt2->fetch(PDO::FETCH_ASSOC)){
         $user_view .= '<div class="rotate-container"><div class="card card-front"><div class="card-header">';
         $user_view .= '<p>フォロー中</p>';
-        $user_view .= '</div><div class="card-background"></div><div class="card-block">';
-        $user_view .= '<img class="avatar" src="img/favicon.png" alt="" />';
+        $user_view .= '</div><div class="card-background"><img class="back" src="upload/'.$val2["back_ground"].'" alt="" /></div><div class="card-block">';
+        $user_view .= '<img class="avatar" src="upload/'.$val2["icon"].'" alt="" />';
         $user_view .= '<h3 class="card-title">'.$val2["u_name"].'</h3>';
         // console_log($val2["u_name"]);
         $user_view .= '<p>Time Traveler</p><button class="btn btn-primary btn-rotate" data-id="'.$val2["be_followed"].'">Read more<i class="fa fa-long-arrow-right"></i></button></div></div>';
         $user_view .= '<div class="card card-back"><div class="card-header"><p>More About Me</p></div><div class="card-block"><h4>説明</h4>';
         $user_view .= '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a faucibus.</p>';
-        $user_view .= '<h4>Connect:</h4><ul class="social-links list-unstyled d-flex justify-content-center"><li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li><li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li><li><a href="#" target="_blank"><i class="fa fa-snapchat"></i></a></li><li><a href="#" target="_blank"><i class="fa fa-instagram"></i></a></li></ul><button class="btn btn-primary btn-rotate"><i class="fa fa-long-arrow-left"></i>Back</button></div></div></div>';
+        $user_view .= '<h4>Connect:</h4><ul class="social-links list-unstyled d-flex justify-content-center"><li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li><li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li><li><a href="#" target="_blank"><i class="fa fa-snapchat"></i></a></li><li><a href="#" target="_blank"><i class="fa fa-instagram"></i></a></li></ul><button class="btn btn-primary btn-rotate" data-id=""><i class="fa fa-long-arrow-left"></i>Back</button></div></div></div>';
     }
     // $json_val2 = json_encode($val2);
     // $val2_array = [];
@@ -222,6 +222,7 @@ if(isset($_SESSION["id"])){
                 axios.post('follow_users_act.php',params).then(function (response) {
                     console.log(response.data);//通信OK
                     let obj_len = Object.keys(response.data).length;
+                    console.log(obj_len);
                     console.log("ajax_post.php/通信OK");
                     if(obj_len != 0){
                         for(let i = 0; i < obj_len; i++){
@@ -231,6 +232,13 @@ if(isset($_SESSION["id"])){
                             map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
                             map.changeMap(lat, lon, "load", 9);
                         }
+                    }else{
+                        map.geolocation(function (data) {
+                        //location
+                        const lat = data.coords.latitude;
+                        const lon = data.coords.longitude;
+                        map.pin(lat, lon, "#0000ff");
+                        });
                     }
                 }).catch(function (error) {
                     console.log(error);//通信Error

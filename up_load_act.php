@@ -1,7 +1,9 @@
 <?php
 session_start();
 include("funcs.php");
+loginCheck();
 
+$id = $_SESSION["id"];
 $movie_title = $_POST["movie_title"];
 $movie_url = $_POST["movie_url"];
 $tag = $_POST["tag"];

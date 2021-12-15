@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("funcs.php");
-// loginCheck();
+loginCheck();
 
 $id = $_SESSION["id"];
 //1.  ローカルDB接続します
@@ -11,11 +11,17 @@ $sql = "SELECT * FROM bemaped_users_table WHERE id=:id";
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(":id", $id, PDO::PARAM_INT);
 $status = $stmt->execute();
-$val = $stmt->fetch(); //ユーザー情報を取得
+$val = $stmt->fetch(PDO::FETCH_ASSOC); //ユーザー情報を取得
+$icon = $val["icon"];
+if($icon == "" || $icon == null){
+    $icon = "img/logo.png";
+}else{
+    $icon = "upload/".$val["icon"];
+}
 
-$sql2 = "SELECT * FROM `bemaped_data_table` WHERE u_id=:id"; //あいまい検索
+$sql2 = "SELECT * FROM `bemaped_data_table` WHERE u_id=:id"; 
 $stmt2 = $pdo->prepare($sql2);
-$stmt2->bindValue(":id", "$id", PDO::PARAM_STR); //検索ワードをバインド変数化
+$stmt2->bindValue(":id", "$id", PDO::PARAM_STR); 
 $status2 = $stmt2->execute(); //sql文にエラーがないか
 $val2 = $stmt2->fetchall(PDO::FETCH_ASSOC);
 $json_val2 = json_encode($val2);
@@ -24,9 +30,9 @@ $json_val2 = json_encode($val2);
 //     array_push($val2_array, $val2);
 // }
 
-$sql3 = "SELECT COUNT(*) FROM bemaped_data_table WHERE u_id=:id"; //あいまい検索
+$sql3 = "SELECT COUNT(*) FROM bemaped_data_table WHERE u_id=:id"; 
 $stmt3 = $pdo->prepare($sql3);
-$stmt3->bindValue(":id", "$id", PDO::PARAM_STR); //検索ワードをバインド変数化
+$stmt3->bindValue(":id", "$id", PDO::PARAM_STR); 
 $status3 = $stmt3->execute(); //sql文にエラーがないか
 $val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
 
@@ -77,10 +83,10 @@ console_log($val3);
                                     <div class="card-header">
                                         <!-- <p>About You</p> -->
                                     </div>
-                                    <div class="card-background"></div>
-                                    <div class="card-block"><img class="avatar" src="img/hurt2.png">
+                                    <div class="card-background" style='background-size:contain; background-image: url("upload/<?=$val["back_ground"]?>")'></div>
+                                    <div class="card-block"><img class="avatar" src="<?=$icon?>">
                                         <h3 class="card-title"><?= $val["u_name"]?></h3>
-                                        <button class="btn btn-primary btn-rotate">Read more&nbsp;<i class="fa fa-long-arrow-right"></i></button>
+                                        <button class="btn btn-primary btn-rotate">Read more<i class="fa fa-long-arrow-right"></i></button>
                                         <a href="profile_edit.php"><button class="btn btn-primary edit">編集</button></a>
                                     </div>
                                 </div>
@@ -90,23 +96,7 @@ console_log($val3);
                                     </div>
                                     <div class="card-block">
                                         <h4>説明</h4>
-                                        <p>ずるずる、どうもSUSURUです！
-                                        「毎日ラーメン健康生活」をテーマに、ラーメンをすする動画を毎日18:30に配信しています。
-                                        日々ラーメンをすすり続け、現在2000日以上連続配信中です！
-                                        全国の美味しいラーメンをすすりたい、紹介したいという気持ちで毎日続けておりますので
-                                        宜しければチャンネル登録よろしくお願いします！
-
-                                        生粋のラーメンYouTuber、SUSURUによる
-                                        「毎日ラーメン健康生活」を追うチャンネル。
-
-                                        「毎日ラーメン健康生活」とは
-                                        ラーメン大好きSUSURUが毎日ラーメンを食べても健康でいれることを証明していく生活。
-                                        現在2000日以上、毎日ラーメンをすすり続けている。
-
-                                        日本全国のラーメンをすする為、ラーメン図鑑としてもお使いいただけます。
-                                        都道府県別再生リストや、二郎系ラーメン、家系ラーメン、といったジャンル別再生リストもございますのでご活用ください！
-                                        世界のRamenも追っていきたい！！
-                                        </p>
+                                        <p><?= $val["explan"]?></p>
                                         <h4>Connect:</h4>
                                         <ul class="social-links list-unstyled d-flex justify-content-center">
                                             <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>

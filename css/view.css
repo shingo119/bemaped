@@ -124,10 +124,11 @@ body {
 .user_icon img{
     border-radius: 50%;
     background-color: aquamarine;
+    width: 80px;
 }
 
 .user_exp{
-    height:264px;
+    height:230px;
     padding-left:10px;
     padding-top: 10px;
     box-sizing: border-box;
@@ -135,10 +136,11 @@ body {
 
 .user_profile{
     width: 20%;
-    border:1px solid #428bca;
-    padding-right:2px;
-    padding-left:2px;
+    /* border:1px solid #428bca; */
+    padding-right:5px;
+    padding-left:5px;
     box-sizing: border-box;
+    background-color: floralwhite;
 }
 
 /* Card styles for rotation */
@@ -263,7 +265,9 @@ a.btn_02 {
   text-decoration: none;
   position: relative;
   transition-duration: 0.2s;
+  border-radius: 19px;
 }
+
 a.btn_02:hover {
   background: #228bc8;
   color: #fff;

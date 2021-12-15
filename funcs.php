@@ -62,6 +62,7 @@ function console_log( $data ){
   echo '</script>';
 }
 
+//fileUpload("送信名","アップロード先フォルダ");
 function fileUpload($fname,$path){
   if (isset($_FILES[$fname] ) && $_FILES[$fname]["error"] ==0 ) {
       //ファイル名取得

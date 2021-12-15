@@ -150,10 +150,10 @@ body {
 }
 
 .card .card-background {
-  background: url("https://static.pexels.com/photos/443374/pexels-photo-443374.jpeg");
   height: 16em;
   background-position: center center;
   background-size: cover;
+  display: flex;
 }
 
 .card .card-block {
@@ -195,4 +195,9 @@ body {
 
 .card .social-links li a {
   font-size: 1.5em;
+}
+
+.back {
+  object-fit: cover;
+  width: 100% !important;
 }

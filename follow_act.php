@@ -21,18 +21,30 @@ $type = $_POST["type"];
 
 //２．表示する分のSQL作成
 // $stmt = $pdo->prepare("SELECT * FROM gs_bm_table WHERE u_id=:id");
-$sql = "INSERT INTO bemaped_follow_table(followed, be_followed,indate)VALUE(:followed, :be_followed,sysdate())";
-$stmt = $pdo->prepare($sql);
-$stmt->bindValue(":followed", $followed, PDO::PARAM_INT);
-$stmt->bindValue(":be_followed", $be_followed, PDO::PARAM_INT);
-$status = $stmt->execute();
 
-
-$stmt2 = $pdo->prepare("SELECT * FROM bemaped_follow_table WHERE bemaped_follow_table.followed =:followed AND bemaped_follow_table.be_followed =:be_followed");
-$stmt->bindValue(":followed", $followed, PDO::PARAM_INT);
-$stmt->bindValue(":be_followed", $be_followed, PDO::PARAM_INT);
+$stmt2 = $pdo->prepare("SELECT * FROM bemaped_follow_table WHERE followed =:followed AND be_followed =:be_followed");
+$stmt2->bindValue(":followed", $followed, PDO::PARAM_INT);
+$stmt2->bindValue(":be_followed", $be_followed, PDO::PARAM_INT);
 $status2 = $stmt2->execute();
 $result2 = $stmt2->fetch();
+
+if($result2 == "" || $result2 == null){
+  $sql = "INSERT INTO bemaped_follow_table(followed, be_followed,indate)VALUE(:followed, :be_followed,sysdate())";
+  $stmt = $pdo->prepare($sql);
+  $stmt->bindValue(":followed", $followed, PDO::PARAM_INT);
+  $stmt->bindValue(":be_followed", $be_followed, PDO::PARAM_INT);
+  $status = $stmt->execute();
+}else{
+  $sql3 = "DELETE FROM bemaped_follow_table WHERE followed =:followed AND be_followed =:be_followed";
+  $stmt3 = $pdo->prepare($sql3);
+  $stmt3->bindValue(":followed", $followed, PDO::PARAM_INT);
+  $stmt3->bindValue(":be_followed", $be_followed, PDO::PARAM_INT);
+  $status3 = $stmt3->execute(); //実行
+}
+
+
+
+
 
 //ajax.php
 
@@ -47,7 +59,7 @@ $json = '[
 ]';
 
 //作成したJSON文字列をリクエストしたファイルに返す
-echo $status;
+echo $result2;
 exit;
 
 ?>

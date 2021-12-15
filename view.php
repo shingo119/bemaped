@@ -38,6 +38,22 @@ $val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
 // $culmn_count = (int)$val3["count(*)"];
 }
 
+$followed = $_SESSION["id"];
+$be_followed = $val["u_id"];
+$sql4 = "SELECT * FROM bemaped_follow_table WHERE followed=:followed AND be_followed=:be_followed";
+$stmt4 = $pdo->prepare($sql4);
+$stmt4->bindValue(":followed", $followed, PDO::PARAM_INT);
+$stmt4->bindValue(":be_followed",$be_followed, PDO::PARAM_INT);
+$status4 = $stmt4->execute();
+$val4 = $stmt4->fetch(PDO::FETCH_ASSOC);
+console_log($status4);
+$follow_btn = "";
+if($val4 == "" || $val4 == null){
+    $follow_btn = "フォローする";
+}else{
+    $follow_btn = "フォローを外す";
+}
+
 // console_log($status3);
 // console_log($val3);
 
@@ -80,14 +96,14 @@ $val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
                 <div class="grid">
                     <div class="user_profile">
                         <div class="user_icon">
-                            <img src="img/hurt2.png" alt="">
+                            <img src="upload/<?=$val["icon"]?>" alt="">
                         </div>
                         <div class="user_name">
                             <h3><?= $val["u_name"]?></h3>
                         </div>
-                        <div class="user_exp">みーもぐです。</div>
+                        <div class="user_exp">説明文インサート欄</div>
                         <section>
-                            <a href="#" class="btn_02" id="follow_btn">フォローする</a>
+                            <a href="#" class="btn_02" id="follow_btn"><?= $follow_btn?></a>
                         </section>                          
                     </div>                    
                     <?= $val["ifram"];?>
@@ -184,6 +200,7 @@ $val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
 
         $("#follow_btn").on("click", function(){
             //Ajax（非同期通信）
+            let follow_btn = "";
             const params = new URLSearchParams();
             params.append('followed', <?=$_SESSION["id"]?>);
             params.append('be_followed', <?= $val["u_id"]?>);
@@ -191,6 +208,13 @@ $val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
             axios.post('follow_act.php',params).then(function (response) {
                 console.log(response.data);//通信OK
                 console.log("ajax_post.php/通信OK");
+                if(response.data == "" || response.data == null){
+                    let div = document.getElementById("follow_btn");
+                    div.innerHTML = "フォローを外す";
+                }else{
+                    let div = document.getElementById("follow_btn");
+                    div.innerHTML = "フォローをする";
+                }
             }).catch(function (error) {
                 console.log(error);//通信Error
             }).then(function () {
