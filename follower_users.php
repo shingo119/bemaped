@@ -16,28 +16,38 @@ $val = $stmt->fetch(); //ユーザー情報を取得
 if(isset($_SESSION["id"])){
     $sql2 = "SELECT * FROM bemaped_follow_table INNER JOIN bemaped_users_table ON bemaped_follow_table.followed = bemaped_users_table.id WHERE bemaped_follow_table.be_followed=:be_followed"; //あいまい検索
     $stmt2 = $pdo->prepare($sql2);
-    $stmt2->bindValue(":be_followed", $id, PDO::PARAM_INT); //検索ワードをバインド変数化
+    $stmt2->bindValue(":be_followed", $id, PDO::PARAM_INT); 
     $status2 = $stmt2->execute(); //sql文にエラーがないか
     // console_log($status2);
 
-    $sql3 = "SELECT COUNT(*) FROM bemaped_follow_table WHERE be_followed=:be_followed"; //あいまい検索
+    $sql3 = "SELECT COUNT(*) FROM bemaped_follow_table WHERE be_followed=:be_followed";
     $stmt3 = $pdo->prepare($sql3);
-    $stmt3->bindValue(":be_followed", "$id", PDO::PARAM_INT); //検索ワードをバインド変数化
+    $stmt3->bindValue(":be_followed", "$id", PDO::PARAM_INT); 
     $status3 = $stmt3->execute(); //sql文にエラーがないか
     $val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
+
     console_log($status3);
     console_log($val3);
 
     $user_view = "";
     while($val2 = $stmt2->fetch(PDO::FETCH_ASSOC)){
-        
+        $sql4 = "SELECT COUNT(*) FROM bemaped_follow_table WHERE be_followed=:be_followed";
+        $stmt4 = $pdo->prepare($sql4);
+        $stmt4->bindValue(":be_followed", $val2["followed"], PDO::PARAM_INT); 
+        $status4 = $stmt4->execute(); //sql文にエラーがないか
+        $val4 = $stmt4->fetch(PDO::FETCH_COLUMN);
+        $sql5 = "SELECT COUNT(*) FROM bemaped_data_table WHERE u_id=:be_followed";
+        $stmt5 = $pdo->prepare($sql5);
+        $stmt5->bindValue(":be_followed", $val2["followed"], PDO::PARAM_INT); 
+        $status5 = $stmt5->execute(); //sql文にエラーがないか
+        $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
         $user_view .= '<div class="skill-card">';
         $user_view .= '<header class="skill-card__header"><img class="skill-card__icon" src="upload/'.$val2["icon"].'" alt="HTML5 Logo" /></header>';
         $user_view .= '<section class="skill-card__body">';
         $user_view .= '<h2 class="skill-card__title">'.$val2["u_name"].'</h2><span class="skill-card__duration">フォロワー情報</span>';
         $user_view .= '<ul class="skill-card__knowledge">';
-        $user_view .= '<li>フォロワー数</li>';
-        $user_view .= '<li>動画本数</li>';
+        $user_view .= '<li>フォロワー数:'.$val4.'</li>';
+        $user_view .= '<li>動画本数:'.$val5.'</li>';
         $user_view .= '</ul></section></div>';
     }
 }
