@@ -75,7 +75,7 @@ if(isset($_SESSION["id"])){
     <div class="main">
         <div class="skill_wrap">
             <div class="skill-card">
-                <header class="skill-card__header"><img class="skill-card__icon" src="https://upload.wikimedia.org/wikipedia/commons/3/38/HTML5_Badge.svg" alt="HTML5 Logo" /></header>
+                <header class="skill-card__header"><img class="skill-card__icon" src="img/logo.png" alt="HTML5 Logo" /></header>
                 <section class="skill-card__body">
                     <h2 class="skill-card__title">フォロワーリスト→</h2><span class="skill-card__duration">フォロワー情報</span>
                     <ul class="skill-card_knowledge">

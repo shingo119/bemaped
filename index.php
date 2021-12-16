@@ -23,13 +23,17 @@ console_log("status:".$status); //sql文にエラーがないか
 
 if(isset($_POST["search_word"])){
 $search_word = $_POST["search_word"]; //検索ワードを今のページからPOSTで取得
+// $split_word = word_split($search_word);
 $sql2 = "SELECT * FROM `bemaped_data_table` WHERE movie_title LIKE :search_word OR tag LIKE :search_word"; //あいまい検索
+// $sql2 = "SELECT * FROM `bemaped_users_table` WHERE u_name IN (yan)"; //あいまい検索
 $stmt2 = $pdo->prepare($sql2);
 $stmt2->bindValue(":search_word", "%{$search_word}%", PDO::PARAM_STR); //検索ワードをバインド変数化
+// $stmt2->bindValue(":search_word", $split_word, PDO::PARAM_STR); //検索ワードをバインド変数化
 $status2 = $stmt2->execute(); //sql文にエラーがないか
 $val2 = $stmt2->fetchall(PDO::FETCH_ASSOC);
 $json_val2 = json_encode($val2);
 // $val2_array = [];
+// console_log(word_split($search_word));
 // while($val2 = $stmt2->fetch(PDO::FETCH_ASSOC)){
 //     array_push($val2_array, $val2);
 // }
