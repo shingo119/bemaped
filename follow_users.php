@@ -39,7 +39,7 @@ if(isset($_SESSION["id"])){
         $user_view .= '<p>Time Traveler</p><button class="btn btn-primary btn-rotate" data-id="'.$val2["be_followed"].'">Read more<i class="fa fa-long-arrow-right"></i></button></div></div>';
         $user_view .= '<div class="card card-back"><div class="card-header"><p>More About Me</p></div><div class="card-block"><h4>説明</h4>';
         $user_view .= '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a faucibus.</p>';
-        $user_view .= '<h4>Connect:</h4><ul class="social-links list-unstyled d-flex justify-content-center"><li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li><li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li><li><a href="#" target="_blank"><i class="fa fa-snapchat"></i></a></li><li><a href="#" target="_blank"><i class="fa fa-instagram"></i></a></li></ul><button class="btn btn-primary btn-rotate" data-id=""><i class="fa fa-long-arrow-left"></i>Back</button></div></div></div>';
+        $user_view .= '<h4>Connect:</h4><ul class="social-links list-unstyled d-flex justify-content-center"><li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li><li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li><li><a href="#" target="_blank"><i class="fa fa-snapchat"></i></a></li><li><a href="#" target="_blank"><i class="fa fa-instagram"></i></a></li></ul><button class="btn btn-primary btn-rotate map_hidden" data-id=""><i class="fa fa-long-arrow-left"></i>Back</button></div></div></div>';
     }
     // $json_val2 = json_encode($val2);
     // $val2_array = [];
@@ -207,8 +207,18 @@ if(isset($_SESSION["id"])){
                 map.changeMap(lat, lon, "load", 9);
                 // console.log(lat);
                 // console.log(lon);
+                // map.onPin(map.pinText(lat, lon, " ", " ", " "), "click", function () {
+                //     if (confirm('ページ遷移しますか？')) {
+                //         const url = "/bemaped/view.php?movie_id=" + json_val2[i]["id"];
+                //         window.location.href = `${url}`;
+                //     }
+                // });
                 }
             }
+
+            $('.map_hidden').on("click",function(){
+                map.deletePin(); 
+            });
 
             $(".btn-rotate").on("click", function(){
                 let click = $(this).data('id');
@@ -231,6 +241,12 @@ if(isset($_SESSION["id"])){
                             const lon = json_val2[i]["lon"];
                             map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
                             map.changeMap(lat, lon, "load", 9);
+                            map.onPin(map.pinText(lat, lon, " ", " ", " "), "click", function () {
+                                if (confirm('ページ遷移しますか？')) {
+                                    const url = "/bemaped/view.php?movie_id=" + json_val2[i]["id"];
+                                    window.location.href = `${url}`;
+                                }
+                            });
                         }
                     }else{
                         map.geolocation(function (data) {

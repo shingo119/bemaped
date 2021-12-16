@@ -175,6 +175,12 @@ if($val4 == "" || $val4 == null){
                 map.changeMap(lat, lon, "load", 9);
                 // console.log(lat);
                 // console.log(lon);
+                map.onPin(map.pinText(lat, lon, " ", " ", " "), "click", function () {
+                    if (confirm('ページ遷移しますか？')) {
+                        const url = "/bemaped/view.php?movie_id=" + json_val2[i]["id"];
+                        window.location.href = `${url}`;
+                    }
+                });
                 }
             }
         }
