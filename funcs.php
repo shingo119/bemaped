@@ -97,7 +97,7 @@ function replace_width_height($data){
 }
 
 function word_split($word){
-  $word_split_array = str_replace("　",",",$word);
+  $word_split_array = explode(" ",$word);
   return $word_split_array;
 }
 

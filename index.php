@@ -23,9 +23,9 @@ console_log("status:".$status); //sql文にエラーがないか
 
 if(isset($_POST["search_word"])){
 $search_word = $_POST["search_word"]; //検索ワードを今のページからPOSTで取得
-// $split_word = word_split($search_word);
+$split_word = word_split($search_word);
+console_log($split_word);
 $sql2 = "SELECT * FROM `bemaped_data_table` WHERE movie_title LIKE :search_word OR tag LIKE :search_word"; //あいまい検索
-// $sql2 = "SELECT * FROM `bemaped_users_table` WHERE u_name IN (yan)"; //あいまい検索
 $stmt2 = $pdo->prepare($sql2);
 $stmt2->bindValue(":search_word", "%{$search_word}%", PDO::PARAM_STR); //検索ワードをバインド変数化
 // $stmt2->bindValue(":search_word", $split_word, PDO::PARAM_STR); //検索ワードをバインド変数化
