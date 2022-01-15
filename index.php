@@ -339,13 +339,14 @@ console_log($val3);
             //     // let inputWord = String(document.querySelector("#search").value);
             let search_word = "<?= $_POST["search_word"] ?>";
             let search_data_count = "<?=$val3?>";
+            // この次の行はfor文の外に出しておいた方が良い（iと関係ない要素なので、for文の中に入れると毎回計算を行うことになって無駄な処理になる）
+            let json_val2 = JSON.parse(JSON.stringify(<?= $json_val2 ?>));
             if( search_word != ""){
                 for (let i = 0; i < search_data_count ; i++) {
                 // const str = <= $val2 ?>;
                 // const obj = JSON.parse(str);
                 // const lat = Number(obj.lat);  //Get latitude
                 // const lon = Number(obj.lon); //Get longitude
-                let json_val2 = JSON.parse(JSON.stringify(<?= $json_val2 ?>));
                 // let val2 = <= $val2 ?>;
                 //console.log(json_val2);
                 // console.log(val2);
@@ -353,16 +354,24 @@ console_log($val3);
                 const lat = json_val2[i]["lat"];
                 const lon = json_val2[i]["lon"];
                 map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
-                map.changeMap(lat, lon, "load", 9);
+                map.changeMap(lat, lon, "load", 9); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
                 // console.log(lat);
                 // console.log(lon);
-                map.onPin(map.pinText(lat, lon, " ", " ", " "), "click", function () {
+                map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden>Hello,world</div>');
+                x = map.pinText(lat, lon, " ", " ", " ");
+                map.onPin(x, "click", function () {
                     if (confirm('ページ遷移しますか？')) {
                         const url = "/bemaped/view.php?movie_id=" + json_val2[i]["id"];
                         window.location.href = `${url}`;
                     }
                 });
-
+                // ホバーした時のみ説明を表示する
+                map.onPin(x, "mouseout", function () {
+                    $('#info_id'+i).attr('hidden', true);
+                });
+                map.onPin(x, "mouseover", function () {
+                    $('#info_id'+i).removeAttr('hidden');
+                });
                 }
             }
         }
