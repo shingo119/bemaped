@@ -25,9 +25,19 @@ if(isset($_POST["search_word"])){
 $search_word = $_POST["search_word"]; //検索ワードを今のページからPOSTで取得
 $split_word = word_split($search_word);
 console_log($split_word);
-$sql2 = "SELECT * FROM `bemaped_data_table` WHERE movie_title LIKE :search_word OR tag LIKE :search_word"; //あいまい検索
+
+// 複数ワードでのあいまい検索ができるように記述を変更
+$sql2 = "SELECT * FROM `bemaped_data_table` WHERE"; //あいまい検索
+for ($i = 0; $i < count($split_word); $i++) {
+  $sql2 .= " movie_title LIKE '%" . $split_word[$i] . "%' OR tag LIKE '%";
+  if ($i == count($split_word) - 1) {
+    $sql2 .= $split_word[$i] . "%'";
+  } else {
+    $sql2 .= $split_word[$i] . "%' OR";
+  }
+}
 $stmt2 = $pdo->prepare($sql2);
-$stmt2->bindValue(":search_word", "%{$search_word}%", PDO::PARAM_STR); //検索ワードをバインド変数化
+// $stmt2->bindValue(":search_word", "%{$search_word}%", PDO::PARAM_STR); //検索ワードをバインド変数化
 // $stmt2->bindValue(":search_word", $split_word, PDO::PARAM_STR); //検索ワードをバインド変数化
 $status2 = $stmt2->execute(); //sql文にエラーがないか
 $val2 = $stmt2->fetchall(PDO::FETCH_ASSOC);
@@ -37,9 +47,17 @@ $json_val2 = json_encode($val2);
 // while($val2 = $stmt2->fetch(PDO::FETCH_ASSOC)){
 //     array_push($val2_array, $val2);
 // }
-$sql3 = "SELECT COUNT(*) FROM bemaped_data_table WHERE movie_title LIKE :search_word OR tag LIKE :search_word"; //あいまい検索
-$stmt3 = $pdo->prepare($sql3);
-$stmt3->bindValue(":search_word", "%{$search_word}%", PDO::PARAM_STR); //検索ワードをバインド変数化
+
+// 複数ワードでのあいまい検索ができるように記述を変更
+$sql3 = "SELECT COUNT(*) FROM bemaped_data_table WHERE"; //あいまい検索
+for ($i = 0; $i < count($split_word); $i++) {
+  $sql3 .= " movie_title LIKE '%" . $split_word[$i] . "%' OR tag LIKE '%";
+  if ($i == count($split_word) - 1) {
+    $sql3 .= $split_word[$i] . "%'";
+  } else {
+    $sql3 .= $split_word[$i] . "%' OR";
+  }
+}$stmt3 = $pdo->prepare($sql3);
 $status3 = $stmt3->execute(); //sql文にエラーがないか
 $val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
 // $culmn_count = (int)$val3["count(*)"];

@@ -97,9 +97,9 @@ function replace_width_height($data){
 }
 
 function word_split($word){
+  //全角スペースでも複数検索できるように追加
+  $word = str_replace(["　"], " ", $word);
   $word_split_array = explode(" ",$word);
   return $word_split_array;
 }
-
-
 ?>
