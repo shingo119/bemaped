@@ -357,7 +357,7 @@ console_log($val3);
                 map.changeMap(lat, lon, "load", 9); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
                 // console.log(lat);
                 // console.log(lon);
-                map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff"><p style="font-size: 16px">' + json_val2[i]["movie_title"] + '</p></div>');
+                map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff"><h5 style="font-size: 16px">' + json_val2[i]["movie_title"] + '</h5></div>');
                 x = map.pinText(lat, lon, " ", " ", " ");
                 map.onPin(x, "click", function () {
                     if (confirm('ページ遷移しますか？')) {
