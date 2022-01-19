@@ -1,6 +1,9 @@
 <?php
 
 session_start();
+header("Expires:-1");//戻るボタンからのフォームの再送信エラー回避
+header("Cache-Control:");//戻るボタンからのフォームの再送信エラー回避
+header("Pragma:");//戻るボタンからのフォームの再送信エラー回避
 include("funcs.php");
 $id = $_SESSION["id"];
 $_SESSION["search_word"] = $_POST["search_word"];
@@ -301,7 +304,7 @@ console_log($val3);
                 const lat = json_val2[i]["lat"];
                 const lon = json_val2[i]["lon"];
                 map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
-                map.changeMap(lat, lon, "load", 9); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
+                map.changeMap(lat, lon, "canvasLight", 13); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
                 map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff"><h5 style="font-size: 16px">' + json_val2[i]["movie_title"] + '</h5></div>');
                 x = map.pinText(lat, lon, " ", " ", " ");
                 map.onPin(x, "click", function () {
