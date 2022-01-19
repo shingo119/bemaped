@@ -4,14 +4,11 @@ session_start();
 include("funcs.php");
 $id = $_SESSION["id"];
 $_SESSION["search_word"] = $_POST["search_word"];
-// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-//     echo $_POST['search_word'];
-// }
 console_log($_SESSION["search_word"]);
 
 
-$pdo = db_connect();//1.  ローカルDB接続します
-$sql = "SELECT * FROM bemaped_users_table WHERE id=:id";//ログイン情報の取得
+$pdo = db_connect();//1.DB接続します
+$sql = "SELECT * FROM bemaped_users_table WHERE id=:id";
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(":id", $id, PDO::PARAM_INT);
 $status = $stmt->execute(); //sql文にエラーがないか
@@ -21,7 +18,7 @@ console_log("ID:".$id); //ログイン中のユーザーID
 console_log($val); //ユーザー情報が取れているか
 console_log("status:".$status); //sql文にエラーがないか
 
-if(isset($_POST["search_word"])){
+if(isset($_POST["search_word"]) && $_POST["search_word"] != " " && $_POST["search_word"] != "　"){//半角スペース、全角スペース、検索ブロック
 $search_word = $_POST["search_word"]; //検索ワードを今のページからPOSTで取得
 $split_word = word_split($search_word);
 console_log($split_word);
@@ -37,16 +34,9 @@ for ($i = 0; $i < count($split_word); $i++) {
   }
 }
 $stmt2 = $pdo->prepare($sql2);
-// $stmt2->bindValue(":search_word", "%{$search_word}%", PDO::PARAM_STR); //検索ワードをバインド変数化
-// $stmt2->bindValue(":search_word", $split_word, PDO::PARAM_STR); //検索ワードをバインド変数化
 $status2 = $stmt2->execute(); //sql文にエラーがないか
 $val2 = $stmt2->fetchall(PDO::FETCH_ASSOC);
 $json_val2 = json_encode($val2);
-// $val2_array = [];
-// console_log(word_split($search_word));
-// while($val2 = $stmt2->fetch(PDO::FETCH_ASSOC)){
-//     array_push($val2_array, $val2);
-// }
 
 // 複数ワードでのあいまい検索ができるように記述を変更
 $sql3 = "SELECT COUNT(*) FROM bemaped_data_table WHERE"; //あいまい検索
@@ -60,14 +50,11 @@ for ($i = 0; $i < count($split_word); $i++) {
 }$stmt3 = $pdo->prepare($sql3);
 $status3 = $stmt3->execute(); //sql文にエラーがないか
 $val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
-// $culmn_count = (int)$val3["count(*)"];
 }
 
 console_log("search_word:".$search_word);
 console_log("status2:".$status2);
 console_log("status3:".$status3);
-// console_log($val2_array);
-// console_log($json_val2);
 console_log($val2);
 console_log($val3);
 
@@ -242,8 +229,9 @@ console_log($val3);
 
     <!-- mainJSを読み込み -->
     <script>
+
         //****************************************************************************************
-        // BingMaps&BmapQuery マップのjQueryの部分
+        // ↓↓↓BingMaps&BmapQuery マップのjQueryの部分↓↓↓
         //****************************************************************************************
 
         //Init
@@ -281,19 +269,7 @@ console_log($val3);
                 //console.log(data);                   //Get Geocode ObjectData
                 const lat = data.location.latitude;  //Get latitude
                 const lon = data.location.longitude; //Get longitude
-                //console.log(lat + ':' + lon);
-
-                //ローカルストレージへ緯度経度保存
-                // const obj = {
-                //     lat,
-                //     lon
-                // }
-                // const str = JSON.stringify(obj);
-                // localStorage.setItem("str",str);
-                //map.pinIcon(lat, lon, "img/red-pin.png", 1.0, 16, 32);
-
                 let uid = "<?= $id ?>";
-                //console.log(uid);
                 if (uid !="") {
                     map.crearInfobox()
                     // map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 76);
@@ -322,21 +298,11 @@ console_log($val3);
 
             //現在地表示
             map.geolocation(function (data) {
-                //location
                 const lat = data.coords.latitude;
                 const lon = data.coords.longitude;
-                //Map
-                // map.startMap(lat, lon, "load", 10);
-                //pin
                 map.pin(lat, lon, "#0000ff");
             });
 
-
-
-            // $('#movie-search-img').on('click', function () {
-            //     //ローカルストレージからデータ取得
-            //     //inputのデータ取得
-            //     // let inputWord = String(document.querySelector("#search").value);
             let search_word = "<?= $_POST["search_word"] ?>";
             let search_data_count = "<?=$val3?>";
             // この次の行はfor文の外に出しておいた方が良い（iと関係ない要素なので、for文の中に入れると毎回計算を行うことになって無駄な処理になる）
@@ -365,7 +331,14 @@ console_log($val3);
                 }
             }
         }
-        // ここまでがマップのjQueryの部分
+
+        //****************************************************************************************
+        // ↑↑↑BingMaps&BmapQuery マップのjQueryの部分↑↑↑
+        //****************************************************************************************
+
+        //****************************************************************************************
+        // ↓↓↓Map以外のJS↓↓↓
+        //****************************************************************************************
 
 
         let mX = 0; //マウスのX軸位置情報をグローバル変数へ保存
@@ -458,16 +431,6 @@ console_log($val3);
             });
         }
 
-        // $('#login').on('click', function(){
-        //     window.location.href = 'login.php';
-        // });
-
-        // $('#signup').on('click', function(){
-        //     window.location.href = 'signup.php';
-        // });
-
-
-        //movie_mapping();
     </script>
 
 </body>
