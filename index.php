@@ -343,20 +343,10 @@ console_log($val3);
             let json_val2 = JSON.parse(JSON.stringify(<?= $json_val2 ?>));
             if( search_word != ""){
                 for (let i = 0; i < search_data_count ; i++) {
-                // const str = <= $val2 ?>;
-                // const obj = JSON.parse(str);
-                // const lat = Number(obj.lat);  //Get latitude
-                // const lon = Number(obj.lon); //Get longitude
-                // let val2 = <= $val2 ?>;
-                //console.log(json_val2);
-                // console.log(val2);
-                // window.addEventListener('DOMContentLoaded', function(){
                 const lat = json_val2[i]["lat"];
                 const lon = json_val2[i]["lon"];
                 map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
                 map.changeMap(lat, lon, "load", 9); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
-                // console.log(lat);
-                // console.log(lon);
                 map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff"><h5 style="font-size: 16px">' + json_val2[i]["movie_title"] + '</h5></div>');
                 x = map.pinText(lat, lon, " ", " ", " ");
                 map.onPin(x, "click", function () {
@@ -375,48 +365,7 @@ console_log($val3);
                 }
             }
         }
-            // });
-                
-
-            //         map.onPin(map.pinText(lat, lon, " ", " ", " "), "click", function () {
-            //             if (confirm('ページ遷移しますか？')) {
-            //                 const url = obj.movieUrl;
-            //                 window.open(url, '_blank')
-            //             }
-            //         });
-
-            //         map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
-            //         //map.pin(lat, lon, "#ffffff");
-            //         // document.querySelector("#geocode").innerHTML = lat + ',' + lon;
-            //         // console.log(obj);
-            //         console.log(lat);
-            //         console.log(lon);
-            // }
-                //検索ワードが富山ならスタートマップは（２）
-                //検索ワードがタイならスタートマップは（９）
-                // if (inputWord === "タイ 観光") {
-                //     const str = sessionStorage.getItem(9);
-                //     const obj = JSON.parse(str);
-                //     const lat = Number(obj.lat);  //Get latitude
-                //     const lon = Number(obj.lon); //Get longitude
-                //     map.changeMap(lat, lon, "load", 6);
-                // } else if (inputWord === "富山 グルメ") {
-                //     const str = sessionStorage.getItem(2);
-                //     const obj = JSON.parse(str);
-                //     const lat = Number(obj.lat);  //Get latitude
-                //     const lon = Number(obj.lon); //Get longitude
-                //     map.changeMap(lat, lon, "load", 10);
-                // }
-            // });
-
-
-        
-
         // ここまでがマップのjQueryの部分
-
-        // const uid = localStorage.getItem('uid');
-        //console.log(uid);
-
 
 
         let mX = 0; //マウスのX軸位置情報をグローバル変数へ保存
