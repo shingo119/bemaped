@@ -281,9 +281,6 @@ console_log($val3);
                 //map.pinIcon(lat, lon, "BmapQuery-master/img/poi_custom.png", 1.0, 12, 39);
             });
 
-
-            //A. Address "Seattle"
-
             $('#search-img').on('click', function () {
                 let address = String(document.querySelector("#search").value);
                 map.getGeocode(address, function (data) {
@@ -293,14 +290,6 @@ console_log($val3);
                     map.pin(lat, lon, "#ff0000");
                     //document.querySelector("#geocode").innerHTML = lat + ',' + lon;
                 });
-            });
-
-
-            //現在地表示
-            map.geolocation(function (data) {
-                const lat = data.coords.latitude;
-                const lon = data.coords.longitude;
-                map.pin(lat, lon, "#0000ff");
             });
 
             let search_word = "<?= $_POST["search_word"] ?>";
@@ -330,6 +319,35 @@ console_log($val3);
                 });
                 }
             }
+
+            //現在地表示してもピンはそのままに変更
+            map.geolocation(function (data) {
+                const lat = data.coords.latitude;
+                const lon = data.coords.longitude;
+                map.pin(lat, lon, "#0000ff");
+                if( search_word != ""){
+                for (let i = 0; i < search_data_count ; i++) {
+                const lat2 = json_val2[i]["lat"];
+                const lon2 = json_val2[i]["lon"];
+                map.pinIcon(lat2, lon2, "img/Youtube-pinicon.png", 0.3, 38, 85);
+                map.infoboxHtml(lat2, lon2, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff"><h5 style="font-size: 16px">' + json_val2[i]["movie_title"] + '</h5></div>');
+                x = map.pinText(lat2, lon2, " ", " ", " ");
+                map.onPin(x, "click", function () {
+                    if (confirm('ページ遷移しますか？')) {
+                        const url = "/bemaped/view.php?movie_id=" + json_val2[i]["id"];
+                        window.location.href = `${url}`;
+                    }
+                });
+                // ホバーした時のみ説明を表示する
+                map.onPin(x, "mouseout", function () {
+                    $('#info_id'+i).attr('hidden', true);
+                });
+                map.onPin(x, "mouseover", function () {
+                    $('#info_id'+i).removeAttr('hidden');
+                });
+                }
+            }
+            });
         }
 
         //****************************************************************************************
