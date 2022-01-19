@@ -4,19 +4,14 @@ include("funcs.php");
 // loginCheck();
 
 $id = $_SESSION["id"];
-//1.  ローカルDB接続します
 $pdo = db_connect();
 $movie_id = $_GET["movie_id"];
-// console_log($_SESSION["search_word"]);
-
-// console_log($movie_id);
 
 $sql = "SELECT * FROM bemaped_users_table INNER JOIN bemaped_data_table ON bemaped_users_table.id = bemaped_data_table.u_id WHERE bemaped_data_table.id =:movie_id";
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(":movie_id", $movie_id, PDO::PARAM_INT);
 $status = $stmt->execute();
 $val = $stmt->fetch(); //ユーザー情報を取得
-// console_log($status);
 
 if(isset($_SESSION["search_word"])){
 $search_word = $_SESSION["search_word"]; //検索ワードを今のページからPOSTで取得
@@ -26,16 +21,11 @@ $stmt2->bindValue(":search_word", "%{$search_word}%", PDO::PARAM_STR); //検索�
 $status2 = $stmt2->execute(); //sql文にエラーがないか
 $val2 = $stmt2->fetchall(PDO::FETCH_ASSOC);
 $json_val2 = json_encode($val2);
-// $val2_array = [];
-// while($val2 = $stmt2->fetch(PDO::FETCH_ASSOC)){
-//     array_push($val2_array, $val2);
-// }
 $sql3 = "SELECT COUNT(*) FROM bemaped_data_table WHERE movie_title LIKE :search_word OR tag LIKE :search_word"; //あいまい検索
 $stmt3 = $pdo->prepare($sql3);
 $stmt3->bindValue(":search_word", "%{$search_word}%", PDO::PARAM_STR); //検索ワードをバインド変数化
 $status3 = $stmt3->execute(); //sql文にエラーがないか
 $val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
-// $culmn_count = (int)$val3["count(*)"];
 }
 
 $followed = $_SESSION["id"];
@@ -53,22 +43,6 @@ if($val4 == "" || $val4 == null){
 }else{
     $follow_btn = "フォローを外す";
 }
-
-// console_log($status3);
-// console_log($val3);
-
-//３．データ表示
-// if($status==false) {
-//   //execute（SQL実行時にエラーがある場合）
-//   $error = $stmt->errorInfo();
-//   exit("ErrorQuery:".$error[2]);
-
-// } else {
-//     $result = $stmt->fetch(PDO::FETCH_ASSOC);
-//     $u_name = $result["u_name"];
-//     // $u_info = $result["u_info"];
-// }
-
 
 ?>
 
@@ -147,12 +121,6 @@ if($val4 == "" || $val4 == null){
                 //location
                 const lat = data.coords.latitude;
                 const lon = data.coords.longitude;
-
-                // console.log(lat);
-                // console.log(lon);
-                //Map
-                // map.startMap(lat, lon, "load", 10);
-                //pin
                 map.pin(lat, lon, "#0000ff");
             });
 
@@ -160,49 +128,22 @@ if($val4 == "" || $val4 == null){
             let search_data_count = "<?=$val3?>";
             if( search_word != ""){
                 for (let i = 0; i < search_data_count ; i++) {
-                // const str = <= $val2 ?>;
-                // const obj = JSON.parse(str);
-                // const lat = Number(obj.lat);  //Get latitude
-                // const lon = Number(obj.lon); //Get longitude
-                let json_val2 = JSON.parse(JSON.stringify(<?= $json_val2 ?>));
-                // let val2 = <= $val2 ?>;
-                //console.log(json_val2);
-                // console.log(val2);
-                // window.addEventListener('DOMContentLoaded', function(){
-                const lat = json_val2[i]["lat"];
-                const lon = json_val2[i]["lon"];
-                map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
-                map.changeMap(lat, lon, "load", 9);
-                // console.log(lat);
-                // console.log(lon);
-                map.onPin(map.pinText(lat, lon, " ", " ", " "), "click", function () {
-                    if (confirm('ページ遷移しますか？')) {
-                        const url = "/bemaped/view.php?movie_id=" + json_val2[i]["id"];
-                        window.location.href = `${url}`;
-                    }
-                });
+                    let json_val2 = JSON.parse(JSON.stringify(<?= $json_val2 ?>));
+                    // window.addEventListener('DOMContentLoaded', function(){
+                    const lat = json_val2[i]["lat"];
+                    const lon = json_val2[i]["lon"];
+                    map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
+                    map.changeMap(lat, lon, "load", 9);
+                    map.onPin(map.pinText(lat, lon, " ", " ", " "), "click", function () {
+                        if (confirm('ページ遷移しますか？')) {
+                            const url = "/bemaped/view.php?movie_id=" + json_val2[i]["id"];
+                            window.location.href = `${url}`;
+                        }
+                    });
                 }
             }
         }
 
-    // $(function(){
-    //     $("#follow_btn").on("click", function(){
-    //         $.ajax({
-    //             type:"POST",
-    //             url: "follow_act.php",
-    //             datatype: "json",
-    //             data:{
-    //                 "followed":<=$_SESSION["id"]?>,
-    //                 "be_followed":<= $val["u_id"]?>
-    //             }
-    //             }).done(function(data){
-    //                 console.log("通信成功");
-    //                 console.log(data);
-    //             }).fail(function(XMLHttpRequest, status, e){
-    //                 alert(e)
-    //             });
-    //         });
-    //     });
 
         $("#follow_btn").on("click", function(){
             //Ajax（非同期通信）
