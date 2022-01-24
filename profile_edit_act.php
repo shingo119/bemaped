@@ -13,7 +13,7 @@ $u_email = $_POST["u_email"];
 $explan = $_POST["explan"];
 $icon = "";
 $back_ground = "";
-if(!isset($_FILES[$fname]) || $_FILES[$fname] == ""){
+if(isset($_FILES[$fname]) || $_FILES[$fname] == ""){
     $icon = fileUpload("icon_upfile","upload/");
     sleep(1);
     $back_ground = fileUpload("background_upfile","upload/");
