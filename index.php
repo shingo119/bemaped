@@ -333,7 +333,7 @@ console_log($val3);
                 const lat2 = json_val2[i]["lat"];
                 const lon2 = json_val2[i]["lon"];
                 map.pinIcon(lat2, lon2, "img/Youtube-pinicon.png", 0.3, 38, 85);
-                map.infoboxHtml(lat2, lon2, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff"><h5 style="font-size: 16px">' + json_val2[i]["movie_title"] + '</h5></div>');
+                map.infoboxHtml(lat2, lon2, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff">'+ json_val2[i]["ifram2"] +'<h5 style="font-size: 16px">' + json_val2[i]["movie_title"] + '</h5></div>');
                 x = map.pinText(lat2, lon2, " ", " ", " ");
                 map.onPin(x, "click", function () {
                     if (confirm('ページ遷移しますか？')) {
@@ -346,6 +346,9 @@ console_log($val3);
                     $('#info_id'+i).attr('hidden', true);
                 });
                 map.onPin(x, "mouseover", function () {
+                    let el = document.getElementById(info_id);
+                    let el_child = el.children
+                    console.log(el_child)
                     $('#info_id'+i).removeAttr('hidden');
                 });
                 }
