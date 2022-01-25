@@ -96,6 +96,12 @@ function replace_width_height($data){
   return $str;
 }
 
+function replace_option_to_ifram2($data){
+  $str = $data;
+  $str = str_replace('width="560"', 'width="300"',$str);
+  $str = str_replace('height="315"', 'height="170"', $str);
+}
+
 function word_split($word){
   //全角スペースでも複数検索できるように追加
   $word = str_replace(["　"], " ", $word);
