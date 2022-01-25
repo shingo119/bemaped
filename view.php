@@ -69,16 +69,16 @@ if($val4 == "" || $val4 == null){
                 
                 <div class="grid">
                     <div class="user_profile">
-                        <div class="user_icon">
-                            <img src="upload/<?=$val["icon"]?>" alt="">
+                        <div class="user_profile_main">
+                            <div class="user_icon">
+                                <img src="upload/<?=$val["icon"]?>" alt="">
+                            </div>
+                            <div class="user_name">
+                                <h3><?= $val["u_name"]?></h3>
+                            </div>
+                            <div class="user_exp"></div>
                         </div>
-                        <div class="user_name">
-                            <h3><?= $val["u_name"]?></h3>
-                        </div>
-                        <div class="user_exp"></div>
-                        <section>
-                            <a href="#" class="btn_02" id="follow_btn"><?= $follow_btn?></a>
-                        </section>                          
+                        <a href="#" class="btn_02" id="follow_btn"><?= $follow_btn?></a>
                     </div>                    
                     <?= $val["ifram"];?>
                 </div>
