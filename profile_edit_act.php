@@ -13,14 +13,20 @@ $u_email = $_POST["u_email"];
 $explan = $_POST["explan"];
 $icon = "";
 $back_ground = "";
-if(isset($_FILES[$fname]) || $_FILES[$fname] == ""){
-    $icon = fileUpload("icon_upfile","upload/");
-    sleep(1);
-    $back_ground = fileUpload("background_upfile","upload/");
-}else{
-    $icon = $_POST["icon_upfile"];
-    $back_ground = $_POST["background_upfile"];
+
+$icon = fileUpload("icon_upfile","upload/");
+sleep(1);
+if($icon ==1 || $icon ==2){
+    exit("FileUpload Error!");
 }
+
+$back_ground = fileUpload("background_upfile","upload/");
+if($back_ground ==1 || $back_ground ==2){
+    exit("FileUpload Error!");
+}
+
+
+
 
 
 if (
