@@ -100,6 +100,15 @@ function replace_option_to_ifram2($data){
   $str = $data;
   $str = str_replace('width="560"', 'width="300"',$str);
   $str = str_replace('height="315"', 'height="170"', $str);
+  $str2=explode(' ', $str);
+  for ($i = 0; $i < count($str2); $i++) {
+    if (substr($str2[$i],0,4) == "src=") {
+      $str2[$i] = substr($str2[$i],0, strlen($str2[$i])-1) . "?autoplay=1&mute=1&loop=1&fs=0&modestbranding=1" . '"';
+    }
+  }
+  // var_dump(implode(' ', $str2));
+  // exit('ok');
+  return implode(' ', $str2);
 }
 
 function word_split($word){

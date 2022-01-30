@@ -7,7 +7,7 @@ header("Pragma:");//戻るボタンからのフォームの再送信エラー回
 include("funcs.php");
 $id = $_SESSION["id"];
 $_SESSION["search_word"] = $_POST["search_word"];
-console_log($_SESSION["search_word"]);
+// console_log($_SESSION["search_word"]);
 
 
 $pdo = db_connect();//1.DB接続します
@@ -17,23 +17,23 @@ $stmt->bindValue(":id", $id, PDO::PARAM_INT);
 $status = $stmt->execute(); //sql文にエラーがないか
 $val = $stmt->fetch(); //ユーザー情報を取得
 
-console_log("ID:".$id); //ログイン中のユーザーID
-console_log($val); //ユーザー情報が取れているか
+// console_log("ID:".$id); //ログイン中のユーザーID
+// console_log($val); //ユーザー情報が取れているか
 console_log("status:".$status); //sql文にエラーがないか
 
 if(isset($_POST["search_word"]) && $_POST["search_word"] != " " && $_POST["search_word"] != "　"){//半角スペース、全角スペース、検索ブロック
 $search_word = $_POST["search_word"]; //検索ワードを今のページからPOSTで取得
 $split_word = word_split($search_word);
-console_log($split_word);
+// console_log($split_word);
 
 // 複数ワードでのあいまい検索ができるように記述を変更
-$sql2 = "SELECT * FROM `bemaped_data_table` WHERE"; //あいまい検索
+$sql2 = "SELECT * FROM bemaped_data_table WHERE"; //あいまい検索
 for ($i = 0; $i < count($split_word); $i++) {
-  $sql2 .= " movie_title LIKE '%" . $split_word[$i] . "%' OR tag LIKE '%";
+  $sql2 .= " (movie_title LIKE '%" . $split_word[$i] . "%' OR tag LIKE '%";
   if ($i == count($split_word) - 1) {
-    $sql2 .= $split_word[$i] . "%'";
+    $sql2 .= $split_word[$i] . "%')";
   } else {
-    $sql2 .= $split_word[$i] . "%' OR";
+    $sql2 .= $split_word[$i] . "%') AND";
   }
 }
 $stmt2 = $pdo->prepare($sql2);
@@ -46,17 +46,18 @@ $sql3 = "SELECT COUNT(*) FROM bemaped_data_table WHERE"; //あいまい検索
 for ($i = 0; $i < count($split_word); $i++) {
   $sql3 .= " movie_title LIKE '%" . $split_word[$i] . "%' OR tag LIKE '%";
   if ($i == count($split_word) - 1) {
-    $sql3 .= $split_word[$i] . "%'";
+    $sql3 .= $split_word[$i] . "%' ";
   } else {
-    $sql3 .= $split_word[$i] . "%' OR";
+    $sql3 .= $split_word[$i] . "%' AND";
   }
 }$stmt3 = $pdo->prepare($sql3);
 $status3 = $stmt3->execute(); //sql文にエラーがないか
 $val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
 }
 
-console_log("search_word:".$search_word);
-console_log("status2:".$status2);
+
+// console_log("search_word:".$search_word);
+// console_log("status2:".$status2);
 console_log("status3:".$status3);
 console_log($val2);
 console_log($val3);
@@ -305,7 +306,7 @@ console_log($val3);
                 const lon = json_val2[i]["lon"];
                 map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
                 map.changeMap(lat, lon, "canvasLight", 13); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
-                map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff">'+ json_val2[i]["ifram2"] +'<h5 style="font-size: 16px">' + json_val2[i]["movie_title"] + '</h5></div>');
+                map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-250px; left:-145px;">'+ json_val2[i]["ifram2"] +'<h5 style="font-size: 16px">' + json_val2[i]["movie_title"] + '</h5></div>');
                 x = map.pinText(lat, lon, " ", " ", " ");
                 map.onPin(x, "click", function () {
                     if (confirm('ページ遷移しますか？')) {
@@ -333,7 +334,7 @@ console_log($val3);
                 const lat2 = json_val2[i]["lat"];
                 const lon2 = json_val2[i]["lon"];
                 map.pinIcon(lat2, lon2, "img/Youtube-pinicon.png", 0.3, 38, 85);
-                map.infoboxHtml(lat2, lon2, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff">'+ json_val2[i]["ifram2"] +'<h5 style="font-size: 16px">' + json_val2[i]["movie_title"] + '</h5></div>');
+                map.infoboxHtml(lat2, lon2, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-250px; left:-145px;">'+ json_val2[i]["ifram2"] +'<h5 style="font-size: 16px">' + json_val2[i]["movie_title"] + '</h5></div>');
                 x = map.pinText(lat2, lon2, " ", " ", " ");
                 map.onPin(x, "click", function () {
                     if (confirm('ページ遷移しますか？')) {
@@ -346,9 +347,6 @@ console_log($val3);
                     $('#info_id'+i).attr('hidden', true);
                 });
                 map.onPin(x, "mouseover", function () {
-                    let el = document.getElementById(info_id);
-                    let el_child = el.children
-                    console.log(el_child)
                     $('#info_id'+i).removeAttr('hidden');
                 });
                 }

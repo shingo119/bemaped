@@ -13,6 +13,8 @@ $ifram = $_POST["ifram"];
 $u_id = $_POST["u_id"];
 
 $ifram = replace_width_height($ifram);
+$ifram2 = replace_option_to_ifram2($_POST["ifram"]);
+console_log($ifram2);
 
 if(
     !isset($_POST["movie_title"]) || $_POST["movie_title"]=="" ||
@@ -27,7 +29,8 @@ if(
 
 $pdo = db_connect();
 
-$sql = "INSERT INTO bemaped_data_table (movie_title, movie_url, tag, lat, lon, ifram, indate, u_id )VALUES(:movie_title, :movie_url, :tag, :lat, :lon, :ifram, sysdate(),:u_id)";
+
+$sql = "INSERT INTO bemaped_data_table (movie_title, movie_url, tag, lat, lon, ifram, ifram2, indate, u_id )VALUES(:movie_title, :movie_url, :tag, :lat, :lon, :ifram, :ifram2, sysdate(),:u_id)";
 $stmt = $pdo->prepare($sql);
 
 $stmt->bindValue(':movie_title', $movie_title, PDO::PARAM_STR);
@@ -36,6 +39,7 @@ $stmt->bindValue(':tag', $tag, PDO::PARAM_STR);
 $stmt->bindValue(':lat', $lat, PDO::PARAM_STR);
 $stmt->bindValue(':lon', $lon, PDO::PARAM_STR);
 $stmt->bindValue(':ifram', $ifram, PDO::PARAM_STR);
+$stmt->bindValue(':ifram2', $ifram2, PDO::PARAM_STR);
 $stmt->bindValue(':u_id', $u_id, PDO::PARAM_INT);
 $status = $stmt->execute();
 

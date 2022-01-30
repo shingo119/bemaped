@@ -1,0 +1,88 @@
+<mxfile host="65bd71144e">
+    <diagram id="sDHDvr2zoODabNkgRbfz" name="ページ1">
+        <mxGraphModel dx="781" dy="1882" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="96" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center&quot;&gt;&lt;b&gt;フォロワー&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;div style=&quot;height: 2px&quot;&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="250" y="290" width="90" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="98" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center&quot;&gt;&lt;b&gt;位置情報&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;div style=&quot;height: 2px&quot;&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="490" y="190" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="99" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center&quot;&gt;&lt;b&gt;マップ&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;div style=&quot;height: 2px&quot;&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="230" y="190" width="90" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="100" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center&quot;&gt;&lt;b&gt;コメント&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;div style=&quot;height: 2px&quot;&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="550" y="300" width="90" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="101" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center&quot;&gt;&lt;b&gt;投稿日&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;div style=&quot;height: 2px&quot;&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="430" y="300" width="90" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="102" value="&lt;p style=&quot;margin: 0px ; margin-top: 4px ; text-align: center&quot;&gt;&lt;b&gt;経路&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;div style=&quot;height: 2px&quot;&gt;&lt;/div&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="640" y="202" width="90" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="108" value="アカウント" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="1">
+                    <mxGeometry x="80" y="290" width="110" height="108" as="geometry"/>
+                </mxCell>
+                <mxCell id="109" value="ユーザー名" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="108">
+                    <mxGeometry y="30" width="110" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="110" value="メールアドレス" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="108">
+                    <mxGeometry y="56" width="110" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="111" value="パスワード" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="108">
+                    <mxGeometry y="82" width="110" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="113" value="動画" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="1">
+                    <mxGeometry x="340" width="110" height="108" as="geometry"/>
+                </mxCell>
+                <mxCell id="114" value="タイトル" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="113">
+                    <mxGeometry y="30" width="110" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="115" value="投稿者" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="113">
+                    <mxGeometry y="56" width="110" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="117" value="投稿日" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="113">
+                    <mxGeometry y="82" width="110" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="118" value="" style="endArrow=diamondThin;endFill=0;endSize=24;html=1;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=1.015;entryY=0.142;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="96" target="108">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="340" y="290" as="sourcePoint"/>
+                        <mxPoint x="500" y="290" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="119" value="" style="endArrow=diamondThin;endFill=0;endSize=24;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="98" target="99">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="468.35" y="220" as="sourcePoint"/>
+                        <mxPoint x="410" y="220.336" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="120" value="" style="endArrow=diamondThin;endFill=0;endSize=24;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="100" target="98">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="500" y="230" as="sourcePoint"/>
+                        <mxPoint x="400" y="230" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="121" value="" style="endArrow=diamondThin;endFill=0;endSize=24;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="101" target="98">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="480" y="310" as="sourcePoint"/>
+                        <mxPoint x="540" y="250" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="122" value="" style="endArrow=diamondThin;endFill=0;endSize=24;html=1;exitX=-0.017;exitY=0.639;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitPerimeter=0;" edge="1" parent="1" source="102" target="98">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="585" y="320" as="sourcePoint"/>
+                        <mxPoint x="550" y="260" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="123" value="" style="endArrow=diamondThin;endFill=0;endSize=24;html=1;exitX=1.015;exitY=0.165;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitPerimeter=0;" edge="1" parent="1" source="113" target="98">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="570" y="80" as="sourcePoint"/>
+                        <mxPoint x="400" y="80" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
