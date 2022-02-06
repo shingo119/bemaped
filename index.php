@@ -211,6 +211,13 @@ console_log($val3);
                 <!-- MAP[START] -->
                 <div id="myMap" style='width:100%;height:100%;float:right;'></div>
                 <!-- MAP[END] -->
+
+                <!-- アルファ版の注意事項[START] -->
+                <div class="disclaimer" style="width: 460px; position: absolute; bottom: 10%; right: 2%; z-index: 100; background-color: rgba(137,231,215); border-radius: 10px; box-shadow: 2px 2px 6px #959595; font-size: 20px; ">
+                    <div style="color:red; font-size: 28px; margin:20px 10px 10px 10px;">※注意！</div>
+                    <div style="margin: 10px 10px 10px 20px">bemapedは現在アルファ版であり、使用できる機能が非常に限られております。<br>ひとまずは<br><br>１．上部の検索窓に「グルメ」と入力<br>２．エンターボタン押下でグルメ動画の検索<br>３．出てきたピンにマウスを乗せて地図上で動画が再生される<br><br>という操作を試していただき、使用感をご確認ください。より詳細な使い方を見たい方はこちらの<a href="https://docs.google.com/presentation/d/1-qODrnM__zfjtMChfcFhxfUipHzHJHaw/edit?usp=sharing&ouid=101344222594026290734&rtpof=true&sd=true" target="_blank" style="color:blue; text-decoration:underline;">使用説明書</a>からご確認ください。<br><br>興味を持たれた方は<a href="https://forms.gle/qQAG7DqDe6GAjAX78" target="_blank" style="color:blue; text-decoration:underline;">アンケート</a>へのご回答もお願いいたします。</div>
+                </div>
+                <!-- アルファ版の注意事項[] -->
             </div>
         </div>
     </div>
