@@ -130,11 +130,11 @@ console_log($val3);
                 </div>
                 </a>
                 <!-- いろいろ検索するページ -->
-                <div class="menu-item">
+                <!-- <div class="menu-item">
                     <img src="img/search.png" alt="">
                     <p>サーチ</p>
                     <div class="description">検索</div>
-                </div>
+                </div> -->
                 <!-- ログインタグ -->
                 <a href="login.php">
                 <div class="menu-item" id="login" <?=logout_flg()?>>
@@ -156,7 +156,7 @@ console_log($val3);
                 <h3 class="youkoso" <?=login_flg()?>>ようこそ、<?= $val["u_name"];?>さん</h3> 
             </div>
             <!-- サブメニュー -->
-            <div class="left-sub-menu">
+            <!-- <div class="left-sub-menu">
                 <div class="menu-item">
                     <img src="img/runk-up.png" alt="">
                     <p>ホットスポット</p>
@@ -177,7 +177,7 @@ console_log($val3);
                     <p>動画UP<br>マッピング</p>
                     <div class="description">動画マッピング</div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <!-- 右側のエリア -->
         <div class="right-culmn">
@@ -198,14 +198,14 @@ console_log($val3);
                         </button>
                         <div class="description">動画</div>
                     </div>
-                    <div class="insta-icon bar-icon">
+                    <!-- <div class="insta-icon bar-icon">
                         <img src="img/insta-icon.png" alt="">
                         <div class="description">写真</div>
-                    </div>
-                    <div class="go-there-icon bar-icon">
+                    </div> -->
+                    <!-- <div class="go-there-icon bar-icon">
                         <img src="img/go-there-blue.png" alt="">
                         <div class="description">経路</div>
-                    </div>
+                    </div> -->
                 </div>
                 </form>
                 <!-- MAP[START] -->
@@ -316,10 +316,10 @@ console_log($val3);
                 map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-250px; left:-145px;">'+ json_val2[i]["ifram2"] +'<h5 style="font-size: 16px">' + json_val2[i]["movie_title"] + '</h5></div>');
                 x = map.pinText(lat, lon, " ", " ", " ");
                 map.onPin(x, "click", function () {
-                    if (confirm('ページ遷移しますか？')) {
+                    // if (confirm('ページ遷移しますか？')) {
                         const url = "/bemaped/view.php?movie_id=" + json_val2[i]["id"];
                         window.location.href = `${url}`;
-                    }
+                    // }
                 });
                 // ホバーした時のみ説明を表示する
                 map.onPin(x, "mouseout", function () {

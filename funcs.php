@@ -117,4 +117,8 @@ function word_split($word){
   $word_split_array = explode(" ",$word);
   return $word_split_array;
 }
+
+
+
+
 ?>

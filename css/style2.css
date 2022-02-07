@@ -260,7 +260,7 @@ p {
 
 /* MAP上の検索バー */
 .search-bar {
-    width: 460px;
+    width: 380px;
     height: 45px;
     position: absolute;
     top: 2%;
