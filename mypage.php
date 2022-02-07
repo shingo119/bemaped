@@ -4,7 +4,7 @@ include("funcs.php");
 loginCheck();
 
 $id = $_SESSION["id"];
-//1.  ローカルDB接続します
+//1. DB接続します
 $pdo = db_connect();
 
 $sql = "SELECT * FROM bemaped_users_table WHERE id=:id";
@@ -22,7 +22,7 @@ if($icon == "" || $icon == null){
 $sql2 = "SELECT * FROM `bemaped_data_table` WHERE u_id=:id"; 
 $stmt2 = $pdo->prepare($sql2);
 $stmt2->bindValue(":id", "$id", PDO::PARAM_STR); 
-$status2 = $stmt2->execute(); //sql文にエラーがないか
+$status2 = $stmt2->execute(); 
 $val2 = $stmt2->fetchall(PDO::FETCH_ASSOC);
 $json_val2 = json_encode($val2);
 // $val2_array = [];
@@ -33,7 +33,7 @@ $json_val2 = json_encode($val2);
 $sql3 = "SELECT COUNT(*) FROM bemaped_data_table WHERE u_id=:id"; 
 $stmt3 = $pdo->prepare($sql3);
 $stmt3->bindValue(":id", "$id", PDO::PARAM_STR); 
-$status3 = $stmt3->execute(); //sql文にエラーがないか
+$status3 = $stmt3->execute(); 
 $val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
 
 console_log($status3);
