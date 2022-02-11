@@ -9,11 +9,12 @@ $movie_url = $_POST["movie_url"];
 $tag = $_POST["tag"];
 $lat = $_POST["lat"];
 $lon = $_POST["lon"];
-$ifram = $_POST["ifram"];
+// $ifram = $_POST["ifram"];
 $u_id = $_POST["u_id"];
 
-$ifram = replace_width_height($ifram);
-$ifram2 = replace_option_to_ifram2($_POST["ifram"]);
+$ifram = make_ifram_by_url($movie_url);
+$ifram1 = replace_width_height($ifram);
+$ifram2 = replace_option_to_ifram2($ifram);
 console_log($ifram2);
 
 if(
