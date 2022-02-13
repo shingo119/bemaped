@@ -51,7 +51,6 @@ console_log($lon);
                     <!-- Right Inputs -->
                     <div class="col-xs-6 wow animated slideInRight" data-wow-delay=".5s">
                         <!-- Message -->
-                        <textarea name="ifram" id="ifram" class="form textarea" placeholder="ifram"></textarea>
                     </div><!-- End Right Inputs -->
                     <!-- Bottom Submit -->
                     <div class="relative fullwidth col-xs-12">
