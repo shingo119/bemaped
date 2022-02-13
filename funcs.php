@@ -98,23 +98,19 @@ function word_split($word){
   return $word_split_array;
 }
 
-//VIDEO_IDから個別動画ページのiframeを作成する関数
-function make_iframe_by_video_id($data){
-  return '<iframe width="560" height="315" src="https://www.youtube.com/embed/'.$data.'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-}
-
-//VIDEO_IDから地図上のiframeを作成する関数
-function make_iframe_on_map_by_video_id($data){
-  return '<iframe width="560" height="315" src="https://www.youtube.com/embed/'.$data.'?autoplay=1&mute=1&version=3&loop=1&playlist=Nr10-DUx4Rw&fs=0&modestbranding=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-}
-
 //YouTubeのURLからVIDEO_IDを取得する関数
 function video_id($movie_url) {
   $res = explode('/', $movie_url);
   $res = $res[count($res)-1];
   $res = explode('v=', $res);
   $res = $res[count($res)-1];
+  $res = explode('&', $res);
+  $res = $res[0];
   return $res;
 }
 
+//VIDEO_IDから個別動画ページのiframeを作成する関数
+function make_iframe_by_video_id($data){
+  return '<iframe width="560" height="315" src="https://www.youtube.com/embed/'.$data.'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+}
 ?>
