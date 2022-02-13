@@ -80,7 +80,7 @@ if($val4 == "" || $val4 == null){
                         </div>
                         <a href="#" class="btn_02" id="follow_btn"><?= $follow_btn?></a>
                     </div>                    
-                    <?= $val["ifram"];?>
+                    <?= make_iframe_by_video_id($val["video_id"]);?>
                 </div>
             </div>
 
