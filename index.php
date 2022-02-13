@@ -46,9 +46,9 @@ $sql3 = "SELECT COUNT(*) FROM bemaped_data_table WHERE"; //あいまい検索
 for ($i = 0; $i < count($split_word); $i++) {
   $sql3 .= " (movie_title LIKE '%" . $split_word[$i] . "%' OR tag LIKE '%";
   if ($i == count($split_word) - 1) {
-    $sql3 .= $split_word[$i] . "%)' ";
+    $sql3 .= $split_word[$i] . "%')";
   } else {
-    $sql3 .= $split_word[$i] . "%)' AND";
+    $sql3 .= $split_word[$i] . "%') AND";
   }
 }$stmt3 = $pdo->prepare($sql3);
 $status3 = $stmt3->execute(); //sql文にエラーがないか
@@ -240,6 +240,10 @@ console_log($val3);
 
     <!-- mainJSを読み込み -->
     <script>
+
+        function make_iframe_on_map_by_video_id(data){
+            return '<iframe width="560" height="315" src="https://www.youtube.com/embed/'+data+'?autoplay=1&mute=1&version=3&loop=1&playlist=Nr10-DUx4Rw&fs=0&modestbranding=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+        }
 
         //****************************************************************************************
         // ↓↓↓BingMaps&BmapQuery マップのjQueryの部分↓↓↓
