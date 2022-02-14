@@ -111,6 +111,6 @@ function video_id($movie_url) {
 
 //VIDEO_IDから個別動画ページのiframeを作成する関数
 function make_iframe_by_video_id($data){
-  return '<iframe width="560" height="315" src="https://www.youtube.com/embed/'.$data.'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+  return '<iframe width="800" height="450" src="https://www.youtube.com/embed/'.$data.'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 }
 ?>

@@ -84,15 +84,15 @@ h1 {
     border:1px solid #8BC3A3;
   }
 
-  .textarea{
+  /* .textarea{
     height: 200px;
     max-height: 200px;
     max-width: 100%;
-  }
+  } */
   
 /* Generic Button Styles */
 
-  .button{
+  /* .button{
     padding:8px 12px;
     background:#0A5175;
     display: block;
@@ -112,7 +112,7 @@ h1 {
   .button:hover{
     background:#8BC3A3;
     color:white;
-  }
+  } */
 
 /* Send Button Styles */
 
@@ -154,3 +154,8 @@ input {
     position: relative;
     z-index: 9999;
 }
+
+.input_item {
+  width: 100%;
+}
+

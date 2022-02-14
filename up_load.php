@@ -32,12 +32,12 @@ console_log($lon);
             <!-- map表示エリア -->
             <!-- Form Area -->
             <div class="contact-form">
-                <h1>bemaped</h1>
+                <a href="index.php"><h1>bemaped</h1></a>
                 <!-- Form -->
                 <!-- <form id="contact-us" method="#" action="#"> -->
                 <!-- Left Inputs -->
                 <form action="up_load_act.php" method="POST">
-                    <div class="col-xs-6 wow animated slideInLeft" data-wow-delay=".5s">
+                    <div class="input_item" data-wow-delay=".5s">
                         <!-- Name -->
                         <input type="text" name="movie_title" id="movie-title" required="required" class="form" placeholder="動画タイトル" />
                         <!-- Email -->
@@ -47,29 +47,14 @@ console_log($lon);
                         <input type="hidden" name="lat" value="<?=$lat?>">
                         <input type="hidden" name="lon" value="<?=$lon?>">
                         <input type="hidden" name="u_id" value="<?= $_SESSION["id"]?>">
-                    </div><!-- End Left Inputs -->
-                    <!-- Right Inputs -->
-                    <div class="col-xs-6 wow animated slideInRight" data-wow-delay=".5s">
-                        <!-- Message -->
-                    </div><!-- End Right Inputs -->
+                    </div>
                     <!-- Bottom Submit -->
                     <div class="relative fullwidth col-xs-12">
                         <!-- Send Button -->
                         <button type="submit" id="submit" name="submit" class="form-btn semibold">動画をマッピング</button>
                     </div><!-- End Bottom Submit -->
                 </form>
-                <!-- Clear -->
-                <div class="clear"></div>
                 <!-- </form> -->
-        
-                <!-- Your Mail Message -->
-                <div class="mail-message-area">
-                    <!-- Message -->
-                    <div class="alert gray-bg mail-message not-visible-message">
-                        <strong>Thank You !</strong> Your email has been delivered.
-                    </div>
-                </div>
-        
             </div><!-- End Contact Form Area -->
         </div><!-- End Inner -->
     </div>
