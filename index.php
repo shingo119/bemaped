@@ -1,5 +1,5 @@
 <?php
-
+ini_set('session.cookie_samesite', 'None');
 session_start();
 header("Expires:-1");//戻るボタンからのフォームの再送信エラー回避
 header("Cache-Control:");//戻るボタンからのフォームの再送信エラー回避
