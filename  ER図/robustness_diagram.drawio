@@ -547,6 +547,138 @@
                         <mxPoint x="89.27999999999977" y="1555.9999999999998" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
+                <mxCell id="218" value="Actor" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="70" y="2290" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="219" value="top.php" style="shape=umlBoundary;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="213.56" y="2280" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="220" value="" style="ellipse;shape=umlControl;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="438.03" y="2280" width="70" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="221" value="" style="endArrow=open;endFill=1;endSize=12;html=1;entryX=-0.013;entryY=0.482;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.986;exitY=0.482;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="219" target="220">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="318.7599999999997" y="2320" as="sourcePoint"/>
+                        <mxPoint x="431.23999999999995" y="2321.28" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="222" value="マイページ" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="433.21" y="2360" width="83.57" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="223" value="user_DB" style="ellipse;shape=umlEntity;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="660" y="2280" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="224" value="" style="endArrow=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.969;exitY=0.485;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="220" target="223">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="520" y="2330" as="sourcePoint"/>
+                        <mxPoint x="640" y="2323.2799999999997" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="225" value="" style="ellipse;shape=umlControl;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="553.51" y="2410" width="70" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="226" value="ユーザー情報&lt;br&gt;を表示" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="546.72" y="2490" width="83.57" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="227" value="" style="endArrow=open;endFill=1;endSize=12;html=1;entryX=0.332;entryY=0.154;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.963;exitY=0.873;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="220" target="225">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="322.1599999999996" y="2328.56" as="sourcePoint"/>
+                        <mxPoint x="447.1200000000001" y="2328.56" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="228" value="mypage.php" style="shape=umlBoundary;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="213.56" y="2410" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="229" value="Layout::ユーザー情報" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="212.47" y="2495" width="123.57" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="230" value="" style="endArrow=open;endFill=1;endSize=12;html=1;entryX=0.984;entryY=0.563;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.013;exitY=0.626;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="225" target="228">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="520" y="2470" as="sourcePoint"/>
+                        <mxPoint x="447.1200000000001" y="2328.56" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="231" value="" style="endArrow=open;endFill=1;endSize=12;html=1;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;entryX=-0.016;entryY=0.506;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="218" target="219">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="322.1599999999996" y="2328.56" as="sourcePoint"/>
+                        <mxPoint x="200" y="2320" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="232" value="" style="endArrow=open;endFill=1;endSize=12;html=1;exitX=-0.029;exitY=0.475;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.3333333333333333;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="228" target="218">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="81.23999999999977" y="2440" as="sourcePoint"/>
+                        <mxPoint x="110" y="2330" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="233" value="" style="ellipse;shape=umlControl;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="389.25" y="2570" width="70" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="234" value="" style="ellipse;shape=umlControl;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="553.51" y="2570" width="70" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="235" value="" style="endArrow=open;endFill=1;endSize=12;html=1;exitX=0.973;exitY=0.706;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.345;entryY=0.092;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="228" target="233">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="564.4200000000003" y="2470.08" as="sourcePoint"/>
+                        <mxPoint x="321.9599999999998" y="2465.0400000000004" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="236" value="ユーザー情報の編集" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="360.43" y="2650" width="123.57" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="238" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="237" target="234">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="237" value="編集データ保存" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="526.72" y="2650" width="123.57" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="240" value="" style="endArrow=open;endFill=1;endSize=12;html=1;exitX=1.095;exitY=0.555;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.016;entryY=0.586;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="233" target="234">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="387.4599999999997" y="2476.4800000000005" as="sourcePoint"/>
+                        <mxPoint x="489.9999999999999" y="2587.36" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="241" value="user_DB" style="ellipse;shape=umlEntity;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="728.5" y="2570" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="245" value="" style="endArrow=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.98;exitY=0.571;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="234" target="241">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="558.3599999999999" y="2550" as="sourcePoint"/>
+                        <mxPoint x="712.5000000000002" y="2551.2" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="246" value="" style="ellipse;shape=umlControl;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="387.22" y="2700" width="70" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="247" value="更新データの表示" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="360.43" y="2780" width="123.57" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="248" value="" style="endArrow=open;endFill=1;endSize=12;html=1;exitX=0.061;exitY=0.758;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.972;entryY=0.43;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="234" target="246">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="475.89999999999986" y="2624.4" as="sourcePoint"/>
+                        <mxPoint x="564.6300000000001" y="2626.88" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="249" value="mypage.php" style="shape=umlBoundary;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="217.13" y="2590" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="250" value="" style="endArrow=open;endFill=1;endSize=12;html=1;exitX=-0.028;exitY=0.54;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.981;entryY=0.727;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="246" target="249">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="295.71999999999997" y="2670.0000000000005" as="sourcePoint"/>
+                        <mxPoint x="193.2" y="2773.76" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="251" value="更新後のユーザー情報" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="207.81" y="2670" width="123.57" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="252" value="" style="endArrow=open;endFill=1;endSize=12;html=1;exitX=-0.006;exitY=0.352;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="249" target="218">
+                    <mxGeometry width="160" relative="1" as="geometry">
+                        <mxPoint x="210.03" y="2610.04" as="sourcePoint"/>
+                        <mxPoint x="140.00000000000003" y="2515" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="253" value="frame" style="shape=umlFrame;whiteSpace=wrap;html=1;width=160;height=40;" vertex="1" parent="1">
+                    <mxGeometry y="2240" width="880" height="590" as="geometry"/>
+                </mxCell>
             </root>
         </mxGraphModel>
     </diagram>
