@@ -6,6 +6,8 @@ header("Cache-Control:");//戻るボタンからのフォームの再送信エ�
 header("Pragma:");//戻るボタンからのフォームの再送信エラー回避
 include("funcs.php");
 $id = $_SESSION["id"];
+$user_id = (int)$_GET["user_id"];
+// console_log($user_id);
 $_SESSION["search_word"] = $_POST["search_word"];
 // console_log($_SESSION["search_word"]);
 
@@ -19,7 +21,7 @@ $val = $stmt->fetch(); //ユーザー情報を取得
 
 // console_log("ID:".$id); //ログイン中のユーザーID
 // console_log($val); //ユーザー情報が取れているか
-console_log("status:".$status); //sql文にエラーがないか
+// console_log("status:".$status); //sql文にエラーがないか
 
 if(isset($_POST["search_word"]) && $_POST["search_word"] != " " && $_POST["search_word"] != "　"){//半角スペース、全角スペース、検索ブロック
 $search_word = $_POST["search_word"]; //検索ワードを今のページからPOSTで取得
@@ -55,12 +57,29 @@ $status3 = $stmt3->execute(); //sql文にエラーがないか
 $val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
 }
 
+$sql4 = "SELECT * FROM bemaped_data_table WHERE u_id=:id";
+$stmt4 = $pdo->prepare($sql4);
+$stmt4->bindValue(":id", $user_id, PDO::PARAM_INT);
+$status4 = $stmt4->execute(); //sql文にエラーがないか
+$val4 = $stmt4->fetchall(PDO::FETCH_ASSOC);
+$json_val4 = json_encode($val4);
+
+// console_log($json_val4);
+
+// 複数ワードでのあいまい検索ができるように記述を変更
+$sql5 = "SELECT COUNT(*) FROM bemaped_data_table WHERE u_id=:id"; //あいまい検索
+$stmt5 = $pdo->prepare($sql5);
+$stmt5->bindValue(":id", $user_id, PDO::PARAM_INT);
+$status5 = $stmt5->execute(); //sql文にエラーがないか
+$val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
+
+// console_log($val5);
 
 // console_log("search_word:".$search_word);
 // console_log("status2:".$status2);
-console_log("status3:".$status3);
-console_log($val2);
-console_log($val3);
+// console_log("status3:".$status3);
+// console_log($val2);
+// console_log($val3);
 
 ?>
 
@@ -309,9 +328,13 @@ console_log($val3);
 
             let search_word = "<?= $_POST["search_word"] ?>";
             let search_data_count = "<?=$val3?>";
+            let user_id = "<?=$user_id?>";
+            let user_id_data_count = "<?=$val5?>";
             // この次の行はfor文の外に出しておいた方が良い（iと関係ない要素なので、for文の中に入れると毎回計算を行うことになって無駄な処理になる）
-            let json_val2 = JSON.parse(JSON.stringify(<?= $json_val2 ?>));
-            if( search_word != ""){
+            console.log(user_id);
+            console.log(user_id_data_count);
+            if( search_word != "" && user_id == ""){
+                let json_val2 = JSON.parse(JSON.stringify(<?= $json_val2 ?>));
                 for (let i = 0; i < search_data_count ; i++) {
                 const lat = json_val2[i]["lat"];
                 const lon = json_val2[i]["lon"];
@@ -322,6 +345,30 @@ console_log($val3);
                 map.onPin(x, "click", function () {
                     // if (confirm('ページ遷移しますか？')) {
                         const url = "/bemaped/view.php?movie_id=" + json_val2[i]["id"];
+                        window.location.href = `${url}`;
+                    // }
+                });
+                // ホバーした時のみ説明を表示する
+                map.onPin(x, "mouseout", function () {
+                    $('#info_id'+i).attr('hidden', true);
+                });
+                map.onPin(x, "mouseover", function () {
+                    $('#info_id'+i).removeAttr('hidden');
+                });
+                }
+            }
+            if( search_word == "" && user_id !=""){
+                let json_val4 = JSON.parse(JSON.stringify(<?= $json_val4 ?>));
+                for (let i = 0; i < user_id_data_count ; i++) {
+                const lat = json_val4[i]["lat"];
+                const lon = json_val4[i]["lon"];
+                map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
+                map.changeMap(lat, lon, "canvasLight", 13); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
+                map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-250px; left:-145px;">'+ make_iframe_on_map_by_video_id(json_val4[i]["video_id"]) +'<h5 style="font-size: 16px">' + json_val4[i]["movie_title"] + '</h5></div>');
+                x = map.pinText(lat, lon, " ", " ", " ");
+                map.onPin(x, "click", function () {
+                    // if (confirm('ページ遷移しますか？')) {
+                        const url = "/bemaped/view.php?movie_id=" + json_val4[i]["id"];
                         window.location.href = `${url}`;
                     // }
                 });
