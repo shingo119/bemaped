@@ -242,8 +242,8 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                         １．上部の検索窓に「グルメ」と入力<br>
                         ２．エンターボタン押下でグルメ動画の検索<br>
                         ３．出てきたピンにマウスを乗せて地図上で動画が再生される<br><br>
-                        <!-- 現在登録されたデータ数が少なく検索できるワードが限定されていますが、<br>
-                        今後ユーザーを増やしてあらゆる場所のあらゆる娯楽情報を検索できるようにしたいと思っています。<br> -->
+                        現在登録されたデータ数が少なく検索できるワードが限定されていますが、<br>
+                        今後ユーザーを増やしてあらゆる場所のあらゆる娯楽情報を検索できるようにしたいと思っています。<br>
                         より詳細な使い方を見たい方はこちらの使用説明書からご確認ください。<br>
                         <a href="https://docs.google.com/presentation/d/1-qODrnM__zfjtMChfcFhxfUipHzHJHaw/edit?usp=sharing&ouid=101344222594026290734&rtpof=true&sd=true" target="_blank" style="color:blue; text-decoration:underline;">使用説明書</a>からご確認ください。<br><br>
                         興味を持たれた方は<a href="https://forms.gle/qQAG7DqDe6GAjAX78" target="_blank" style="color:blue; text-decoration:underline;">アンケート</a>へのご回答もお願いいたします。
