@@ -23,6 +23,11 @@ function db_connect(){
       $db_host = "localhost";
       $db_id = "root";
       $db_pw = "root";
+    } else if ($_SERVER['HTTP_HOST'] == "localhost:81"){
+      $db_name = "bemaped_db";
+      $db_host = "localhost:3307";
+      $db_id = "root";
+      $db_pw = "root";
     } else {
       // さくらサーバ－用
       $db_name = "bemaped_unit";
@@ -53,8 +58,6 @@ function login_flg(){
     return 'style="display:none"';
   }
 }
-
-
 
 function console_log( $data ){
   echo '<script>';
@@ -88,29 +91,6 @@ function fileUpload($fname,$path){
     }
 }
 
-
-function replace_width_height($data){
-  $str = $data;
-  $str = str_replace('width="560"', 'width="800"',$str);
-  $str = str_replace('height="315"', 'height="450"', $str);
-  return $str;
-}
-
-function replace_option_to_ifram2($data){
-  $str = $data;
-  $str = str_replace('width="560"', 'width="300"',$str);
-  $str = str_replace('height="315"', 'height="170"', $str);
-  $str2=explode(' ', $str);
-  for ($i = 0; $i < count($str2); $i++) {
-    if (substr($str2[$i],0,4) == "src=") {
-      $str2[$i] = substr($str2[$i],0, strlen($str2[$i])-1) . "?autoplay=1&mute=1&loop=1&fs=0&modestbranding=1" . '"';
-    }
-  }
-  // var_dump(implode(' ', $str2));
-  // exit('ok');
-  return implode(' ', $str2);
-}
-
 function word_split($word){
   //全角スペースでも複数検索できるように追加
   $word = str_replace(["　"], " ", $word);
@@ -118,7 +98,19 @@ function word_split($word){
   return $word_split_array;
 }
 
+//YouTubeのURLからVIDEO_IDを取得する関数
+function video_id($movie_url) {
+  $res = explode('/', $movie_url);
+  $res = $res[count($res)-1];
+  $res = explode('v=', $res);
+  $res = $res[count($res)-1];
+  $res = explode('&', $res);
+  $res = $res[0];
+  return $res;
+}
 
-
-
+//VIDEO_IDから個別動画ページのiframeを作成する関数
+function make_iframe_by_video_id($data){
+  return '<iframe width="800" height="450" src="https://www.youtube.com/embed/'.$data.'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+}
 ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: mysql749.db.sakura.ne.jp
--- 生成日時: 2022 年 1 月 15 日 14:36
+-- 生成日時: 2022 年 2 月 23 日 08:57
 -- サーバのバージョン： 5.7.32-log
 -- PHP のバージョン: 7.1.18
 
@@ -31,11 +31,10 @@ SET time_zone = "+00:00";
 CREATE TABLE `bemaped_data_table` (
   `id` int(11) NOT NULL,
   `movie_title` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `movie_url` varchar(512) COLLATE utf8_unicode_ci NOT NULL,
+  `video_id` varchar(512) COLLATE utf8_unicode_ci NOT NULL,
   `tag` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
   `lat` double(17,14) NOT NULL,
   `lon` double(17,14) NOT NULL,
-  `ifram` varchar(512) COLLATE utf8_unicode_ci NOT NULL,
   `indate` datetime NOT NULL,
   `u_id` int(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -44,31 +43,103 @@ CREATE TABLE `bemaped_data_table` (
 -- テーブルのデータのダンプ `bemaped_data_table`
 --
 
-INSERT INTO `bemaped_data_table` (`id`, `movie_title`, `movie_url`, `tag`, `lat`, `lon`, `ifram`, `indate`, `u_id`) VALUES
-(1, '〔富山グルメ〕魚津の人気ラーメン店の神トッピングは多分コレ', 'https://youtu.be/LXqUuF7sbuM', '#魚津の人気ラーメン店 #神トッピングは #これだ', 36.83277130126953, 137.41815185546875, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/LXqUuF7sbuM\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-11 16:02:53', 6),
-(3, '〔富山グルメ〕ミシュラン獲得のお寿司屋さん！感動の嵐が巻き起こった', 'https://youtu.be/5ejYjl63AfU', '', 36.67717742919922, 137.20721435546875, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/5ejYjl63AfU\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-12 04:30:32', 6),
-(4, '〔射水グルメ〕パキスタンカレーを堪能！', 'https://youtu.be/y2tb9ALdmM8', '#富山グルメ #富山カレー #アルバラカ', 36.75175476074219, 137.08551025390625, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/y2tb9ALdmM8\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-12 04:32:18', 6),
-(5, '絶景露天風呂と贅沢バイキング、トドメの高級日本酒飲み放題！', 'https://youtu.be/EwLr8YoyqvM', '#ミシュラン三つ星 #黒部宇奈月温泉 #贅沢三昧', 36.81706237792969, 137.58427429199220, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/EwLr8YoyqvM\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-12 10:34:30', 6),
-(6, '【めちゃうま】麺線整いすぎて見とれてしまう、パーフェクトな一杯をすする 麺笑 巧真【飯テロ】SUSURU TV.第2199回', 'https://youtu.be/cVWxy9DpGTk', '#麺笑巧真 #八王子 #ラーメン', 35.65976715087891, 139.34184265136720, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/cVWxy9DpGTk\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-13 07:16:20', 8),
-(8, '【絶対王者】日本一のつけ麺！これをすすらないと今年終われない、とみ田のつけ麺をすする 中華蕎麦 とみ田【飯テロ】', 'https://youtu.be/OZklX7rxlrM', '#中華蕎麦とみ田 #千葉 #ラーメン', 35.78176256864247, 139.90094882761085, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/OZklX7rxlrM\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-13 11:43:00', 8),
-(9, '〔富山グルメ〕ミシュラン獲得のお寿司屋さん！感動の嵐が巻き起こった', 'https://youtu.be/5ejYjl63AfU', '', 36.67716456939119, 137.20723237097442, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/5ejYjl63AfU\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-14 17:39:02', 6),
-(10, '【じもん】高円寺のソウルフード激辛ラーメンを晋平太とすする じもん【飯テロ】SUSURU TV.第2198回', 'https://youtu.be/NyZXG-cz3lc', '#じもん #晋平太 #ラーメン', 35.70336864469922, 139.64918174514906, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/NyZXG-cz3lc\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-15 22:35:29', 8),
-(11, '【おかわり無料家系】完飲必至の東京代表家系で食べ過ぎてしまいました をすする　武蔵家 中野本店', 'https://youtu.be/jbwM80czi0k', '#武蔵家 #中野 #ラーメン', 35.69766948666345, 139.66902270420900, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/jbwM80czi0k\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-15 22:37:13', 8),
-(12, '【無茶した】カロリー爆弾！超絶ジャンクな二郎系をすする 用心棒本号 東大前【飯テロ】', 'https://youtu.be/dFfMBp6maz8', '#毎日ラーメン生活 #SUSURU_TV #ラーメン', 35.71748467726623, 139.75764575108394, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/dFfMBp6maz8\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-15 22:39:38', 8),
-(13, '初日から行列の二郎系ラーメンをすする 蒲田 ラーメン 宮郎【飯テロ】', 'https://youtu.be/4dpTHMDUiiE', '#毎日ラーメン生活 #SUSURU_TV', 35.56187660208226, 139.71250118647970, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/4dpTHMDUiiE\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-15 22:41:52', 8),
-(14, '【超絶濃厚】濃厚すぎてレンゲが立ってしまうほどのドロドロスープの衝撃。をすする 超絶濃厚鶏そば きりすて御麺【飯テロ】', 'https://youtu.be/NUWLwl8g2xo', '#超絶濃厚鶏そばきりすて御麺 #不動前 #ラーメン', 35.62430304739695, 139.71021052627805, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/NUWLwl8g2xo\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-16 05:45:51', 8),
-(15, '【ラーメン好き必食】恐ろしいほどの老舗町中華で激安ラーメン&半チャーハンをすする 平和軒【飯テロ】', 'https://youtu.be/f9i2Z5CRzFU', '#平和軒 #大崎 #ラーメン', 35.62093467007313, 139.72429891870120, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/f9i2Z5CRzFU\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-16 05:48:36', 8),
-(16, '【つけ麺】一粒で二度美味しい。2種類の麺が合い盛りのつけ麺と超極太麺をすする 麺や 麦ゑ紋【飯テロ】', 'https://youtu.be/hQutZTR9EXI', '#麺や麦ゑ紋 #新宿 #ラーメン', 35.69612507605375, 139.69836970596550, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/hQutZTR9EXI\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-16 05:50:14', 8),
-(17, '【神楽坂】絶品グルメ食べ歩き！黒毛和牛贅沢重「翔山亭」&メロン専門店「果房メロンとロマン」&メレンゲ菓子「メルベイユ」&フルーツサンド「ハピマルフルーツ神楽坂」', 'https://youtu.be/cVlkit8NCrs', '#東京グルメ #神楽坂グルメ #神楽坂カフェ', 35.70189684966379, 139.74104778857426, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/cVlkit8NCrs\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-16 06:15:11', 12),
-(18, '【恵比寿】お出汁とネギが激うま！鴨すき鍋「とりなご 恵比寿店」', 'https://youtu.be/4mT4gF9HoPo', '#東京グルメ #恵比寿グルメ #鴨すき', 35.64504137556677, 139.71692892358402, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/4mT4gF9HoPo\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-16 06:17:17', 12),
-(19, '【中野】予約困難！超人気のマグロ専門店「マグロマート」', 'https://youtu.be/2U1qks82eT4', '#中野グルメ #マグロ #マグロマート', 35.70957461636522, 139.66652461319208, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/2U1qks82eT4\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-16 06:19:35', 12),
-(20, '【代官山】羽釜で炊いた”おひつめし”が絶品「ごはんや一芯」＆さつまいも天ぷらの塩アイス「Tempura Motoyoshi いも」', 'https://youtu.be/ckpnxsbyRgI', '#東京グルメ #代官山ランチ #ご飯が美味しいお店', 35.64718591948328, 139.70175640673835, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/ckpnxsbyRgI\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-16 06:20:59', 12),
-(21, '【代々木上原】ロンドン伝統の絶品ミートパイ「dish（ディッシュ）」', 'https://youtu.be/rJVqhSgK2QU', '#東京グルメ #代々木上原カフェ #アップルパイ', 35.66934590120415, 139.68107696783923, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/rJVqhSgK2QU\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-16 06:23:50', 12),
-(22, '絶対リピートしちゃう最高の秘島リゾートに週末トリップ｜タイ・クート島', 'https://youtu.be/Gf0R6iX-Nfg', '#タイ旅行 #海外旅行 #Vlog', 11.65194159053314, 102.56874884336600, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/Gf0R6iX-Nfg\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-16 06:38:05', 13),
-(23, 'まだ誰も知らない…都心近くの森林リゾートを8000円で独り占め！チャリで行くバーンガジャオの旅【タイ・バンコク】บางกะเจ้า Bang krachao', 'https://youtu.be/qWZzkMjNf-o', '#タイ旅行 #バンコク #vlog', 13.66943852466792, 100.56809710646388, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/qWZzkMjNf-o\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-16 06:43:08', 13),
-(24, 'タイの超穴場リゾート・マーク島　カヤックでしか辿り着けない奇跡の浜辺が美しすぎた ｜เกาะหมาก Koh Mak', 'https://youtu.be/FVlTOZMPj-s', '#タイ旅行 #マーク島 #KohMak', 11.81925452391637, 102.47903914974842, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/FVlTOZMPj-s\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-16 06:48:57', 13),
-(25, 'バンコク・スクンビットに森の結界ホテル　これは別世界…｜AriyasomVilla（アリヤソムヴィラ）', 'https://youtu.be/5V1noy4WXZI', '#タイ旅行  #バンコク #タイ', 13.74789033257170, 100.55165677614453, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/5V1noy4WXZI\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-16 06:54:14', 13),
-(26, '本当は秘密にしたい…1泊1700円の最強ゲストハウス｜タイ・クート島｜เกาะกูด', 'https://youtu.be/tN7hO9iqu54', '#タイ旅行  #เกาะกูด', 11.59469818411189, 102.56536203319720, '<iframe width=\"800\" height=\"450\" src=\"https://www.youtube.com/embed/tN7hO9iqu54\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', '2021-12-16 11:58:41', 13);
+INSERT INTO `bemaped_data_table` (`id`, `movie_title`, `video_id`, `tag`, `lat`, `lon`, `indate`, `u_id`) VALUES
+(1, '〔富山グルメ〕魚津の人気ラーメン店の神トッピングは多分コレ', 'LXqUuF7sbuM', '#魚津の人気ラーメン店 #神トッピングは #これだ', 36.83277130126953, 137.41815185546875, '2021-12-11 16:02:53', 6),
+(3, '〔富山グルメ〕ミシュラン獲得のお寿司屋さん！感動の嵐が巻き起こった', '5ejYjl63AfU', '', 36.67717742919922, 137.20721435546875, '2021-12-12 04:30:32', 6),
+(4, '〔射水グルメ〕パキスタンカレーを堪能！', 'y2tb9ALdmM8', '#富山グルメ #富山カレー #アルバラカ', 36.75175476074219, 137.08551025390625, '2021-12-12 04:32:18', 6),
+(5, '絶景露天風呂と贅沢バイキング、トドメの高級日本酒飲み放題！', 'EwLr8YoyqvM', '#ミシュラン三つ星 #黒部宇奈月温泉 #贅沢三昧', 36.81706237792969, 137.58427429199220, '2021-12-12 10:34:30', 6),
+(6, '【めちゃうま】麺線整いすぎて見とれてしまう、パーフェクトな一杯をすする 麺笑 巧真【飯テロ】SUSURU TV.第2199回', 'cVWxy9DpGTk', '#麺笑巧真 #八王子 #ラーメン', 35.65976715087891, 139.34184265136720, '2021-12-13 07:16:20', 8),
+(8, '【絶対王者】日本一のつけ麺！これをすすらないと今年終われない、とみ田のつけ麺をすする 中華蕎麦 とみ田【飯テロ】', 'OZklX7rxlrM', '#中華蕎麦とみ田 #千葉 #ラーメン', 35.78176256864247, 139.90094882761085, '2021-12-13 11:43:00', 8),
+(9, '〔富山グルメ〕ミシュラン獲得のお寿司屋さん！感動の嵐が巻き起こった', '5ejYjl63AfU', '', 36.67716456939119, 137.20723237097442, '2021-12-14 17:39:02', 6),
+(10, '【じもん】高円寺のソウルフード激辛ラーメンを晋平太とすする じもん【飯テロ】SUSURU TV.第2198回', 'NyZXG-cz3lc', '#じもん #晋平太 #ラーメン', 35.70336864469922, 139.64918174514906, '2021-12-15 22:35:29', 8),
+(11, '【おかわり無料家系】完飲必至の東京代表家系で食べ過ぎてしまいました をすする　武蔵家 中野本店', 'jbwM80czi0k', '#武蔵家 #中野 #ラーメン', 35.69766948666345, 139.66902270420900, '2021-12-15 22:37:13', 8),
+(12, '【無茶した】カロリー爆弾！超絶ジャンクな二郎系をすする 用心棒本号 東大前【飯テロ】', 'dFfMBp6maz8', '#毎日ラーメン生活 #SUSURU_TV #ラーメン', 35.71748467726623, 139.75764575108394, '2021-12-15 22:39:38', 8),
+(13, '初日から行列の二郎系ラーメンをすする 蒲田 ラーメン 宮郎【飯テロ】', '4dpTHMDUiiE', '#毎日ラーメン生活 #SUSURU_TV', 35.56187660208226, 139.71250118647970, '2021-12-15 22:41:52', 8),
+(14, '【超絶濃厚】濃厚すぎてレンゲが立ってしまうほどのドロドロスープの衝撃。をすする 超絶濃厚鶏そば きりすて御麺【飯テロ】', 'NUWLwl8g2xo', '#超絶濃厚鶏そばきりすて御麺 #不動前 #ラーメン', 35.62430304739695, 139.71021052627805, '2021-12-16 05:45:51', 8),
+(15, '【ラーメン好き必食】恐ろしいほどの老舗町中華で激安ラーメン&半チャーハンをすする 平和軒【飯テロ】', 'f9i2Z5CRzFU', '#平和軒 #大崎 #ラーメン', 35.62093467007313, 139.72429891870120, '2021-12-16 05:48:36', 8),
+(16, '【つけ麺】一粒で二度美味しい。2種類の麺が合い盛りのつけ麺と超極太麺をすする 麺や 麦ゑ紋【飯テロ】', 'hQutZTR9EXI', '#麺や麦ゑ紋 #新宿 #ラーメン', 35.69612507605375, 139.69836970596550, '2021-12-16 05:50:14', 8),
+(17, '【神楽坂】絶品グルメ食べ歩き！黒毛和牛贅沢重「翔山亭」&メロン専門店「果房メロンとロマン」&メレンゲ菓子「メルベイユ」&フルーツサンド「ハピマルフルーツ神楽坂」', 'cVlkit8NCrs', '#東京グルメ #神楽坂グルメ #神楽坂カフェ', 35.70189684966379, 139.74104778857426, '2021-12-16 06:15:11', 12),
+(18, '【恵比寿】お出汁とネギが激うま！鴨すき鍋「とりなご 恵比寿店」', '4mT4gF9HoPo', '#東京グルメ #恵比寿グルメ #鴨すき', 35.64504137556677, 139.71692892358402, '2021-12-16 06:17:17', 12),
+(19, '【中野】予約困難！超人気のマグロ専門店「マグロマート」', '2U1qks82eT4', '#中野グルメ #マグロ #マグロマート', 35.70957461636522, 139.66652461319208, '2021-12-16 06:19:35', 12),
+(20, '【代官山】羽釜で炊いた”おひつめし”が絶品「ごはんや一芯」＆さつまいも天ぷらの塩アイス「Tempura Motoyoshi いも」', 'ckpnxsbyRgI', '#東京グルメ #代官山ランチ #ご飯が美味しいお店', 35.64718591948328, 139.70175640673835, '2021-12-16 06:20:59', 12),
+(21, '【代々木上原】ロンドン伝統の絶品ミートパイ「dish（ディッシュ）」', 'rJVqhSgK2QU', '#東京グルメ #代々木上原カフェ #アップルパイ', 35.66934590120415, 139.68107696783923, '2021-12-16 06:23:50', 12),
+(22, '絶対リピートしちゃう最高の秘島リゾートに週末トリップ｜タイ・クート島', 'Gf0R6iX-Nfg', '#タイ旅行 #海外旅行 #Vlog', 11.65194159053314, 102.56874884336600, '2021-12-16 06:38:05', 13),
+(23, 'まだ誰も知らない…都心近くの森林リゾートを8000円で独り占め！チャリで行くバーンガジャオの旅【タイ・バンコク】บางกะเจ้า Bang krachao', 'qWZzkMjNf-o', '#タイ旅行 #バンコク #vlog', 13.66943852466792, 100.56809710646388, '2021-12-16 06:43:08', 13),
+(24, 'タイの超穴場リゾート・マーク島　カヤックでしか辿り着けない奇跡の浜辺が美しすぎた ｜เกาะหมาก Koh Mak', 'FVlTOZMPj-s', '#タイ旅行 #マーク島 #KohMak', 11.81925452391637, 102.47903914974842, '2021-12-16 06:48:57', 13),
+(25, 'バンコク・スクンビットに森の結界ホテル　これは別世界…｜AriyasomVilla（アリヤソムヴィラ）', '5V1noy4WXZI', '#タイ旅行  #バンコク #タイ', 13.74789033257170, 100.55165677614453, '2021-12-16 06:54:14', 13),
+(26, '本当は秘密にしたい…1泊1700円の最強ゲストハウス｜タイ・クート島｜เกาะกูด', 'tN7hO9iqu54', '#タイ旅行  #เกาะกูด', 11.59469818411189, 102.56536203319720, '2021-12-16 11:58:41', 13),
+(27, '【富山グルメ】一口餃子がウリ！新店のランチがコスパ◎だった', 'a5HLZKBJ8L8', '#新店 #餃子とラーメン #大盛りにすればヨカタ', 36.68761259984785, 137.21318120710026, '2022-01-16 12:33:17', 6),
+(28, '【新宿デートスポット５選】カフェやランチ、ホテルやオススメ場所紹介:1.THE KNOT TOKYO Shinjuku', 'ljyx2OPIsKE', '', 35.68860140847194, 139.68846163626503, '2022-01-16 12:43:49', 14),
+(29, '【新宿デートスポット５選】カフェやランチ、ホテルやオススメ場所紹介: 2.vito coffee', 'ljyx2OPIsKE', '', 35.69597045725897, 139.69685430280342, '2022-01-16 12:46:05', 14),
+(30, '【新宿デートスポット５選】カフェやランチ、ホテルやオススメ場所紹介: 3.新宿御苑', 'ljyx2OPIsKE', '', 35.68668943834047, 139.70815084173412, '2022-01-16 12:54:23', 14),
+(31, '【新宿デートスポット５選】カフェやランチ、ホテルやオススメ場所紹介: 4.Brooklyn Parlor ', 'ljyx2OPIsKE', '', 35.69010223056910, 139.70594167220142, '2022-01-16 12:55:52', 14),
+(32, '【新宿デートスポット５選】カフェやランチ、ホテルやオススメ場所紹介: 5.BOOK AND BED TOKYO', 'ljyx2OPIsKE', '', 35.69542100412398, 139.70058583724045, '2022-01-16 22:45:26', 14),
+(33, '【表参道オシャレランチ５選】美味しいのに安いお昼/ デートにもオススメ:１IDOL', 'cy8HgxntI7k', '', 35.66190615404709, 139.71249674655067, '2022-01-16 23:30:08', 14),
+(34, '【表参道オシャレランチ５選】美味しいのに安いお昼/ デートにもオススメ:２ A to Z cafe', 'cy8HgxntI7k', '', 35.66251923296611, 139.71225260592567, '2022-01-16 23:31:40', 14),
+(35, '【表参道オシャレランチ５選】美味しいのに安いお昼/ デートにもオススメ:３ GOKU BURGER ゴク バーガー', 'cy8HgxntI7k', '', 35.66691485211211, 139.70822428561320, '2022-01-16 23:33:17', 14),
+(36, '【表参道オシャレランチ５選】美味しいのに安いお昼/ デートにもオススメ:４　café Madu　カフェ・マディ', 'cy8HgxntI7k', '', 35.66267018097813, 139.71212600869245, '2022-01-16 23:34:44', 14),
+(37, '【表参道オシャレランチ５選】美味しいのに安いお昼/ デートにもオススメ:５　YPSILON　イプシロン ', 'cy8HgxntI7k', '', 35.66112795571868, 139.71413564192795, '2022-01-16 23:36:05', 14),
+(38, '【原宿オシャレカフェ５選】 デートにもオススメ:1. dotcom space tokyo', 'jg5c5BoS2Fc', '#原宿 ＃原宿カフェ ＃原宿vlog', 35.67180473904188, 139.70343923079517, '2022-01-16 23:38:35', 14),
+(39, '【原宿オシャレカフェ５選】 デートにもオススメ: 2.rag & bone coffee', 'jg5c5BoS2Fc', '', 35.66664236779875, 139.70711659895923, '2022-01-16 23:45:57', 14),
+(40, '【原宿オシャレカフェ５選】 デートにもオススメ:番外編.MUUN seoul', 'jg5c5BoS2Fc', '', 35.67152409334646, 139.70870351302170, '2022-01-16 23:48:31', 14),
+(41, '【原宿オシャレカフェ５選】 デートにもオススメ:3.natural stance', 'jg5c5BoS2Fc', '', 35.66990284700583, 139.70774673623154, '2022-01-16 23:49:54', 14),
+(42, '【原宿オシャレカフェ５選】 デートにもオススメ:4.EATALY HARAJUKU', 'jg5c5BoS2Fc', '', 35.67053458160733, 139.70296905840053, '2022-01-16 23:51:07', 14),
+(43, '【原宿オシャレカフェ５選】 デートにもオススメ:5.Cafe Luigi', 'jg5c5BoS2Fc', '', 35.66898350496331, 139.70661758584083, '2022-01-16 23:52:29', 14),
+(44, '【原宿グルメ】超モチモチ！たらこスパゲティ専門店「東京たらこスパゲティ 原宿表参道店」', 'uIvNRdpuGJQ', '#2020年7月オープン #たらこパスタ #炙りたらこのお出汁スパゲティ', 35.66734699983360, 139.70579361123150, '2022-01-16 23:57:49', 12),
+(45, '【渋谷グルメ】旨味あふれる「生ハンバーグ」を初体験！「極味や（きわみや）渋谷パルコ店」', 'BHKGceBgvJE', '#東京グルメ #生ハンバーグ #極味や', 35.66226595950544, 139.69917582487160, '2022-01-16 23:59:41', 12),
+(46, '【吉祥寺】コスパ最強の炭火焼ハンバーグ「挽肉と米」', 'EERJdhLTOUI', '#吉祥寺グルメ #炭火焼ハンバーグ #炊き立てご飯', 35.70582585121649, 139.57775711220805, '2022-01-17 00:01:04', 12),
+(47, '【中野】予約困難！超人気のマグロ専門店「マグロマート」', '2U1qks82eT4', '#中野グルメ #マグロ #マグロマート', 35.70958332802943, 139.66654968378967, '2022-01-17 00:02:33', 12),
+(48, '【渋谷】絶品！フレンチトースト&あんバターサンド「ビストロ ロジウラ(Bistro Rojiura)」', 'LoDakRbVqMA', '#渋谷グルメ #渋谷カフェ #東京グルメ', 35.66241637255629, 139.69732951139500, '2022-01-17 00:04:53', 12),
+(49, 'カレーうどんと言えば吉宗！高岡の人気店', 'Nr10-DUx4Rw', '#富山グルメ #高岡グルメ #吉宗', 36.75643461723699, 137.02694768659248, '2022-01-26 12:04:05', 6),
+(51, 'test', '6MOVRp8Fx6s', '#test', 35.74900283107591, 139.59582119093093, '2022-02-11 17:04:01', 1),
+(57, '【最強富士丸系】この一杯中毒！受け継がれた名店の魂に感動', '646ln0zCB4g', '#ラーメン #No11', 35.74497348987640, 139.70789916408458, '2022-02-13 16:19:19', 15),
+(58, '【利きりんご】信州産のりんごを当てることはできるのか！？', 'ZJRlIrvuzEg', '#りんご #長野 #利き', 36.33894458881326, 138.44495609646765, '2022-02-22 11:02:01', 16),
+(59, '塩尻謎解き散歩！', 'KZYLOj6TtE0', '#長野 #塩尻 #散歩#エンパーク', 36.11205969375948, 137.95280531419448, '2022-02-22 11:06:42', 16),
+(60, '塩尻謎解き散歩！', 'KZYLOj6TtE0', '#長野 #塩尻 #散歩#平井出遺跡', 36.10293875152903, 137.94552973030330, '2022-02-22 11:09:50', 16),
+(61, '塩尻謎解き散歩！', 'KZYLOj6TtE0', '#長野 #塩尻 #散歩#平井出博物館', 36.09914867772358, 137.93930414436580, '2022-02-22 11:14:59', 16),
+(62, '塩尻謎解き散歩！', 'KZYLOj6TtE0', '#長野 #塩尻 #散歩#平井出の泉', 36.10084313665556, 137.93990398779098, '2022-02-22 11:17:04', 16),
+(63, '塩尻謎解き散歩！', 'KZYLOj6TtE0', '#長野 #塩尻 #散歩#塩尻駅', 36.11434486637947, 137.94785383714378, '2022-02-22 11:18:26', 16),
+(64, '阿智村のあの旅館は今！？', '-kcg1-RyNAM', '#長野 #サウナ #リフォーム', 35.44619068301989, 137.73391178494420, '2022-02-22 11:24:09', 16),
+(65, 'ワインプロジェクト3「収穫の秋」', 'rHBZ6FjqOsQ', '#信州 #収穫 #酒#ワイン', 36.09875957847106, 138.00067213548363, '2022-02-22 11:26:47', 16),
+(69, '【DIY】初のグランピング！テント作りに挑戦してみた！', 'mg3NEt9M39c', '#グランピング #DIY #みどり湖', 36.09025620986645, 137.99457471505485, '2022-02-22 11:42:55', 16),
+(70, 'デジタルサイネージで奥蓼科秘湯めぐり', '0cuVDOQNNbc', '#蓼科 #秘湯 #デジタルサイネージ#明治温泉#温泉', 36.03753026211560, 138.29615997085753, '2022-02-22 11:47:50', 16),
+(71, 'デジタルサイネージで奥蓼科秘湯めぐり', '0cuVDOQNNbc', '#蓼科 #秘湯 #デジタルサイネージ#渋御殿湯#温泉', 36.03612334463495, 138.32701855674620, '2022-02-22 11:52:02', 16),
+(72, 'デジタルサイネージで奥蓼科秘湯めぐり', '0cuVDOQNNbc', '#蓼科 #秘湯 #デジタルサイネージ#渋辰野館#温泉', 36.03341984061269, 138.30965031949654, '2022-02-22 11:54:43', 16),
+(73, '世界最大最古のピラミッドでUFOを呼ぶ!!', '5qzEs9w7UGE', '#長野 #信州#山', 36.55388143735181, 138.22174041189447, '2022-02-22 12:03:10', 16),
+(74, '絶景一本　大外刈り「下諏訪 諏訪湖畔」', 'WyPRerOTuw4', '#柔道 #大外刈り #下諏訪', 36.06501432992169, 138.09104836457254, '2022-02-22 12:29:44', 16),
+(75, 'あのオバステの絶景で投げたい', 'd7iw4NqJw5E', '#長野 #信州 #姨捨', 36.50427044044724, 138.09546637417057, '2022-02-22 12:34:59', 16),
+(76, '地域を守った不思議な地蔵', 'YLGd3sQlP98', '#東日本大震災 #六地蔵 #奇跡', 36.97791037152336, 138.47868902734737, '2022-02-22 12:39:37', 16),
+(77, 'エンジョイゴルフ「ハーフラウンド38の奇跡」', 'Fl6kr5BON6I', '#ゴルフ #奇跡 #ハーフラウンド#塩嶺カントリークラブ', 36.06965774310220, 138.00854567063988, '2022-02-22 12:41:40', 16),
+(78, 'FM長野「346 GROOVE FRIDAY!」に密着', 'auCgFjpDsLo', '#エフエム #長野 #ラジオ', 36.22702845217920, 137.96919740858542, '2022-02-22 12:44:16', 16),
+(79, 'FM長野「346 GROOVE FRIDAY!」に密着', 'auCgFjpDsLo', '#エフエム #長野 #ラジオ#寸八総本店#ラーメン', 36.22591074594033, 137.98439969181180, '2022-02-22 12:46:31', 16),
+(80, '絶景一本「諏訪 立石公園」', 'KwJ2qvv0ubU', '#柔道 #巴投げ #諏訪湖＃公園', 36.05342938201698, 138.12266649117737, '2022-02-22 12:49:35', 16),
+(81, '絶景一本　〜おしどり隠しの滝〜', '8WTrAlxXmxs', '#柔道 #一本背負い #奥蓼科', 36.03752161789182, 138.29582482900906, '2022-02-22 12:52:10', 16),
+(82, 'サウナ対決 どっちが強い？', 'ylboQHT9DGk', '#信州 #サウナ #GoPro#川中島温泉テルメDOME', 36.59632403123057, 138.15661429447590, '2022-02-22 12:54:51', 16),
+(83, 'ご長寿の街！佐久市に行ってきました！', 'DCesJZRijXg', '#長野 #佐久 #ぴんころ#ぴんころ地蔵', 36.22565655302097, 138.47056563759747, '2022-02-22 12:59:33', 16),
+(84, '「人気ラーメン店の無謀な挑戦」前編', 'HISrSg4RAkY', '#ラーメン #カップラーメン #チャレンジ＃らぁ麺しろがね', 36.20156297133401, 137.94900475289265, '2022-02-22 13:03:41', 16),
+(85, '「人気ラーメン店の無謀な挑戦」後編', 'fJ6rRNxSJhU', '#ラーメン #カップラーメン #チャレンジ＃らぁ麺しろがね', 36.20156297133401, 137.94906000000000, '2022-02-22 13:06:00', 16),
+(86, '信州ディープツアー「日本のど真ん中」はドコ？', 'ZZwGDCa30sw', '#日本の中心 #日本のヘソ #日本のど真ん中#日本中心展望台', 36.01614352556098, 137.98946681992632, '2022-02-22 13:17:27', 16),
+(87, '信州ディープツアー「太平洋？日本海？この水はどっちへ行くの？」', 'PB4HusxlDaA', '#清少納言 #善知鳥峠 #分水嶺#蔵造川水路橋#日本唯一#レンガ造り#水路橋', 36.07032674915681, 137.97742750219277, '2022-02-22 13:26:00', 16),
+(88, '信州ディープツアー「太平洋？日本海？この水はどっちへ行くの？」', 'PB4HusxlDaA', '#清少納言 #善知鳥峠 #分水嶺', 36.07606225594507, 137.98004578216660, '2022-02-22 13:28:40', 16),
+(89, '信州ディープツアー「上杉謙信 物見の岩」', 'tup3TipE8jE', '#長野 #信州 #上杉謙信', 36.67160648269294, 138.18321461241678, '2022-02-22 13:33:38', 16),
+(90, '川中島の合戦 武田VS上杉 〜キツツキ戦法〜', 'a-31MKdqM_E', '#信州 #上杉謙信 #武田信玄', 36.56149734546621, 138.17145484699510, '2022-02-22 13:36:20', 16),
+(91, '【長野1泊2日】特急あずさで木曽・松本の旅　奈良井宿を訪ねる【長野の旅その１】　かなめや', 'MtEOdv09NTs', '#かなめや', 35.96469972559991, 137.81065289967586, '2022-02-22 13:50:57', 17),
+(92, '奈良井宿の散策 : Walking Around Narai-Juku Post Town （Nagano, Japan）', 'O1LHWs0qlm4', '#下町#八幡宮##二百地蔵#専念寺#法然寺#中町#大宝寺#マリア地蔵#神明宮#伊勢屋', 35.96907570114323, 137.81527882220797, '2022-02-22 13:56:02', 17),
+(93, '【旅行Vlog】長野で歴史と自然を感じる〈奈良井宿・木曽〉お食事処いなかや', '-XIOQc8h18o', '#あしはらみゅう #長野旅行 #vlog', 35.96734931495044, 137.81338956952848, '2022-02-22 14:00:31', 17),
+(94, '【ひとり旅】中山道・奈良井宿　ソースカツ丼、宿場町のカフェ、おやきとだんごなど宿場町の名物グルメ・龍の大天井絵・奈良井宿の歴史的景観を散策', '8KZ0Jy1ASlY', '#ひとり旅 #長野 #奈良井#お食事処#松波', 35.96523250595670, 137.81092205792837, '2022-02-22 14:02:41', 17),
+(95, '【ひとり旅#14】長野木曽路　奈良井宿　松本城　おっさん　ひとり呑み', 'VcVDFZeoIno', '＃ひとり旅 ＃松本 ＃奈良井宿#越後谷食堂', 35.96660373202184, 137.81219893724450, '2022-02-22 14:06:01', 17),
+(96, '奈良井宿 江戸時代の歴史と風景を残す中山道 木曽路十一宿の街並み Narai-juku Walk the Histric Post town in Nagano Japan', 'RI0l9E71DjE', '#jvtravel #japanvideography #travel', 35.96628364280153, 137.81397167786193, '2022-02-22 14:08:12', 17),
+(97, '奈良井宿　江戸時代にタイムスリップ！！築約２００年の宿に泊まる', 'J_3IrviPKE4', '＃奈良井宿 ＃奈良井木曽の大橋 ＃伊勢屋', 35.96494907781779, 137.81058024101085, '2022-02-22 14:10:33', 17),
+(98, '(6)【中山道の旅】自転車で行く 東京→京都 12日間《下諏訪宿→奈良井宿》　木曽路編その１', 'LFGmw-PekHE', '＃奈良井宿 ＃奈良井木曽の大橋 ＃伊勢屋#上問屋資料館', 35.96482369417062, 137.81028861451020, '2022-02-22 14:17:06', 17),
+(99, '[ 長野県 1泊2日の旅 ]　#1 中山道の真ん中、三十四番目の宿場町『 奈良井宿 』へ　～ 浦島太郎の伝説に迫る ～', 'BUMl3u6NT2Y', '#1では #旅するPorco #奈良井宿#甘味処#こころ音', 35.96462994248854, 137.81018171517340, '2022-02-22 15:09:20', 17),
+(100, 'ノスタルジックな宿場町で食べ歩き / 江戸時代の風情が残る「奈良井宿」 / 長野県観光スポット / vlog', 'IBvIKXYcgm8', '#長野 #奈良井宿 #食べ歩き#おやき#てずから', 35.96573763036265, 137.81140026638036, '2022-02-22 15:11:07', 17),
+(101, '大門商店街～イルミネーション～', 'vwJwu0p1vO4', '#長野県塩尻市 #大門商店街 #イルミネーション', 36.11186677796886, 137.95300464720447, '2022-02-22 15:22:54', 18),
+(102, '広報制作映像「高ボッチ高原」', '9SSgQLvio1E', '#高ボッチ高原 #八ヶ岳中信高原国定公園 #360度の眺望', 36.13222032735614, 138.03460337936045, '2022-02-22 15:28:05', 18),
+(103, '【第２弾】今年の高ボッチ高原はおもしろい！', 'F4r1J4kmIus', '#長野県塩尻市 #高ボッチ高原 #ドローン', 36.13076455440925, 138.03021837953510, '2022-02-22 15:29:25', 18),
+(104, 'テレビ広報しおじり「YOUMEX ARENA始まります」', '_HWyBG4ncmI', '#塩尻市新体育館 #塩尻市総合体育館 #ユメックスアリーナ', 36.12425443247277, 137.94475827362120, '2022-02-22 15:32:32', 18),
+(105, 'しおじり特集「みどり湖へら鮒釣り大会」', 'F5NYnC7xI4s', '#塩尻市　#釣り　#湖', 36.09202164249553, 137.99916483910283, '2022-02-22 15:37:00', 18),
+(106, 'しおじり特集「塩尻ワイナリーフェスタ2018」', 'ZxGkMIbUQME', '#塩尻市#ワイン#塩尻駅', 36.11447390505647, 137.94811761385674, '2022-02-22 15:39:27', 18),
+(107, 'しおじり特集「第51回木曽漆器祭・奈良井宿場祭」', 'wRO6l4HrivA', '#塩尻市#奈良井宿#祭り', 35.96832077413649, 137.81451776445580, '2022-02-22 15:45:05', 18);
 
 -- --------------------------------------------------------
 
@@ -88,6 +159,7 @@ CREATE TABLE `bemaped_follow_table` (
 --
 
 INSERT INTO `bemaped_follow_table` (`id`, `followed`, `be_followed`, `indate`) VALUES
+(4, 6, 8, '2021-12-14 17:14:39'),
 (5, 1, 6, '2021-12-15 14:57:46'),
 (7, 1, 8, '2021-12-16 01:51:15'),
 (8, 8, 6, '2021-12-16 05:42:22'),
@@ -97,9 +169,8 @@ INSERT INTO `bemaped_follow_table` (`id`, `followed`, `be_followed`, `indate`) V
 (13, 5, 12, '2021-12-16 06:57:46'),
 (14, 5, 13, '2021-12-16 06:58:07'),
 (15, 13, 6, '2021-12-16 12:00:04'),
-(24, 6, 13, '2021-12-16 15:03:30'),
-(25, 5, 8, '2021-12-16 15:09:05'),
-(28, 6, 8, '2021-12-16 16:26:59');
+(16, 5, 8, '2021-12-16 12:20:21'),
+(17, 14, 12, '2022-01-16 23:55:36');
 
 -- --------------------------------------------------------
 
@@ -124,14 +195,18 @@ CREATE TABLE `bemaped_users_table` (
 --
 
 INSERT INTO `bemaped_users_table` (`id`, `u_name`, `u_email`, `u_pw`, `explan`, `icon`, `back_ground`, `life_flg`, `indate`) VALUES
-(1, 'horagarasu', 'test@test.test', '$2y$10$7cH7lix18Eyy5mzDUZ5JEetmRUdWVGcsUiUs9AK2HYbRF6OhBqOlu', 'TESTでホラガラスのアカウント作ってみました', '202112150828006ad436112b55be27a8f78fa3caa94c9b.png', '202112150828006ad436112b55be27a8f78fa3caa94c9b.jpg', 0, '2021-12-03 19:41:28'),
+(1, 'horagarasu', 'test@test.test', '$2y$10$7cH7lix18Eyy5mzDUZ5JEetmRUdWVGcsUiUs9AK2HYbRF6OhBqOlu', 'TESTでホラガラスのアカウント作ってみました', '2022012502554729ab65a843d74d23faf3c1755ce800ef.png', '2022012502554829ab65a843d74d23faf3c1755ce800ef.png', 0, '2021-12-03 19:41:28'),
 (2, 'yano', 'test@test.te', '$2y$10$pKRK0iDh8W.Vwz3oP8zznuV8O6VLZnJqLIYxB8vH/LCjzd1xcEAlS', '裏垢です。', '', '', 0, '2021-12-10 09:22:24'),
 (5, '矢野慎吾', 'test@test', '$2y$10$NW9/NMzJkhLyMwGL.4JJtuMzJ37igVDhmK0hBOsZQoDIMWkSSnu82', 'どうも、矢野慎吾です！bemapedというサービスを作ったのは私です！', '20211215215622227bc05e6bab2ed0ed5a154bc9df8668.JPG', '20211215215623227bc05e6bab2ed0ed5a154bc9df8668.jpg', 0, '2021-12-10 09:35:52'),
 (6, 'みーもぐ', 'mi-mogu@test.test', '$2y$10$Gju0K8opplwweFbNweLhKOrl5fMq1EE9A5/sKrrhbawJy7Y8NFSMq', '富山のグルメやスポットを紹介している【みーもぐ】と申します。\r\nインスタフォロワー2.8万人突破！\r\n富山の飲食店に行きまくっております。\r\n\r\n生まれ育った富山の美味しい・楽しいを一人でも多くの方に届けられるよう\r\n動画を配信していきたいと思っています♪\r\n\r\nチャンネル登録やコメント、大変励みになります…\r\nぜひよろしくお願いします＾＾', '20211215125415c01d2e0b12939bbc12d024e5332cca00.png', '20211215125416c01d2e0b12939bbc12d024e5332cca00.png', 0, '2021-12-12 14:06:31'),
 (7, 'ヒカキン', 'hikakin@test.test', '$2y$10$A4H8IXeyqJJOD.xIWRA17OkzzYIn2uXcdvjIFXDG61YpkyWI.28BG', 'HikakinTVはヒカキンが日常の面白いものを紹介するチャンネルです。\r\n◆プロフィール◆\r\nYouTubeにてHIKAKIN、HikakinTV、HikakinGames、HikakinBlogと\r\n４つのチャンネルを運営し、動画の総アクセス数は100億回を突破、\r\nチャンネル登録者数は計1800万人以上、YouTubeタレント事務所uuum株式会社ファウンダー兼最高顧問。', '20211215151031d991844998f550e6ea3dddc3dd26e53c.png', '20211215151032d991844998f550e6ea3dddc3dd26e53c.png', 0, '2021-12-13 07:13:26'),
 (8, 'susuruTV', 'susuru@test.test', '$2y$10$IxHHRG5hwNYFogHnqpthVuyyFkuVdleeF9jVxThOnb5.NumdsZ16e', 'ずるずる、どうもSUSURUです！「毎日ラーメン健康生活」をテーマに、ラーメンをすする動画を毎日18:30に配信しています。日々ラーメンをすすり続け、現在2000日以上連続配信中です！全国の美味しいラーメンをすすりたい、紹介したいという気持ちで毎日続けておりますので宜しければチャンネル登録よろしくお願いします！生粋のラーメンYouTuber、SUSURUによる「毎日ラーメン健康生活」を追うチャンネル。「毎日ラーメン健康生活」とはラーメン大好きSUSURUが毎日ラーメンを食べても健康でいれることを証明していく生活。現在2000日以上、毎日ラーメンをすすり続けている。日本全国のラーメンをすする為、ラーメン図鑑としてもお使いいただけます。都道府県別再生リストや、二郎系ラーメン、家系ラーメン、といったジャンル別再生リストもございますのでご活用ください！世界のRamenも追っていきたい！！', '202112151425019bfbfcdc7e0dfb36d09e0480d03daa77.png', '202112151425029bfbfcdc7e0dfb36d09e0480d03daa77.png', 0, '2021-12-13 07:15:19'),
 (12, 'marumeshi', 'marumeshi@test.test', '$2y$10$QxCYynOI.UlnSA81W4NZSO5di3RIobT3hnMNOdx0qP4XrDfCqNd36', '食べることが大好きな\r\n2人組がお送りします٩( \'ω\' )و٩( \'ω\' )و \r\n\r\nまるめしでは、\r\n日本全国の美味しいご飯を紹介して行きます。\r\n（旅行も大好きなので、いつかは海外のご飯も紹介できたら良いなぁ…と思っています）\r\n\r\nチャンネル登録よろしくお願いします。', '20211215212855c1d936a484a38e76d4df5410eabe5c5e.png', '20211215212856c1d936a484a38e76d4df5410eabe5c5e.png', 0, '2021-12-16 06:13:16'),
-(13, 'MAIBARU', 'maibaru@test.test', '$2y$10$k09BDmNb/V8Q8xKwkgxOIuQMCuuhRKvGvt9D4u97ZCUcEiltvh7O2', 'こんにちは、MAIBARUです\r\n\r\nこのチャンネルは私MAIBARUと撮影担当YUUが\r\n気ままに運営するタイ旅行チャンネルです。\r\n人気の観光地から地方の秘境まで、ゆるっと発信中\r\n週末に不定期更新しています\r\n\r\nかなりゆるめのテイストですが、お気に召せば幸いです\r\nチャンネル登録や動画にコメントを頂けるととてもよろこびます', '2021121521355938953b51ebea7a3c5d36f1975ef2828b.png', '2021121521360038953b51ebea7a3c5d36f1975ef2828b.png', 0, '2021-12-16 06:33:41');
+(13, 'MAIBARU', 'maibaru@test.test', '$2y$10$k09BDmNb/V8Q8xKwkgxOIuQMCuuhRKvGvt9D4u97ZCUcEiltvh7O2', 'こんにちは、MAIBARUです\r\n\r\nこのチャンネルは私MAIBARUと撮影担当YUUが\r\n気ままに運営するタイ旅行チャンネルです。\r\n人気の観光地から地方の秘境まで、ゆるっと発信中\r\n週末に不定期更新しています\r\n\r\nかなりゆるめのテイストですが、お気に召せば幸いです\r\nチャンネル登録や動画にコメントを頂けるととてもよろこびます', '2021121521355938953b51ebea7a3c5d36f1975ef2828b.png', '2021121521360038953b51ebea7a3c5d36f1975ef2828b.png', 0, '2021-12-16 06:33:41'),
+(15, 'kato', 'katonyonko@yahoo.co.jp', '$2y$10$0eq3IOsepV2eGzIashxR1u29brhmTtaBcCZE2C8fCBvhCQrCxwUmq', NULL, NULL, NULL, 0, '2022-02-13 16:14:35'),
+(16, '松山三四六の三四六道', 'sanshirou@test.test', '$2y$10$QSHrNHGhRTQ1hJF9/8bsdusmboy/5Jl8yhbIJF/nK5xeCGZWHnVqm', '松山三四六の公式YouTubeチャンネル【三四六道（サンシロード）】です。\r\n三四六が知る魅力溢れる信州、そして信州人。長野県を元気にしたいという熱い思いを込めた動画を配信していきたいと思います。', '202202221053024f8c1d0382b74248fb38adbf4a7577c5.png', '202202221053034f8c1d0382b74248fb38adbf4a7577c5.png', 0, '2022-02-22 10:52:21'),
+(17, '奈良井宿 ~naraijuku~', 'naraijuku@test.test', '$2y$10$lxfOTIsZ06QSWSb2YgtxiOe5TVMCWFjIXVjs/CJP47YtBLBnEKY9e', '奈良井宿の紹介動画コンテンツをマッピング', '2022022213470107b6462b9b9c95783b62f427ef56b930.png', '2022022213470207b6462b9b9c95783b62f427ef56b930.png', 0, '2022-02-22 13:44:13'),
+(18, '塩尻市', 'shiojiri@test.test', '$2y$10$7GSQVmTlhkRhZPHpl9Y3UO8PC8DwXwlxQPpyTkxyM32G0TyPf/NMm', '塩尻市の魅力を動画でマッピング', '20220222151745e52396ba2e8532829a593225c7dc281c.png', '20220222151746e52396ba2e8532829a593225c7dc281c.png', 0, '2022-02-22 15:15:04');
 
 --
 -- ダンプしたテーブルのインデックス
@@ -163,19 +238,19 @@ ALTER TABLE `bemaped_users_table`
 -- テーブルのAUTO_INCREMENT `bemaped_data_table`
 --
 ALTER TABLE `bemaped_data_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 
 --
 -- テーブルのAUTO_INCREMENT `bemaped_follow_table`
 --
 ALTER TABLE `bemaped_follow_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- テーブルのAUTO_INCREMENT `bemaped_users_table`
 --
 ALTER TABLE `bemaped_users_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
