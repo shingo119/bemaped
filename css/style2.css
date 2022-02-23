@@ -195,7 +195,16 @@ body {
 
 .left-main-menu .menu-item {
     width: 100%;
-    height: 80px;
+    height: 50px;
+    display: flex;
+    box-sizing: border-box;
+    padding-left: 60px;
+    align-items: center;
+}
+
+.left-sub-menu  {
+    width: 100%;
+    height: 50px;
     display: flex;
     box-sizing: border-box;
     padding-left: 60px;
@@ -232,15 +241,6 @@ p {
     width: 95%;
     margin-top: 30px;
     padding-bottom: 50px;
-}
-
-.left-sub-menu .menu-item {
-    width: 100%;
-    height: 90px;
-    display: flex;
-    box-sizing: border-box;
-    padding-left: 60px;
-    align-items: center;
 }
 
 /* 右側のカラム */

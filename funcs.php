@@ -59,6 +59,14 @@ function login_flg(){
   }
 }
 
+function loginLogout_flg(){
+  if($_SESSION["id"] != "" || $_SESSION["id"] != NULL){
+    return 'style="display:flex"'; 
+  }else{
+    return 'style="display:none"';
+  }
+}
+
 function console_log( $data ){
   echo '<script>';
   echo 'console.log('. json_encode( $data ) .')';

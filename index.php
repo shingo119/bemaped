@@ -134,7 +134,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 </a>
                 <!-- フォローしてる人を確認するページ -->
                 <a href="follow_users.php">
-                <div class="menu-item">
+                <div class="menu-item" <?=loginLogout_flg()?> <?=login_flg()?>>
                     <img src="img/megane3.png" alt="">
                     <p>フォロー</p>
                     <div class="description">フォロー</div>
@@ -142,7 +142,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 </a>
                 <!-- フォローされている人を確認するページ -->
                 <a href="follower_users.php">
-                <div class="menu-item">
+                <div class="menu-item" <?=loginLogout_flg()?> <?=login_flg()?>>
                     <img src="img/hurt-pink.png" alt="">
                     <p>フォロワー</p>
                     <div class="description">フォロワー</div>
@@ -232,7 +232,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 <!-- MAP[END] -->
 
                 <!-- アルファ版の注意事項[START] -->
-                <div class="disclaimer" style="width: 460px; position: absolute; bottom: 10%; right: 2%; z-index: 100; background-color: rgba(137,231,215); border-radius: 10px; box-shadow: 2px 2px 6px #959595; font-size: 20px; ">
+                <div class="disclaimer" style="width: 460px; position: absolute; bottom: -1%; right: 69%; z-index: 100; background-color: rgba(137,231,215); border-radius: 10px; box-shadow: 2px 2px 6px #959595; font-size: 20px; ">
                     <div style="color:red; font-size: 28px; margin:20px 10px 10px 10px;">※注意！</div>
                     <div style="margin: 10px 10px 10px 20px">
                         bemapedアルファ版をご覧いただきありがとうございます。<br>
@@ -393,7 +393,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 const maxLength = Math.max(...[latLength,lonLength]);
                 console.log("maxLength:"+maxLength);
                 console.log("zoom:"+zoom);
-                map.changeMap(totalLat/search_data_count, totalLon/search_data_count, "load", zoom); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
+                map.changeMap((maxLat + minLat)/2, (maxLon + minLon)/2, "load", zoom); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
 
             }
             if( search_word == "" && user_id != 0){
@@ -442,7 +442,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 lonLengthList.forEach(el => lonLength < el ? lonZoom++:null);
                 const zoom = Math.min(...[latZoom,lonZoom]);
                 console.log("zoom:"+zoom);
-                map.changeMap(totalLat/user_id_data_count, totalLon/user_id_data_count, "load", zoom); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
+                map.changeMap((maxLat + minLat)/2, (maxLon + minLon)/2, "load", zoom); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
             }else{
                 map.changeMap(lat, lon, "load", 13); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
             }
