@@ -343,6 +343,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
             let search_data_count = "<?=$val3?>";
             let user_id = "<?=$user_id?>";
             let user_id_data_count = "<?=$val5?>";
+            console.log(search_word);
             // この次の行はfor文の外に出しておいた方が良い（iと関係ない要素なので、for文の中に入れると毎回計算を行うことになって無駄な処理になる）
             // console.log(user_id);
             // console.log(user_id_data_count);
@@ -393,7 +394,8 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 const maxLength = Math.max(...[latLength,lonLength]);
                 console.log("maxLength:"+maxLength);
                 console.log("zoom:"+zoom);
-                map.changeMap((maxLat + minLat)/2, (maxLon + minLon)/2, "load", zoom); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
+                console.log("currentGiocord:"+(Number(maxLat) + Number(minLat))/2+','+(Number(maxLon) + Number(minLon))/2);
+                map.changeMap((Number(maxLat) + Number(minLat))/2, (Number(maxLon) + Number(minLon))/2, "load", zoom); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
 
             }
             if( search_word == "" && user_id != 0){
@@ -442,7 +444,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 lonLengthList.forEach(el => lonLength < el ? lonZoom++:null);
                 const zoom = Math.min(...[latZoom,lonZoom]);
                 console.log("zoom:"+zoom);
-                map.changeMap((maxLat + minLat)/2, (maxLon + minLon)/2, "load", zoom); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
+                map.changeMap((Number(maxLat) + Number(minLat))/2, (Number(maxLon) + Number(minLon))/2, "load", zoom); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
             }else{
                 map.changeMap(lat, lon, "load", 13); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
             }
