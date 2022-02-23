@@ -333,7 +333,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
             // この次の行はfor文の外に出しておいた方が良い（iと関係ない要素なので、for文の中に入れると毎回計算を行うことになって無駄な処理になる）
             console.log(user_id);
             console.log(user_id_data_count);
-            if( search_word != "" && user_id == ""){
+            if( search_word != ""){
                 let json_val2 = JSON.parse(JSON.stringify(<?= $json_val2 ?>));
                 for (let i = 0; i < search_data_count ; i++) {
                 const lat = json_val2[i]["lat"];
