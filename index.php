@@ -402,10 +402,10 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 let json_val4 = JSON.parse(JSON.stringify(<?= $json_val4 ?>));
                 let totalLat = 0;
                 let totalLon = 0;
-                let maxLat = 0;
-                let maxLon = 0;
-                let minLat = 0;
-                let minLon = 0;
+                let maxLat = -90;
+                let maxLon = -180;
+                let minLat = 90;
+                let minLon = 180;
                 let latZoom = 0;
                 let lonZoom = 0;
                 for (let i = 0; i < user_id_data_count ; i++) {
