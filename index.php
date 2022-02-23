@@ -232,7 +232,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 <!-- MAP[END] -->
 
                 <!-- アルファ版の注意事項[START] -->
-                <div class="disclaimer" style="width: 460px; position: absolute; bottom: -1%; right: 69%; z-index: 100; background-color: rgba(137,231,215); border-radius: 10px; box-shadow: 2px 2px 6px #959595; font-size: 20px; ">
+                <div class="disclaimer" style="width: 460px; position: absolute; bottom: -1%; right: 70%; z-index: 100; background-color: rgba(137,231,215); border-radius: 10px; box-shadow: 2px 2px 6px #959595; font-size: 20px; ">
                     <div style="color:red; font-size: 28px; margin:20px 10px 10px 10px;">※注意！</div>
                     <div style="margin: 10px 10px 10px 20px">
                         bemapedアルファ版をご覧いただきありがとうございます。<br>
