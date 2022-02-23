@@ -344,16 +344,16 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
             let user_id = "<?=$user_id?>";
             let user_id_data_count = "<?=$val5?>";
             // この次の行はfor文の外に出しておいた方が良い（iと関係ない要素なので、for文の中に入れると毎回計算を行うことになって無駄な処理になる）
-            console.log(user_id);
-            console.log(user_id_data_count);
+            // console.log(user_id);
+            // console.log(user_id_data_count);
             if( search_word != ""){
                 let json_val2 = JSON.parse(JSON.stringify(<?= $json_val2 ?>));
                 let totalLat = 0;
                 let totalLon = 0;
-                let maxLat = 0;
-                let maxLon = 0;
-                let minLat = 0;
-                let minLon = 0;
+                let maxLat = -90;
+                let maxLon = -180;
+                let minLat = 90;
+                let minLon = 180;
                 let latZoom = 0;
                 let lonZoom = 0;
                 for (let i = 0; i < search_data_count ; i++) {
@@ -383,22 +383,20 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                         $('#info_id'+i).removeAttr('hidden');
                     });
                 }
-                const latLength = (maxLat - minLat);
-                const lonLength = (maxLon - minLon);
-                // const latLength = Math.floor((maxLat - minLat)*9.1287);
-                // const lonLength = Math.floor((maxLon - minLon)*11.0940);
-                console.log(latLength);
-                console.log(lonLength);
-                const latLengthList = [36615, 14646, 7323, 3661, 2929, 1464, 732, 366, 146, 73, 29, ]
-                const lonLengthList = [55961, 22384, 11192, 5596, 4476, 2238, 1119, 559, 223, 111, 44]
+                const latLength = (maxLat - minLat)*91;
+                const lonLength = (maxLon - minLon)*110;
+                const latLengthList = [36615, 14646, 7323, 3661, 2929, 1464, 732, 366, 146, 73, 29, 14, 7.3, 3.6, 1.4, 0.7]
+                const lonLengthList = [55961, 22384, 11192, 5596, 4476, 2238, 1119, 559, 223, 111, 44, 22, 11, 5, 2.2, 1.1]
                 latLengthList.forEach(el => latLength < el ? latZoom++:null);
                 lonLengthList.forEach(el => lonLength < el ? lonZoom++:null);
                 const zoom = Math.min(...[latZoom,lonZoom]);
-                console.log(zoom);
+                const maxLength = Math.max(...[latLength,lonLength]);
+                console.log("maxLength:"+maxLength);
+                console.log("zoom:"+zoom);
                 map.changeMap(totalLat/search_data_count, totalLon/search_data_count, "load", zoom); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
 
             }
-            if( search_word == "" && user_id !=""){
+            if( search_word == "" && user_id != 0){
                 let json_val4 = JSON.parse(JSON.stringify(<?= $json_val4 ?>));
                 let totalLat = 0;
                 let totalLon = 0;
@@ -436,18 +434,14 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                         $('#info_id'+i).removeAttr('hidden');
                     });
                 }
-                const latLength = (maxLat - minLat);
-                const lonLength = (maxLon - minLon);
-                // const latLength = Math.floor((maxLat - minLat)*9.1287);
-                // const lonLength = Math.floor((maxLon - minLon)*11.0940);
-                console.log(latLength);
-                console.log(lonLength);
-                const latLengthList = [36615, 14646, 7323, 3661, 2929, 1464, 732, 366, 146, 73, 29, ]
-                const lonLengthList = [55961, 22384, 11192, 5596, 4476, 2238, 1119, 559, 223, 111, 44]
+                const latLength = (maxLat - minLat)*91;
+                const lonLength = (maxLon - minLon)*110;
+                const latLengthList = [36615, 14646, 7323, 3661, 2929, 1464, 732, 366, 146, 73, 29, 14, 7.3, 3.6, 1.4, 0.7]
+                const lonLengthList = [55961, 22384, 11192, 5596, 4476, 2238, 1119, 559, 223, 111, 44, 22, 11, 5, 2.2, 1.1]
                 latLengthList.forEach(el => latLength < el ? latZoom++:null);
                 lonLengthList.forEach(el => lonLength < el ? lonZoom++:null);
                 const zoom = Math.min(...[latZoom,lonZoom]);
-                console.log(zoom);
+                console.log("zoom:"+zoom);
                 map.changeMap(totalLat/user_id_data_count, totalLon/user_id_data_count, "load", zoom); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
             }else{
                 map.changeMap(lat, lon, "load", 13); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
