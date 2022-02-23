@@ -113,7 +113,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
         <div class="left-culmn">
             <!-- メインメニュー -->
             <div class="main-icon">
-                <h1>bemaped</h1>
+                <a href="index.php"><h1>bemaped</h1></a>
             </div>
             <div class="left-main-menu">
                 <!-- サインアップタグ -->
@@ -204,7 +204,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
             
             <!-- マップ表示エリア -->
             <div class="map-area">
-                <form method="POST" action="">
+                <form method="POST" action="index.php">
                 <div class="search-bar">
                     <input type="text" id="search" name="search_word" placeholder="bemaped で 検索する">
                     <div class="search-icon bar-icon">
@@ -234,7 +234,20 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 <!-- アルファ版の注意事項[START] -->
                 <div class="disclaimer" style="width: 460px; position: absolute; bottom: 10%; right: 2%; z-index: 100; background-color: rgba(137,231,215); border-radius: 10px; box-shadow: 2px 2px 6px #959595; font-size: 20px; ">
                     <div style="color:red; font-size: 28px; margin:20px 10px 10px 10px;">※注意！</div>
-                    <div style="margin: 10px 10px 10px 20px">bemapedは現在アルファ版であり、使用できる機能が非常に限られております。<br>ひとまずは<br><br>１．上部の検索窓に「グルメ」と入力<br>２．エンターボタン押下でグルメ動画の検索<br>３．出てきたピンにマウスを乗せて地図上で動画が再生される<br><br>という操作を試していただき、使用感をご確認ください。より詳細な使い方を見たい方はこちらの<a href="https://docs.google.com/presentation/d/1-qODrnM__zfjtMChfcFhxfUipHzHJHaw/edit?usp=sharing&ouid=101344222594026290734&rtpof=true&sd=true" target="_blank" style="color:blue; text-decoration:underline;">使用説明書</a>からご確認ください。<br><br>興味を持たれた方は<a href="https://forms.gle/qQAG7DqDe6GAjAX78" target="_blank" style="color:blue; text-decoration:underline;">アンケート</a>へのご回答もお願いいたします。</div>
+                    <div style="margin: 10px 10px 10px 20px">
+                        bemapedアルファ版をご覧いただきありがとうございます。<br>
+                        bemapedは動画と地図上の位置を紐づけるアプリであり、
+                        現在本番リリースに向けて開発を進めております。<br>
+                        アプリに興味を持っていただいた方は、使用感についてのアンケートにご協力ください。<br><br>
+                        １．上部の検索窓に「グルメ」と入力<br>
+                        ２．エンターボタン押下でグルメ動画の検索<br>
+                        ３．出てきたピンにマウスを乗せて地図上で動画が再生される<br><br>
+                        <!-- 現在登録されたデータ数が少なく検索できるワードが限定されていますが、<br>
+                        今後ユーザーを増やしてあらゆる場所のあらゆる娯楽情報を検索できるようにしたいと思っています。<br> -->
+                        より詳細な使い方を見たい方はこちらの使用説明書からご確認ください。<br>
+                        <a href="https://docs.google.com/presentation/d/1-qODrnM__zfjtMChfcFhxfUipHzHJHaw/edit?usp=sharing&ouid=101344222594026290734&rtpof=true&sd=true" target="_blank" style="color:blue; text-decoration:underline;">使用説明書</a>からご確認ください。<br><br>
+                        興味を持たれた方は<a href="https://forms.gle/qQAG7DqDe6GAjAX78" target="_blank" style="color:blue; text-decoration:underline;">アンケート</a>へのご回答もお願いいたします。
+                    </div>
                 </div>
                 <!-- アルファ版の注意事項[] -->
             </div>
@@ -335,51 +348,109 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
             console.log(user_id_data_count);
             if( search_word != ""){
                 let json_val2 = JSON.parse(JSON.stringify(<?= $json_val2 ?>));
+                let totalLat = 0;
+                let totalLon = 0;
+                let maxLat = 0;
+                let maxLon = 0;
+                let minLat = 0;
+                let minLon = 0;
+                let latZoom = 0;
+                let lonZoom = 0;
                 for (let i = 0; i < search_data_count ; i++) {
-                const lat = json_val2[i]["lat"];
-                const lon = json_val2[i]["lon"];
-                map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
-                map.changeMap(lat, lon, "load", 13); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
-                map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-250px; left:-145px;">'+ make_iframe_on_map_by_video_id(json_val2[i]["video_id"]) +'<h5 style="font-size: 16px">' + json_val2[i]["movie_title"] + '</h5></div>');
-                x = map.pinText(lat, lon, " ", " ", " ");
-                map.onPin(x, "click", function () {
-                    // if (confirm('ページ遷移しますか？')) {
+                    const lat = json_val2[i]["lat"];
+                    const lon = json_val2[i]["lon"];
+                    totalLat += Number(lat);
+                    totalLon += Number(lon);
+                    maxLat = maxLat > lat ? maxLat:lat;
+                    maxLon = maxLon > lon ? maxLon:lon;
+                    minLat = minLat < lat ? minLat:lat;
+                    minLon = minLon < lon ? minLon:lon;
+                    map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
+                    // map.changeMap(lat, lon, "load", 13); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
+                    map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-250px; left:-145px;">'+ make_iframe_on_map_by_video_id(json_val2[i]["video_id"]) +'<h5 style="font-size: 16px">' + json_val2[i]["movie_title"] + '</h5></div>');
+                    x = map.pinText(lat, lon, " ", " ", " ");
+                    map.onPin(x, "click", function () {
+                        // if (confirm('ページ遷移しますか？')) {
                         const url = "/bemaped/view.php?movie_id=" + json_val2[i]["id"];
                         window.location.href = `${url}`;
-                    // }
-                });
-                // ホバーした時のみ説明を表示する
-                map.onPin(x, "mouseout", function () {
-                    $('#info_id'+i).attr('hidden', true);
-                });
-                map.onPin(x, "mouseover", function () {
-                    $('#info_id'+i).removeAttr('hidden');
-                });
+                        // }
+                    });
+                    // ホバーした時のみ説明を表示する
+                    map.onPin(x, "mouseout", function () {
+                        $('#info_id'+i).attr('hidden', true);
+                    });
+                    map.onPin(x, "mouseover", function () {
+                        $('#info_id'+i).removeAttr('hidden');
+                    });
                 }
+                const latLength = (maxLat - minLat);
+                const lonLength = (maxLon - minLon);
+                // const latLength = Math.floor((maxLat - minLat)*9.1287);
+                // const lonLength = Math.floor((maxLon - minLon)*11.0940);
+                console.log(latLength);
+                console.log(lonLength);
+                const latLengthList = [36615, 14646, 7323, 3661, 2929, 1464, 732, 366, 146, 73, 29, ]
+                const lonLengthList = [55961, 22384, 11192, 5596, 4476, 2238, 1119, 559, 223, 111, 44]
+                latLengthList.forEach(el => latLength < el ? latZoom++:null);
+                lonLengthList.forEach(el => lonLength < el ? lonZoom++:null);
+                const zoom = Math.min(...[latZoom,lonZoom]);
+                console.log(zoom);
+                map.changeMap(totalLat/search_data_count, totalLon/search_data_count, "load", zoom); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
+
             }
             if( search_word == "" && user_id !=""){
                 let json_val4 = JSON.parse(JSON.stringify(<?= $json_val4 ?>));
+                let totalLat = 0;
+                let totalLon = 0;
+                let maxLat = 0;
+                let maxLon = 0;
+                let minLat = 0;
+                let minLon = 0;
+                let latZoom = 0;
+                let lonZoom = 0;
                 for (let i = 0; i < user_id_data_count ; i++) {
-                const lat = json_val4[i]["lat"];
-                const lon = json_val4[i]["lon"];
-                map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
-                map.changeMap(lat, lon, "load", 13); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
-                map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-250px; left:-145px;">'+ make_iframe_on_map_by_video_id(json_val4[i]["video_id"]) +'<h5 style="font-size: 16px">' + json_val4[i]["movie_title"] + '</h5></div>');
-                x = map.pinText(lat, lon, " ", " ", " ");
-                map.onPin(x, "click", function () {
-                    // if (confirm('ページ遷移しますか？')) {
+                    const lat = json_val4[i]["lat"];
+                    const lon = json_val4[i]["lon"];
+                    totalLat += Number(lat);
+                    totalLon += Number(lon);
+                    maxLat = maxLat > lat ? maxLat:lat;
+                    maxLon = maxLon > lon ? maxLon:lon;
+                    minLat = minLat < lat ? minLat:lat;
+                    minLon = minLon < lon ? minLon:lon;
+
+                    map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
+                    // map.changeMap(totalLat/user_id_data_count, totalLon/user_id_data_count, "load", 13); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
+                    map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-250px; left:-145px;">'+ make_iframe_on_map_by_video_id(json_val4[i]["video_id"]) +'<h5 style="font-size: 16px">' + json_val4[i]["movie_title"] + '</h5></div>');
+                    x = map.pinText(lat, lon, " ", " ", " ");
+                    map.onPin(x, "click", function () {
+                        // if (confirm('ページ遷移しますか？')) {
                         const url = "/bemaped/view.php?movie_id=" + json_val4[i]["id"];
                         window.location.href = `${url}`;
-                    // }
-                });
-                // ホバーした時のみ説明を表示する
-                map.onPin(x, "mouseout", function () {
-                    $('#info_id'+i).attr('hidden', true);
-                });
-                map.onPin(x, "mouseover", function () {
-                    $('#info_id'+i).removeAttr('hidden');
-                });
+                        // }
+                        });
+                    // ホバーした時のみ説明を表示する
+                    map.onPin(x, "mouseout", function () {
+                        $('#info_id'+i).attr('hidden', true);
+                    });
+                    map.onPin(x, "mouseover", function () {
+                        $('#info_id'+i).removeAttr('hidden');
+                    });
                 }
+                const latLength = (maxLat - minLat);
+                const lonLength = (maxLon - minLon);
+                // const latLength = Math.floor((maxLat - minLat)*9.1287);
+                // const lonLength = Math.floor((maxLon - minLon)*11.0940);
+                console.log(latLength);
+                console.log(lonLength);
+                const latLengthList = [36615, 14646, 7323, 3661, 2929, 1464, 732, 366, 146, 73, 29, ]
+                const lonLengthList = [55961, 22384, 11192, 5596, 4476, 2238, 1119, 559, 223, 111, 44]
+                latLengthList.forEach(el => latLength < el ? latZoom++:null);
+                lonLengthList.forEach(el => lonLength < el ? lonZoom++:null);
+                const zoom = Math.min(...[latZoom,lonZoom]);
+                console.log(zoom);
+                map.changeMap(totalLat/user_id_data_count, totalLon/user_id_data_count, "load", zoom); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
+            }else{
+                map.changeMap(lat, lon, "load", 13); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
             }
 
             //現在地表示してもピンはそのままに変更
