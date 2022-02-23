@@ -174,6 +174,25 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 <!-- ログイン中だけ表示されるメッセージ -->
                 <h3 class="youkoso" <?=login_flg()?>>ようこそ、<?= $val["u_name"];?>さん</h3> 
             </div>
+            <!-- アルファ版の注意事項[START] -->
+            <div class="disclaimer" style="width: 460px; position: relative; top: 0px; left: 3px; z-index: 100; background-color: rgba(137,231,215); border-radius: 10px; box-shadow: 2px 2px 6px #959595; font-size: 20px; ">
+                <div style="color:red; font-size: 28px; margin:20px 10px 10px 10px;">※注意！</div>
+                <div style="margin: 10px 10px 10px 20px">
+                    bemapedアルファ版をご覧いただきありがとうございます。<br>
+                    bemapedは動画と地図上の位置を紐づけるアプリであり、
+                    現在本番リリースに向けて開発を進めております。<br>
+                    アプリに興味を持っていただいた方は、使用感についてのアンケートにご協力ください。<br><br>
+                    １．上部の検索窓に「グルメ」と入力<br>
+                    ２．エンターボタン押下でグルメ動画の検索<br>
+                    ３．出てきたピンにマウスを乗せて地図上で動画が再生される<br><br>
+                    現在登録されたデータ数が少なく検索できるワードが限定されていますが、<br>
+                    今後ユーザーを増やしてあらゆる場所のあらゆる娯楽情報を検索できるようにしたいと思っています。<br>
+                    より詳細な使い方を見たい方はこちらの使用説明書からご確認ください。<br>
+                    <a href="https://docs.google.com/presentation/d/1-qODrnM__zfjtMChfcFhxfUipHzHJHaw/edit?usp=sharing&ouid=101344222594026290734&rtpof=true&sd=true" target="_blank" style="color:blue; text-decoration:underline;">使用説明書</a>からご確認ください。<br><br>
+                    興味を持たれた方は<a href="https://forms.gle/qQAG7DqDe6GAjAX78" target="_blank" style="color:blue; text-decoration:underline;">アンケート</a>へのご回答もお願いいたします。
+                </div>
+            </div>
+                <!-- アルファ版の注意事項[] -->
             <!-- サブメニュー -->
             <!-- <div class="left-sub-menu">
                 <div class="menu-item">
@@ -231,25 +250,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 <div id="myMap" style='width:100%;height:100%;float:right;'></div>
                 <!-- MAP[END] -->
 
-                <!-- アルファ版の注意事項[START] -->
-                <div class="disclaimer" style="width: 460px; position: absolute; bottom: 4%; right: 70%; z-index: 100; background-color: rgba(137,231,215); border-radius: 10px; box-shadow: 2px 2px 6px #959595; font-size: 20px; ">
-                    <div style="color:red; font-size: 28px; margin:20px 10px 10px 10px;">※注意！</div>
-                    <div style="margin: 10px 10px 10px 20px">
-                        bemapedアルファ版をご覧いただきありがとうございます。<br>
-                        bemapedは動画と地図上の位置を紐づけるアプリであり、
-                        現在本番リリースに向けて開発を進めております。<br>
-                        アプリに興味を持っていただいた方は、使用感についてのアンケートにご協力ください。<br><br>
-                        １．上部の検索窓に「グルメ」と入力<br>
-                        ２．エンターボタン押下でグルメ動画の検索<br>
-                        ３．出てきたピンにマウスを乗せて地図上で動画が再生される<br><br>
-                        現在登録されたデータ数が少なく検索できるワードが限定されていますが、<br>
-                        今後ユーザーを増やしてあらゆる場所のあらゆる娯楽情報を検索できるようにしたいと思っています。<br>
-                        より詳細な使い方を見たい方はこちらの使用説明書からご確認ください。<br>
-                        <a href="https://docs.google.com/presentation/d/1-qODrnM__zfjtMChfcFhxfUipHzHJHaw/edit?usp=sharing&ouid=101344222594026290734&rtpof=true&sd=true" target="_blank" style="color:blue; text-decoration:underline;">使用説明書</a>からご確認ください。<br><br>
-                        興味を持たれた方は<a href="https://forms.gle/qQAG7DqDe6GAjAX78" target="_blank" style="color:blue; text-decoration:underline;">アンケート</a>へのご回答もお願いいたします。
-                    </div>
-                </div>
-                <!-- アルファ版の注意事項[] -->
+                
             </div>
         </div>
     </div>
