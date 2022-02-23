@@ -281,7 +281,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
             //   マップの種類：↓色々ある
             //   MapType:[load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
             //--------------------------------------------------
-            map.startMap(35.712772, 139.750443, "canvasLight", 10);
+            map.startMap(35.712772, 139.750443, "load", 10);
 
             // キーワード検索で座標を取ってきて、その座標を表示
             // map.getGeocode("Seattle", function (data) {
@@ -339,7 +339,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 const lat = json_val2[i]["lat"];
                 const lon = json_val2[i]["lon"];
                 map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
-                map.changeMap(lat, lon, "canvasLight", 13); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
+                map.changeMap(lat, lon, "load", 13); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
                 map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-250px; left:-145px;">'+ make_iframe_on_map_by_video_id(json_val2[i]["video_id"]) +'<h5 style="font-size: 16px">' + json_val2[i]["movie_title"] + '</h5></div>');
                 x = map.pinText(lat, lon, " ", " ", " ");
                 map.onPin(x, "click", function () {
@@ -363,7 +363,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 const lat = json_val4[i]["lat"];
                 const lon = json_val4[i]["lon"];
                 map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
-                map.changeMap(lat, lon, "canvasLight", 13); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
+                map.changeMap(lat, lon, "load", 13); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
                 map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-250px; left:-145px;">'+ make_iframe_on_map_by_video_id(json_val4[i]["video_id"]) +'<h5 style="font-size: 16px">' + json_val4[i]["movie_title"] + '</h5></div>');
                 x = map.pinText(lat, lon, " ", " ", " ");
                 map.onPin(x, "click", function () {
