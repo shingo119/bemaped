@@ -182,28 +182,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
             <!-- アルファ版の注意事項[START] -->
             <!-- いろいろ検索するページ -->
             
-            <div class="disclaimer" style="display:none; width: 460px; position: relative; top: -120px; left: 720px; z-index: 100; background-color: rgba(137,231,215); border-radius: 10px; box-shadow: 2px 2px 6px #959595; font-size: 20px; ">
-                <div style="color:red; font-size: 28px; margin:20px 10px 10px 10px;">※注意！</div>
-                <div style="margin: 10px 10px 10px 20px">
-                    bemapedアルファ版をご覧いただきありがとうございます。<br>
-                    bemapedは動画と地図上の位置を紐づけるアプリであり、現在本番リリースに向けて開発を進めております。<br>
-                    アプリに興味を持っていただいた方は、使用感についての
-                    <a href="https://forms.gle/qQAG7DqDe6GAjAX78" target="_blank" style="color:blue; text-decoration:underline;">
-                        アンケート
-                    </a>にご協力ください。
-                    <br><br>
-                    １．上部の検索窓に「グルメ」と入力<br>
-                    ２．エンターボタン押下でグルメ動画の検索<br>
-                    ３．出てきたピンにマウスを乗せて地図上で動画が再生される<br><br>
-                    現在登録されたデータ数が少なく検索できるワードが限定されていますが、<br>
-                    今後ユーザーを増やしてあらゆる場所のあらゆる娯楽情報を検索できるようにしたいと思っています。<br>
-                    より詳細な使い方を見たい方は<br>こちらの
-                    <a href="https://docs.google.com/presentation/d/1-qODrnM__zfjtMChfcFhxfUipHzHJHaw/edit?usp=sharing&ouid=101344222594026290734&rtpof=true&sd=true" target="_blank" style="color:blue; text-decoration:underline;">
-                        使用説明書
-                    </a>からご確認ください。<br>
-                </div>
-                <button id="fadeOut_btn" class="btn btn-radius-solid btn--shadow">閉じる<i class="fas fa-angle-right fa-position-right"></i></button>
-            </div>
+            
                 <!-- アルファ版の注意事項[] -->
             <!-- サブメニュー -->
             <!-- <div class="left-sub-menu">
@@ -259,9 +238,32 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 </div>
                 </form>
                 <!-- MAP[START] -->
-                <div id="myMap" style='width:100%;height:100%;float:right;'></div>
+                <div id="myMap" style='width:100%;height:100%;float:right;'>
+                    <div class="disclaimer" style="display:none; width: 460px; position: relative; top: 180px; left: 430px; z-index: 100; background-color: rgba(137,231,215); border-radius: 10px; box-shadow: 2px 2px 6px #959595; font-size: 20px; ">
+                        <div style="color:red; font-size: 28px; margin:20px 10px 10px 10px;">※注意！</div>
+                        <div style="margin: 10px 10px 10px 20px">
+                            bemapedアルファ版をご覧いただきありがとうございます。<br>
+                            bemapedは動画と地図上の位置を紐づけるアプリであり、現在本番リリースに向けて開発を進めております。<br>
+                            アプリに興味を持っていただいた方は、使用感についての
+                            <a href="https://forms.gle/qQAG7DqDe6GAjAX78" target="_blank" style="color:blue; text-decoration:underline;">
+                                アンケート
+                            </a>にご協力ください。
+                            <br><br>
+                            １．上部の検索窓に「グルメ」と入力<br>
+                            ２．エンターボタン押下でグルメ動画の検索<br>
+                            ３．出てきたピンにマウスを乗せて地図上で動画が再生される<br><br>
+                            現在登録されたデータ数が少なく検索できるワードが限定されていますが、<br>
+                            今後ユーザーを増やしてあらゆる場所のあらゆる娯楽情報を検索できるようにしたいと思っています。<br>
+                            より詳細な使い方を見たい方は<br>こちらの
+                            <a href="https://docs.google.com/presentation/d/1-qODrnM__zfjtMChfcFhxfUipHzHJHaw/edit?usp=sharing&ouid=101344222594026290734&rtpof=true&sd=true" target="_blank" style="color:blue; text-decoration:underline;">
+                                使用説明書
+                            </a>からご確認ください。<br>
+                            <div class="wrap"><button id="fadeOut_btn" class="btn btn-radius-solid btn--shadow">閉じる<i class="fas fa-angle-right fa-position-right"></i></button></div>
+                        </div>   
+                    </div>
+                </div>
                 <!-- MAP[END] -->
-
+                
                 
             </div>
         </div>
@@ -590,8 +592,15 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
             });
         }
 
+        let description_flag = 0;
         $('#fadeIn_icon').on('click', function () {
-            $('.disclaimer').fadeIn();
+            description_flag =(description_flag + 1) % 2;
+            if(description_flag === 1){
+                $('.disclaimer').fadeIn();
+            }else{
+                $('.disclaimer').fadeOut();
+            }
+            
         })
 
         $('#fadeOut_btn').on('click', function () {
