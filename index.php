@@ -147,13 +147,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                     <div class="description">フォロワー</div>
                 </div>
                 </a>
-                <!-- いろいろ検索するページ -->
-                <!-- <div class="menu-item">
-                    <img src="img/search.png" alt="">
-                    <p>サーチ</p>
-                    <div class="description">検索</div>
-                </div> -->
-                <!-- ログインタグ -->
+                
                 <a href="login.php">
                 <div class="menu-item" id="login" <?=logout_flg()?>>
                     <img src="img/login-icon.png" alt="">
@@ -169,12 +163,26 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                     <div class="description">ログアウト</div>
                 </div>
                 </a>
-
+                <div class="menu-item" id="fadeIn_icon">
+                    <img src="img/info2.png" alt="">
+                    <p>ご注意</p>
+                    <div class="description">ご注意</div>
+                </div>
+                <a href="https://forms.gle/qQAG7DqDe6GAjAX78" target="_blank">
+                <div class="menu-item">
+                    <img src="img/questionnaire.png" alt="">
+                    <p>アンケート</p>
+                    <div class="description">アンケート</div>
+                </div>
+                </a>
+            <!-- ログインタグ -->
                 <!-- ログイン中だけ表示されるメッセージ -->
                 <h3 class="youkoso" <?=login_flg()?>>ようこそ、<?= $val["u_name"];?>さん</h3> 
             </div>
             <!-- アルファ版の注意事項[START] -->
-            <div class="disclaimer" style="width: 460px; position: relative; top: 0px; left: 3px; z-index: 100; background-color: rgba(137,231,215); border-radius: 10px; box-shadow: 2px 2px 6px #959595; font-size: 20px; ">
+            <!-- いろいろ検索するページ -->
+            
+            <div class="disclaimer" style="display:none; width: 460px; position: relative; top: -120px; left: 720px; z-index: 100; background-color: rgba(137,231,215); border-radius: 10px; box-shadow: 2px 2px 6px #959595; font-size: 20px; ">
                 <div style="color:red; font-size: 28px; margin:20px 10px 10px 10px;">※注意！</div>
                 <div style="margin: 10px 10px 10px 20px">
                     bemapedアルファ版をご覧いただきありがとうございます。<br>
@@ -194,6 +202,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                         使用説明書
                     </a>からご確認ください。<br>
                 </div>
+                <button id="fadeOut_btn" class="btn btn-radius-solid btn--shadow">閉じる<i class="fas fa-angle-right fa-position-right"></i></button>
             </div>
                 <!-- アルファ版の注意事項[] -->
             <!-- サブメニュー -->
@@ -261,8 +270,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
         
     
     <!-- jQuery読み込みCDN -->
-    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
-        integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     
     <!-- bingmapのAPI読み込みCDN -->
     <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=ApPcFw7GdzTHXhj7erJNlk_tpn3P3DrjLSsbAPzasrG0b7f8_EDggHCOVS9brMbx' async
@@ -581,6 +589,16 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 $(".main").css("display", "flex");
             });
         }
+
+        $('#fadeIn_icon').on('click', function () {
+            $('.disclaimer').fadeIn();
+        })
+
+        $('#fadeOut_btn').on('click', function () {
+            $('.disclaimer').fadeOut();
+        })
+
+
 
     </script>
 
