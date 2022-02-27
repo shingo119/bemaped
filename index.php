@@ -604,6 +604,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
         })
 
         $('#fadeOut_btn').on('click', function () {
+            description_flag =(description_flag + 1) % 2;
             $('.disclaimer').fadeOut();
         })
 
