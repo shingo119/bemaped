@@ -1,15 +1,15 @@
 <?php
-ini_set('session.cookie_samesite','None');session_start();
+ini_set('session.cookie_samesite','None');
+session_start();
 header("Expires:-1");//戻るボタンからのフォームの再送信エラー回避
 header("Cache-Control:");//戻るボタンからのフォームの再送信エラー回避
 header("Pragma:");//戻るボタンからのフォームの再送信エラー回避
 include("funcs.php");
 $id = $_SESSION["id"];
 $user_id = (int)$_GET["user_id"];
-// console_log($user_id);
 $_SESSION["search_word"] = $_POST["search_word"];
-// console_log($_SESSION["search_word"]);
-
+$_SESSION["lat"]=$_POST["pin_lat"];
+$_SESSION["lon"]=$_POST["pin_lon"];
 
 $pdo = db_connect();//1.DB接続します
 $sql = "SELECT * FROM bemaped_users_table WHERE id=:id";
@@ -18,14 +18,9 @@ $stmt->bindValue(":id", $id, PDO::PARAM_INT);
 $status = $stmt->execute(); //sql文にエラーがないか
 $val = $stmt->fetch(); //ユーザー情報を取得
 
-// console_log("ID:".$id); //ログイン中のユーザーID
-// console_log($val); //ユーザー情報が取れているか
-// console_log("status:".$status); //sql文にエラーがないか
-
 if(isset($_POST["search_word"]) && $_POST["search_word"] != " " && $_POST["search_word"] != "　"){//半角スペース、全角スペース、検索ブロック
 $search_word = $_POST["search_word"]; //検索ワードを今のページからPOSTで取得
 $split_word = word_split($search_word);
-// console_log($split_word);
 
 // 複数ワードでのあいまい検索ができるように記述を変更
 $sql2 = "SELECT * FROM bemaped_data_table WHERE"; //あいまい検索
@@ -63,23 +58,12 @@ $status4 = $stmt4->execute(); //sql文にエラーがないか
 $val4 = $stmt4->fetchall(PDO::FETCH_ASSOC);
 $json_val4 = json_encode($val4);
 
-// console_log($json_val4);
-
 // 複数ワードでのあいまい検索ができるように記述を変更
 $sql5 = "SELECT COUNT(*) FROM bemaped_data_table WHERE u_id=:id"; //あいまい検索
 $stmt5 = $pdo->prepare($sql5);
 $stmt5->bindValue(":id", $user_id, PDO::PARAM_INT);
 $status5 = $stmt5->execute(); //sql文にエラーがないか
 $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
-
-// console_log($val5);
-
-// console_log("search_word:".$search_word);
-// console_log("status2:".$status2);
-// console_log("status3:".$status3);
-// console_log($val2);
-// console_log($val3);
-
 ?>
 
 
@@ -179,44 +163,16 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 <!-- ログイン中だけ表示されるメッセージ -->
                 <h3 class="youkoso" <?=login_flg()?>>ようこそ、<?= $val["u_name"];?>さん</h3> 
             </div>
-            <!-- アルファ版の注意事項[START] -->
-            <!-- いろいろ検索するページ -->
-            
-            
-                <!-- アルファ版の注意事項[] -->
-            <!-- サブメニュー -->
-            <!-- <div class="left-sub-menu">
-                <div class="menu-item">
-                    <img src="img/runk-up.png" alt="">
-                    <p>ホットスポット</p>
-                    <div class="description">急上昇</div>
-                </div>
-                <div class="menu-item" id="Youtube">
-                    <img src="img/Youtube-icon2.png" alt="">
-                    <p>Youtube<br>マッピング</p>
-                    <div class="description">Youtubeマッピング</div>
-                </div>
-                <div class="menu-item">
-                    <img src="img/insta-icon.png" alt="">
-                    <p>Instagram<br>マッピング</p>
-                    <div class="description">Instagramマッピング</div>
-                </div>
-                <div class="menu-item">
-                    <img src="img/logo.png" alt="" style="border-radius: 5px;">
-                    <p>動画UP<br>マッピング</p>
-                    <div class="description">動画マッピング</div>
-                </div>
-            </div> -->
         </div>
         <!-- 右側のエリア -->
         <div class="right-culmn">
-            <!-- 動画再生などのビューエリア -->
-            
             <!-- マップ表示エリア -->
             <div class="map-area">
                 <form method="POST" action="index.php">
                 <div class="search-bar">
                     <input type="text" id="search" name="search_word" placeholder="bemaped で 検索する">
+                    <input id="pin_lat" name="pin_lat" hidden>
+                    <input id="pin_lon" name="pin_lon" hidden>
                     <div class="search-icon bar-icon">
                         <img src="img/search-gray.png" id="search-img" alt="">
                         <div class="description">住所</div>
@@ -227,14 +183,6 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                         </button>
                         <div class="description">動画</div>
                     </div>
-                    <!-- <div class="insta-icon bar-icon">
-                        <img src="img/insta-icon.png" alt="">
-                        <div class="description">写真</div>
-                    </div> -->
-                    <!-- <div class="go-there-icon bar-icon">
-                        <img src="img/go-there-blue.png" alt="">
-                        <div class="description">経路</div>
-                    </div> -->
                 </div>
                 </form>
                 <!-- MAP[START] -->
@@ -291,6 +239,80 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
             return '<iframe width="315" height="170" src="https://www.youtube.com/embed/'+data+'?autoplay=1&mute=1&version=3&loop=1&playlist='+data+'&fs=0&modestbranding=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
         }
 
+        //クリックすると座標を取ってくる
+        function getCoordinate(map) {
+            map.onGeocode("click", function (data) {
+                map.pinLayerClear(pin);
+                lat = data.location.latitude;  //Get latitude
+                lon = data.location.longitude; //Get longitude
+                pin = map.pinLayer(lat, lon, "#0000ff");
+                document.getElementById("pin_lat").value = lat;
+                document.getElementById("pin_lon").value = lon;
+                // let uid = "<?= $id ?>";
+                // if (uid !="") {
+                //     map.crearInfobox()
+                //     // map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 76);
+                //     setTimeout(map.infobox(lat, lon, "この場所に動画をマッピングしますか？", `<a href="up_load.php?sample1=${lat}&sample2=${lon}">設定画面に移動</a>`), 500);
+                // }
+            });
+        }
+
+        // 虫眼鏡マークを押すとbing mapでの検索を行い、そこにピンを打つ
+        function addressSearch(map,pin) {
+            $('#search-img').on('click', function () {
+                    map.pinLayerClear(pin);
+                    let address = String(document.querySelector("#search").value);
+                    map.getGeocode(address, function (data) {
+                        lat = data.latitude;  //Get latitude
+                        lon = data.longitude; //Get longitude
+                        pin = map.pinLayer(lat, lon, "#0000ff");
+                        document.getElementById("pin_lat").value = lat;
+                        document.getElementById("pin_lon").value = lon;
+                    });
+                });
+        }
+
+        // 動画の表示
+        function movie(map,count,str) {
+            let json_val2 = JSON.parse(str);
+            let maxLat = -90;
+            let maxLon = -180;
+            let minLat = 90;
+            let minLon = 180;
+            let latZoom = 0;
+            let lonZoom = 0;
+            for (let i = 0; i < count ; i++) {
+                const mlat = json_val2[i]["lat"];
+                const mlon = json_val2[i]["lon"];
+                maxLat = maxLat > mlat ? maxLat:mlat;
+                maxLon = maxLon > mlon ? maxLon:mlon;
+                minLat = minLat < mlat ? minLat:mlat;
+                minLon = minLon < mlon ? minLon:mlon;
+                map.pinIcon(mlat, mlon, "img/Youtube-pinicon.png", 0.3, 38, 85);
+                map.infoboxHtml(mlat, mlon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-250px; left:-145px;">'+ make_iframe_on_map_by_video_id(json_val2[i]["video_id"]) +'<h5 style="font-size: 16px">' + json_val2[i]["movie_title"] + '</h5></div>');
+                x = map.pinText(mlat, mlon, " ", " ", " ");
+                map.onPin(x, "click", function () {
+                    const url = "/bemaped/view.php?movie_id=" + json_val2[i]["id"];
+                    window.location.href = `${url}`;
+                });
+                // ホバーした時のみ説明を表示する
+                map.onPin(x, "mouseout", function () {
+                    $('#info_id'+i).attr('hidden', true);
+                });
+                map.onPin(x, "mouseover", function () {
+                    $('#info_id'+i).removeAttr('hidden');
+                });
+            }
+            const latLength = (maxLat - minLat)*91;
+            const lonLength = (maxLon - minLon)*110;
+            const latLengthList = [36615, 14646, 7323, 3661, 2929, 1464, 732, 366, 146, 73, 29, 14, 7.3, 3.6, 1.4, 0.7]
+            const lonLengthList = [55961, 22384, 11192, 5596, 4476, 2238, 1119, 559, 223, 111, 44, 22, 11, 5, 2.2, 1.1]
+            latLengthList.forEach(el => latLength < el ? latZoom++:null);
+            lonLengthList.forEach(el => lonLength < el ? lonZoom++:null);
+            const zoom = Math.min(...[latZoom,lonZoom]);
+            map.changeMap((Number(maxLat) + Number(minLat))/2, (Number(maxLon) + Number(minLon))/2, "load", zoom);
+        }
+
         //****************************************************************************************
         // ↓↓↓BingMaps&BmapQuery マップのjQueryの部分↓↓↓
         //****************************************************************************************
@@ -308,189 +330,30 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
             //   マップの種類：↓色々ある
             //   MapType:[load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
             //--------------------------------------------------
-            map.startMap(35.712772, 139.750443, "load", 10);
-
-            // キーワード検索で座標を取ってきて、その座標を表示
-            // map.getGeocode("Seattle", function (data) {
-            //     console.log(data);          //Get Geocode ObjectData
-            //     const lat = data.latitude;  //Get latitude
-            //     const lon = data.longitude; //Get longitude
-            //     document.querySelector("#geocode").innerHTML = lat + '<br>' + lon;
-            // });
-
-            //----------------------------------------------------
-            //3. Add Pushpin-Icon 好きな画像アイコンをマッピングできる
-            // （緯度、経度、アイコン画像、アイコン大きさ、アイコンと位置情報のリンクするところのX位置、アイコンと位置情報のリンクするところY位置）
-            // pinIcon(lat, lon, icon, scale, anchor_x, anchor_y);
-            //----------------------------------------------------
-            //let pin = map.pinIcon(47.6130, -122.1945, "../img/poi_custom.png", 1.0, 0, 0);
-
-            //クリックすると座標を取ってくる
-            map.onGeocode("click", function (data) {
-                //console.log(data);                   //Get Geocode ObjectData
-                const lat = data.location.latitude;  //Get latitude
-                const lon = data.location.longitude; //Get longitude
-                let uid = "<?= $id ?>";
-                if (uid !="") {
-                    map.crearInfobox()
-                    // map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 76);
-                    setTimeout(map.infobox(lat, lon, "この場所に動画をマッピングしますか？", `<a href="up_load.php?sample1=${lat}&sample2=${lon}">設定画面に移動</a>`), 500);
-                }else{
-
+            map.geolocation(function(data) {
+                //location
+                let lat = data.coords.latitude;
+                let lon = data.coords.longitude;
+                if (<?php if ($_SESSION["lat"]!='' && $_SESSION["lon"]!='') {echo 'true';} else {echo 'false';} ?>) {
+                    lat = Number(<?= $_SESSION["lat"] ?>);
+                    lon = Number(<?= $_SESSION["lon"] ?>);
                 }
-                //map.pinLayerClear(pin2); ピンのレイヤーの時の削除コード
-                //map.pinIcon(lat, lon, "BmapQuery-master/img/poi_custom.png", 1.0, 12, 39);
-            });
-
-            $('#search-img').on('click', function () {
-                let address = String(document.querySelector("#search").value);
-                map.getGeocode(address, function (data) {
-                    console.log(data);          //Get Geocode ObjectData
-                    const lat = data.latitude;  //Get latitude
-                    const lon = data.longitude; //Get longitude
-                    map.pin(lat, lon, "#ff0000");
-                    //document.querySelector("#geocode").innerHTML = lat + ',' + lon;
-                });
-            });
-
-            let search_word = "<?= $_POST["search_word"] ?>";
-            let search_data_count = "<?=$val3?>";
-            let user_id = "<?=$user_id?>";
-            let user_id_data_count = "<?=$val5?>";
-            console.log(search_word);
-            // この次の行はfor文の外に出しておいた方が良い（iと関係ない要素なので、for文の中に入れると毎回計算を行うことになって無駄な処理になる）
-            // console.log(user_id);
-            // console.log(user_id_data_count);
-            if( search_word != ""){
-                let json_val2 = JSON.parse(JSON.stringify(<?= $json_val2 ?>));
-                // let totalLat = 0;
-                // let totalLon = 0;
-                let maxLat = -90;
-                let maxLon = -180;
-                let minLat = 90;
-                let minLon = 180;
-                let latZoom = 0;
-                let lonZoom = 0;
-                for (let i = 0; i < search_data_count ; i++) {
-                    const lat = json_val2[i]["lat"];
-                    const lon = json_val2[i]["lon"];
-                    // totalLat += Number(lat);
-                    // totalLon += Number(lon);
-                    maxLat = maxLat > lat ? maxLat:lat;
-                    maxLon = maxLon > lon ? maxLon:lon;
-                    minLat = minLat < lat ? minLat:lat;
-                    minLon = minLon < lon ? minLon:lon;
-                    map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
-                    // map.changeMap(lat, lon, "load", 13); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
-                    map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-250px; left:-145px;">'+ make_iframe_on_map_by_video_id(json_val2[i]["video_id"]) +'<h5 style="font-size: 16px">' + json_val2[i]["movie_title"] + '</h5></div>');
-                    x = map.pinText(lat, lon, " ", " ", " ");
-                    map.onPin(x, "click", function () {
-                        // if (confirm('ページ遷移しますか？')) {
-                        const url = "/bemaped/view.php?movie_id=" + json_val2[i]["id"];
-                        window.location.href = `${url}`;
-                        // }
-                    });
-                    // ホバーした時のみ説明を表示する
-                    map.onPin(x, "mouseout", function () {
-                        $('#info_id'+i).attr('hidden', true);
-                    });
-                    map.onPin(x, "mouseover", function () {
-                        $('#info_id'+i).removeAttr('hidden');
-                    });
-                }
-                const latLength = (maxLat - minLat)*91;
-                const lonLength = (maxLon - minLon)*110;
-                const latLengthList = [36615, 14646, 7323, 3661, 2929, 1464, 732, 366, 146, 73, 29, 14, 7.3, 3.6, 1.4, 0.7]
-                const lonLengthList = [55961, 22384, 11192, 5596, 4476, 2238, 1119, 559, 223, 111, 44, 22, 11, 5, 2.2, 1.1]
-                latLengthList.forEach(el => latLength < el ? latZoom++:null);
-                lonLengthList.forEach(el => lonLength < el ? lonZoom++:null);
-                const zoom = Math.min(...[latZoom,lonZoom]);
-                const maxLength = Math.max(...[latLength,lonLength]);
-                console.log("maxLength:"+maxLength);
-                console.log("zoom:"+zoom);
-                console.log("currentGiocord:"+(Number(maxLat) + Number(minLat))/2+','+(Number(maxLon) + Number(minLon))/2);
-                map.changeMap((Number(maxLat) + Number(minLat))/2, (Number(maxLon) + Number(minLon))/2, "load", zoom); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
-
-            }
-            if( search_word == "" && user_id != 0){
-                let json_val4 = JSON.parse(JSON.stringify(<?= $json_val4 ?>));
-                // let totalLat = 0;
-                // let totalLon = 0;
-                let maxLat = -90;
-                let maxLon = -180;
-                let minLat = 90;
-                let minLon = 180;
-                let latZoom = 0;
-                let lonZoom = 0;
-                for (let i = 0; i < user_id_data_count ; i++) {
-                    const lat = json_val4[i]["lat"];
-                    const lon = json_val4[i]["lon"];
-                    // totalLat += Number(lat);
-                    // totalLon += Number(lon);
-                    maxLat = maxLat > lat ? maxLat:lat;
-                    maxLon = maxLon > lon ? maxLon:lon;
-                    minLat = minLat < lat ? minLat:lat;
-                    minLon = minLon < lon ? minLon:lon;
-
-                    map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
-                    // map.changeMap(totalLat/user_id_data_count, totalLon/user_id_data_count, "load", 13); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
-                    map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-250px; left:-145px;">'+ make_iframe_on_map_by_video_id(json_val4[i]["video_id"]) +'<h5 style="font-size: 16px">' + json_val4[i]["movie_title"] + '</h5></div>');
-                    x = map.pinText(lat, lon, " ", " ", " ");
-                    map.onPin(x, "click", function () {
-                        // if (confirm('ページ遷移しますか？')) {
-                        const url = "/bemaped/view.php?movie_id=" + json_val4[i]["id"];
-                        window.location.href = `${url}`;
-                        // }
-                        });
-                    // ホバーした時のみ説明を表示する
-                    map.onPin(x, "mouseout", function () {
-                        $('#info_id'+i).attr('hidden', true);
-                    });
-                    map.onPin(x, "mouseover", function () {
-                        $('#info_id'+i).removeAttr('hidden');
-                    });
-                }
-                const latLength = (maxLat - minLat)*91;
-                const lonLength = (maxLon - minLon)*110;
-                const latLengthList = [36615, 14646, 7323, 3661, 2929, 1464, 732, 366, 146, 73, 29, 14, 7.3, 3.6, 1.4, 0.7]
-                const lonLengthList = [55961, 22384, 11192, 5596, 4476, 2238, 1119, 559, 223, 111, 44, 22, 11, 5, 2.2, 1.1]
-                latLengthList.forEach(el => latLength < el ? latZoom++:null);
-                lonLengthList.forEach(el => lonLength < el ? lonZoom++:null);
-                const zoom = Math.min(...[latZoom,lonZoom]);
-                console.log("zoom:"+zoom);
-                map.changeMap((Number(maxLat) + Number(minLat))/2, (Number(maxLon) + Number(minLon))/2, "load", zoom); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
-            }else{
-                map.changeMap(lat, lon, "load", 13); //ここも毎回changeMapを入れるのは無駄になりそうなので、良い位置が表示されるように検討する
-            }
-
-            //現在地表示してもピンはそのままに変更
-            map.geolocation(function (data) {
-                const lat = data.coords.latitude;
-                const lon = data.coords.longitude;
-                map.pin(lat, lon, "#0000ff");
+                map.startMap(lat, lon, "load", 13);
+                pin =map.pinLayer(lat,lon,"#0000ff");
+                document.getElementById("pin_lat").value = lat;
+                document.getElementById("pin_lon").value = lon;
+                getCoordinate(map);
+                addressSearch(map,pin);
+                let search_word = "<?= $_POST["search_word"] ?>";
+                let search_data_count = "<?=$val3?>";
+                let user_id = "<?=$user_id?>";
+                let user_id_data_count = "<?=$val5?>";
                 if( search_word != ""){
-                for (let i = 0; i < search_data_count ; i++) {
-                const lat2 = json_val2[i]["lat"];
-                const lon2 = json_val2[i]["lon"];
-                map.pinIcon(lat2, lon2, "img/Youtube-pinicon.png", 0.3, 38, 85);
-                map.infoboxHtml(lat2, lon2, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-250px; left:-145px;">'+ make_iframe_on_map_by_video_id(json_val2[i]["video_id"]) +'<h5 style="font-size: 16px">' + json_val2[i]["movie_title"] + '</h5></div>');
-                x = map.pinText(lat2, lon2, " ", " ", " ");
-                map.onPin(x, "click", function () {
-                    if (confirm('ページ遷移しますか？')) {
-                        const url = "/bemaped/view.php?movie_id=" + json_val2[i]["id"];
-                        window.location.href = `${url}`;
-                    }
-                });
-                // ホバーした時のみ説明を表示する
-                map.onPin(x, "mouseout", function () {
-                    $('#info_id'+i).attr('hidden', true);
-                });
-                map.onPin(x, "mouseover", function () {
-                    $('#info_id'+i).removeAttr('hidden');
-                });
+                    movie(map, search_data_count, JSON.stringify(<?= $json_val2 ?>));
+                } else if ( search_word == "" && user_id != 0){
+                    movie(map, user_id_data_count, JSON.stringify(<?= $json_val4 ?>));
                 }
-            }
-            });
+            })
         }
 
         //****************************************************************************************
@@ -557,7 +420,6 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
         }
 
         let loginFlag = localStorage.getItem("loginFlag");
-        //console.log(loginFlag);
         if (loginFlag == null) {
             $(function () { //オープニング画面エフェクト
                 $(".top h1").addClass("is-fadein");
