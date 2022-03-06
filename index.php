@@ -170,9 +170,10 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
             <div class="map-area">
                 <form method="POST" action="index.php">
                 <div class="search-bar">
-                    <input type="text" id="search" name="search_word" placeholder="bemaped で 検索する">
+                    <input type="text" id="search" name="search_word" placeholder="検索ワード">
                     <input id="pin_lat" name="pin_lat" hidden>
                     <input id="pin_lon" name="pin_lon" hidden>
+                    <div id="round-css">ピンからの距離<input type="number" value="1000" min="100" max="100000" step="100" id="round" name="round">m</div>
                     <div class="search-icon bar-icon">
                         <img src="img/search-gray.png" id="search-img" alt="">
                         <div class="description">住所</div>
