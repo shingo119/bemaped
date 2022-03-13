@@ -10,6 +10,7 @@ $user_id = (int)$_GET["user_id"];
 $_SESSION["search_word"] = $_POST["search_word"];
 $_SESSION["lat"]=$_POST["pin_lat"];
 $_SESSION["lon"]=$_POST["pin_lon"];
+$_SESSION["round"]=$_POST["round"];
 
 $pdo = db_connect();//1.DB接続します
 $sql = "SELECT * FROM bemaped_users_table WHERE id=:id";
@@ -19,36 +20,38 @@ $status = $stmt->execute(); //sql文にエラーがないか
 $val = $stmt->fetch(); //ユーザー情報を取得
 
 if(isset($_POST["search_word"]) && $_POST["search_word"] != " " && $_POST["search_word"] != "　"){//半角スペース、全角スペース、検索ブロック
-$search_word = $_POST["search_word"]; //検索ワードを今のページからPOSTで取得
-$split_word = word_split($search_word);
+    $search_word = $_POST["search_word"]; //検索ワードを今のページからPOSTで取得
+    $split_word = word_split($search_word);
 
-// 複数ワードでのあいまい検索ができるように記述を変更
-$sql2 = "SELECT * FROM bemaped_data_table WHERE"; //あいまい検索
-for ($i = 0; $i < count($split_word); $i++) {
-  $sql2 .= " (movie_title LIKE '%" . $split_word[$i] . "%' OR tag LIKE '%";
-  if ($i == count($split_word) - 1) {
-    $sql2 .= $split_word[$i] . "%')";
-  } else {
-    $sql2 .= $split_word[$i] . "%') AND";
-  }
-}
-$stmt2 = $pdo->prepare($sql2);
-$status2 = $stmt2->execute(); //sql文にエラーがないか
-$val2 = $stmt2->fetchall(PDO::FETCH_ASSOC);
-$json_val2 = json_encode($val2);
+    // 複数ワードでのあいまい検索ができるように記述を変更
+    $sql2 = "SELECT * FROM bemaped_data_table WHERE"; //あいまい検索
+    $sql2 .= " (6378137 * ACOS(COS(RADIANS(".strval($_SESSION["lat"]).")) * COS(RADIANS(lat)) * COS(RADIANS(lon) - RADIANS(".strval($_SESSION["lon"]).")) + SIN(RADIANS(".strval($_SESSION["lat"]).")) * SIN(RADIANS(lat)))) < ".strval($_SESSION["round"])." AND";
+    for ($i = 0; $i < count($split_word); $i++) {
+    $sql2 .= " (movie_title LIKE '%" . $split_word[$i] . "%' OR tag LIKE '%";
+    if ($i == count($split_word) - 1) {
+        $sql2 .= $split_word[$i] . "%')";
+    } else {
+        $sql2 .= $split_word[$i] . "%') AND";
+    }
+    }
+    $stmt2 = $pdo->prepare($sql2);
+    $status2 = $stmt2->execute(); //sql文にエラーがないか
+    $val2 = $stmt2->fetchall(PDO::FETCH_ASSOC);
+    $json_val2 = json_encode($val2);
 
-// 複数ワードでのあいまい検索ができるように記述を変更
-$sql3 = "SELECT COUNT(*) FROM bemaped_data_table WHERE"; //あいまい検索
-for ($i = 0; $i < count($split_word); $i++) {
-  $sql3 .= " (movie_title LIKE '%" . $split_word[$i] . "%' OR tag LIKE '%";
-  if ($i == count($split_word) - 1) {
-    $sql3 .= $split_word[$i] . "%')";
-  } else {
-    $sql3 .= $split_word[$i] . "%') AND";
-  }
-}$stmt3 = $pdo->prepare($sql3);
-$status3 = $stmt3->execute(); //sql文にエラーがないか
-$val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
+    // 複数ワードでのあいまい検索ができるように記述を変更
+    $sql3 = "SELECT COUNT(*) FROM bemaped_data_table WHERE"; //あいまい検索
+    $sql3 .= " (6378137 * ACOS(COS(RADIANS(".strval($_SESSION["lat"]).")) * COS(RADIANS(lat)) * COS(RADIANS(lon) - RADIANS(".strval($_SESSION["lon"]).")) + SIN(RADIANS(".strval($_SESSION["lat"]).")) * SIN(RADIANS(lat)))) < ".strval($_SESSION["round"])." AND";
+    for ($i = 0; $i < count($split_word); $i++) {
+    $sql3 .= " (movie_title LIKE '%" . $split_word[$i] . "%' OR tag LIKE '%";
+    if ($i == count($split_word) - 1) {
+        $sql3 .= $split_word[$i] . "%')";
+    } else {
+        $sql3 .= $split_word[$i] . "%') AND";
+    }
+    }$stmt3 = $pdo->prepare($sql3);
+    $status3 = $stmt3->execute(); //sql文にエラーがないか
+    $val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
 }
 
 $sql4 = "SELECT * FROM bemaped_data_table WHERE u_id=:id";
@@ -240,7 +243,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
             return '<iframe width="315" height="170" src="https://www.youtube.com/embed/'+data+'?autoplay=1&mute=1&version=3&loop=1&playlist='+data+'&fs=0&modestbranding=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
         }
 
-        //クリックすると座標を取ってくる
+        //クリックするとそこにピンを打つ
         function getCoordinate(map) {
             map.onGeocode("click", function (data) {
                 map.pinLayerClear(pin);
@@ -259,7 +262,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
         }
 
         // 虫眼鏡マークを押すとbing mapでの検索を行い、そこにピンを打つ
-        function addressSearch(map,pin) {
+        function addressSearch(map) {
             $('#search-img').on('click', function () {
                     map.pinLayerClear(pin);
                     let address = String(document.querySelector("#search").value);
@@ -274,7 +277,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
         }
 
         // 動画の表示
-        function movie(map,count,str) {
+        function movie(map,count,str,locations) {
             let json_val2 = JSON.parse(str);
             let maxLat = -90;
             let maxLon = -180;
@@ -289,6 +292,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 maxLon = maxLon > mlon ? maxLon:mlon;
                 minLat = minLat < mlat ? minLat:mlat;
                 minLon = minLon < mlon ? minLon:mlon;
+                locations[i+1] = new Microsoft.Maps.Location(mlat, mlon);
                 map.pinIcon(mlat, mlon, "img/Youtube-pinicon.png", 0.3, 38, 85);
                 map.infoboxHtml(mlat, mlon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-250px; left:-145px;">'+ make_iframe_on_map_by_video_id(json_val2[i]["video_id"]) +'<h5 style="font-size: 16px">' + json_val2[i]["movie_title"] + '</h5></div>');
                 x = map.pinText(mlat, mlon, " ", " ", " ");
@@ -339,20 +343,22 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                     lat = Number(<?= $_SESSION["lat"] ?>);
                     lon = Number(<?= $_SESSION["lon"] ?>);
                 }
+                let locations = [];
+                locations[0] = new Microsoft.Maps.Location(lat, lon);
                 map.startMap(lat, lon, "load", 13);
                 pin =map.pinLayer(lat,lon,"#0000ff");
                 document.getElementById("pin_lat").value = lat;
                 document.getElementById("pin_lon").value = lon;
                 getCoordinate(map);
-                addressSearch(map,pin);
+                addressSearch(map);
                 let search_word = "<?= $_POST["search_word"] ?>";
                 let search_data_count = "<?=$val3?>";
                 let user_id = "<?=$user_id?>";
                 let user_id_data_count = "<?=$val5?>";
                 if( search_word != ""){
-                    movie(map, search_data_count, JSON.stringify(<?= $json_val2 ?>));
+                    movie(map, search_data_count, JSON.stringify(<?= $json_val2 ?>),locations);
                 } else if ( search_word == "" && user_id != 0){
-                    movie(map, user_id_data_count, JSON.stringify(<?= $json_val4 ?>));
+                    movie(map, user_id_data_count, JSON.stringify(<?= $json_val4 ?>),locations);
                 }
             })
         }
