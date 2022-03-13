@@ -69,8 +69,6 @@ $status5 = $stmt5->execute(); //sql文にエラーがないか
 $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -110,6 +108,14 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                     <div class="description">登録</div>
                 </div>
                 </a>
+                <!-- マッピングタグ -->
+                <!-- <a href="up_load.php?sample1=`${lat}`&sample2=`${lon}`"> -->
+                <div class="menu-item" id="mapping" <?=login_flg()?>>
+                    <img src="img/red-pin.png" alt="">
+                    <p>マッピング</p>
+                    <div class="description">青いピンの位置に動画をマッピングします</div>
+                </div>
+                <!-- </a> -->
                 <!-- マイページタグ -->
                 <a href="mypage.php">
                 <div class="menu-item" id="mypage" <?=login_flg()?>>
@@ -120,7 +126,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 </a>
                 <!-- フォローしてる人を確認するページ -->
                 <a href="follow_users.php">
-                <div class="menu-item" <?=loginLogout_flg()?> <?=login_flg()?>>
+                <div class="menu-item" <?=login_flg()?>>
                     <img src="img/megane3.png" alt="">
                     <p>フォロー</p>
                     <div class="description">フォロー</div>
@@ -128,13 +134,13 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 </a>
                 <!-- フォローされている人を確認するページ -->
                 <a href="follower_users.php">
-                <div class="menu-item" <?=loginLogout_flg()?> <?=login_flg()?>>
+                <div class="menu-item" <?=login_flg()?>>
                     <img src="img/hurt-pink.png" alt="">
                     <p>フォロワー</p>
                     <div class="description">フォロワー</div>
                 </div>
                 </a>
-                
+                <!-- ログインタグ -->
                 <a href="login.php">
                 <div class="menu-item" id="login" <?=logout_flg()?>>
                     <img src="img/login-icon.png" alt="">
@@ -405,18 +411,6 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
         //検索バーのアイコンからカーソルが外れると案内が消える
         $('.youtube-icon').mouseout(hideDescription);
 
-        //検索バーのアイコンにカーソルを乗せると案内が出る
-        $('.insta-icon').mouseover(showDescription);
-
-        //検索バーのアイコンからカーソルが外れると案内が消える
-        $('.insta-icon').mouseout(hideDescription);
-
-        //経路検索アイコンにカーソルを乗せると案内が出る
-        $('.go-there-icon').mouseover(showDescription);
-
-        //経路検索アイコンからカーソルが外れると案内が消える
-        $('.go-there-icon').mouseout(hideDescription);
-
         //デスクリプションクラスを隠す関数
         function hideDescription() {
             $(this).children(".description").hide();
@@ -461,6 +455,10 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
             });
         }
 
+        $('#mapping').on('click', function () {
+            window.location.href = `up_load.php?sample1=${lat}&sample2=${lon}`;
+        })
+
         let description_flag = 0;
         $('#fadeIn_icon').on('click', function () {
             description_flag =(description_flag + 1) % 2;
@@ -476,9 +474,6 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
             description_flag =(description_flag + 1) % 2;
             $('.disclaimer').fadeOut();
         })
-
-
-
     </script>
 
 </body>

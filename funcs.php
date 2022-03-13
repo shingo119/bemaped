@@ -44,7 +44,7 @@ function db_connect(){
 }
 
 function logout_flg(){
-  if($_SESSION["id"] == "" || $_SESSION["id"] == NULL){
+  if($_SESSION["id"] == ""){
     return NULL; 
   }else{
     return 'style="display:none"';
@@ -52,16 +52,8 @@ function logout_flg(){
 }
 
 function login_flg(){
-  if($_SESSION["id"] != "" || $_SESSION["id"] != NULL){
+  if($_SESSION["id"] != ""){
     return NULL; 
-  }else{
-    return 'style="display:none"';
-  }
-}
-
-function loginLogout_flg(){
-  if($_SESSION["id"] != "" || $_SESSION["id"] != NULL){
-    return 'style="display:flex"'; 
   }else{
     return 'style="display:none"';
   }

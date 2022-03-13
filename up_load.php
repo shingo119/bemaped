@@ -8,7 +8,6 @@ $lon = $_GET["sample2"];
 console_log($lat);
 console_log($lon);
 
-
 ?>
 
 <!DOCTYPE html>
@@ -82,16 +81,13 @@ console_log($lon);
             var kv = urlSearch[i].split('=');
             urlPrm[kv[0]] = kv[1];
         }
-        console.log(urlPrm.sample1);
-        console.log(urlPrm.sample2);
 
         sessionStorage.setItem('lat',urlPrm.sample1);
         sessionStorage.setItem('lon',urlPrm.sample2);
 
-
         function GetMap() {
             const map = new Bmap("#myMap");
-            map.startMap(Number(urlPrm.sample1), Number(urlPrm.sample2), "canvasLight", 10);
+            map.startMap(Number(urlPrm.sample1), Number(urlPrm.sample2), "road", 18);
             map.pinIcon(Number(urlPrm.sample1), Number(urlPrm.sample2), "img/red-pin.png", 1.0, 16, 32);
         }
 
