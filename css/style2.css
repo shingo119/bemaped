@@ -253,14 +253,30 @@ p {
 /* MAP上にある動画検索窓のインプット部分 */
 #search {
     width: 220px;
-    margin-left: 30px;
+    margin-left: 10px;
     height: 25px;
     border: none;
+    border-right: 1px solid rgb(187, 187, 187);
+}
+
+#round-css {
+    margin: 0 10px;
+    height: 25px;
+    border: none;
+    border-right: 1px solid rgb(187, 187, 187);
+    padding-right: 10px
+}
+
+#round {
+    width: 80px;
+    margin: 0 10px;
+    height: 25px;
+    border: none;
+    text-align: right;
 }
 
 /* MAP上の検索バー */
 .search-bar {
-    width: 380px;
     height: 45px;
     position: absolute;
     top: 2%;
@@ -275,8 +291,7 @@ p {
 
 /* MAP上にある住所検索窓のインプット部分 */
 #adress-search {
-    width: 220px;
-    margin-left: 30px;
+    margin: 0 10px;
     height: 25px;
 }
 
@@ -291,14 +306,13 @@ input[type="text"]:focus {
 }
 
 .search-icon {
-    width: 45px;
     height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 26px;
     border-right: 1px solid rgb(187, 187, 187);
     cursor: pointer;
+    padding-right: 10px;
 }
 
 .bar-icon img {
@@ -314,7 +328,6 @@ input[type="text"]:focus {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    border-right: 1px solid rgb(187, 187, 187);
 }
 
 .insta-icon {

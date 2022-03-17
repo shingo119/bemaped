@@ -39,8 +39,6 @@ if($pw){
     $_SESSION["chk_ssid"] = session_id();
     $_SESSION["id"] = $val["id"];
     $_SESSION["u_email"] = $val["u_email"];
-    // $_SESSION["u_id"] = $_POST["lid"];
-    //$_SESSION["u_pw"] = $_POST["lpw"];
     header("Location: index.php");
 }else{
     header("Location: login.php");

@@ -8,7 +8,6 @@ $lon = $_GET["sample2"];
 console_log($lat);
 console_log($lon);
 
-
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +31,11 @@ console_log($lon);
             <!-- map表示エリア -->
             <!-- Form Area -->
             <div class="contact-form">
-                <a href="index.php"><h1>bemaped</h1></a>
+                <form method="POST" action="index.php">
+                    <input id="pin_lat" name="pin_lat" hidden>
+                    <input id="pin_lon" name="pin_lon" hidden>
+                    <h1 type="submit">bemaped</h1>
+                </form>
                 <!-- Form -->
                 <!-- <form id="contact-us" method="#" action="#"> -->
                 <!-- Left Inputs -->
@@ -42,6 +45,8 @@ console_log($lon);
                         <input type="text" name="movie_title" id="movie-title" required="required" class="form" placeholder="動画タイトル" />
                         <!-- Email -->
                         <input type="text" name="movie_url" id="movie-url" required="required" class="form" placeholder="動画URL" />
+                        <!-- コメント -->
+                        <input type="text" name="comment" id="comment" class="form" placeholder="コメント" />
                         <!-- Subject -->
                         <input type="text" name="tag" id="tag" class="form" placeholder="＃タグ" />
                         <input type="hidden" name="lat" value="<?=$lat?>">
@@ -82,16 +87,13 @@ console_log($lon);
             var kv = urlSearch[i].split('=');
             urlPrm[kv[0]] = kv[1];
         }
-        console.log(urlPrm.sample1);
-        console.log(urlPrm.sample2);
 
         sessionStorage.setItem('lat',urlPrm.sample1);
         sessionStorage.setItem('lon',urlPrm.sample2);
 
-
         function GetMap() {
             const map = new Bmap("#myMap");
-            map.startMap(Number(urlPrm.sample1), Number(urlPrm.sample2), "canvasLight", 10);
+            map.startMap(Number(urlPrm.sample1), Number(urlPrm.sample2), "load", 18);
             map.pinIcon(Number(urlPrm.sample1), Number(urlPrm.sample2), "img/red-pin.png", 1.0, 16, 32);
         }
 
