@@ -6,6 +6,7 @@ loginCheck();
 $id = $_SESSION["id"];
 $movie_title = $_POST["movie_title"];
 $movie_url = $_POST["movie_url"];
+$comment = $_POST["comment"];
 $tag = $_POST["tag"];
 $lat = $_POST["lat"];
 $lon = $_POST["lon"];
@@ -24,7 +25,7 @@ if(
 $pdo = db_connect();
 
 
-$sql = "INSERT INTO bemaped_data_table (movie_title, video_id, tag, lat, lon, indate, u_id )VALUES(:movie_title, :video_id, :tag, :lat, :lon, sysdate(),:u_id)";
+$sql = "INSERT INTO bemaped_data_table (movie_title, video_id, tag, lat, lon, indate, u_id, comment )VALUES(:movie_title, :video_id, :tag, :lat, :lon, sysdate(),:u_id, :comment)";
 $stmt = $pdo->prepare($sql);
 
 $stmt->bindValue(':movie_title', $movie_title, PDO::PARAM_STR);
@@ -33,6 +34,7 @@ $stmt->bindValue(':tag', $tag, PDO::PARAM_STR);
 $stmt->bindValue(':lat', $lat, PDO::PARAM_STR);
 $stmt->bindValue(':lon', $lon, PDO::PARAM_STR);
 $stmt->bindValue(':u_id', $u_id, PDO::PARAM_INT);
+$stmt->bindValue(':comment', $comment, PDO::PARAM_STR);
 $status = $stmt->execute();
 
 if($status == false){

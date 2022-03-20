@@ -104,13 +104,19 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 </div>
                 </a>
                 <!-- マッピングタグ -->
-                <!-- <a href="up_load.php?sample1=`${lat}`&sample2=`${lon}`"> -->
                 <div class="menu-item" id="mapping" <?=login_flg()?>>
                     <img src="img/red-pin.png" alt="">
                     <p>マッピング</p>
                     <div class="description">青いピンの位置に動画をマッピングする</div>
                 </div>
-                <!-- </a> -->
+                <!-- 自分の動画の表示 -->
+                <a href="index.php?user_id=<?=$_SESSION["id"]?>">
+                <div class="menu-item" id="mymovie" <?=login_flg()?>>
+                    <img src="img/Youtube-icon.png" alt="">
+                    <p>マイ動画</p>
+                    <div class="description">マイ動画</div>
+                </div>
+                </a>
                 <!-- マイページタグ -->
                 <a href="mypage.php">
                 <div class="menu-item" id="mypage" <?=login_flg()?>>
@@ -120,21 +126,21 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 </div>
                 </a>
                 <!-- フォローしてる人を確認するページ -->
-                <a href="follow_users.php">
+                <!-- <a href="follow_users.php">
                 <div class="menu-item" <?=login_flg()?>>
                     <img src="img/megane3.png" alt="">
                     <p>フォロー</p>
                     <div class="description">フォロー</div>
                 </div>
-                </a>
+                </a> -->
                 <!-- フォローされている人を確認するページ -->
-                <a href="follower_users.php">
+                <!-- <a href="follower_users.php">
                 <div class="menu-item" <?=login_flg()?>>
                     <img src="img/hurt-pink.png" alt="">
                     <p>フォロワー</p>
                     <div class="description">フォロワー</div>
                 </div>
-                </a>
+                </a> -->
                 <!-- ログインタグ -->
                 <a href="login.php">
                 <div class="menu-item" id="login" <?=logout_flg()?>>
@@ -442,7 +448,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
         }
 
         $('#mapping').on('click', function () {
-            window.location.href = `up_load.php?sample1=${lat}&sample2=${lon}`;
+            window.location.href = `up_load.php?lat=${lat}&lon=${lon}`;
         })
 
         let description_flag = 0;
@@ -453,7 +459,6 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
             }else{
                 $('.disclaimer').fadeOut();
             }
-            
         })
 
         $('#fadeOut_btn').on('click', function () {

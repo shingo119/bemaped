@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("funcs.php");
-// loginCheck();
+loginCheck();
 
 $id = $_SESSION["id"];
 $pdo = db_connect();
@@ -114,7 +114,7 @@ if($val4 == "" || $val4 == null){
 
             const map = new Bmap("#myMap");
             
-            map.startMap(35.712772, 139.750443, "canvasLight", 10);
+            map.startMap(35.712772, 139.750443, "load", 10);
 
             //現在地表示
             map.geolocation(function (data) {
@@ -129,7 +129,6 @@ if($val4 == "" || $val4 == null){
             if( search_word != ""){
                 for (let i = 0; i < search_data_count ; i++) {
                     let json_val2 = JSON.parse(JSON.stringify(<?= $json_val2 ?>));
-                    // window.addEventListener('DOMContentLoaded', function(){
                     const lat = json_val2[i]["lat"];
                     const lon = json_val2[i]["lon"];
                     map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
