@@ -1,9 +1,8 @@
 .main {
-  display: flex;
   justify-content: center;
   align-items: center;
-  width: 70%;
-  height: 100vh;
+  width: 80%;
+  height: 100%;
   margin: 0 auto;
 }
 
@@ -13,15 +12,17 @@
 }
 
 .inner {
-    width: 100%;
-    height: 100%;
+  display: flex;
+  width: 100%;
+  height:40%;
 }
 
-.mymap {
-  width: 100%;
-  height: 40%;
-  margin-top: 50px;
-  margin-bottom: 50px;
+.contact-form {
+  height:calc(100%-200px);
+}
+
+#myMap {
+  margin-top: 10px;
 }
 
 p {
@@ -41,10 +42,6 @@ h1 {
 .col-lg-5 {
     width:100%;
 }
-
-#contact{
-    padding:10px 0 10px;
-  }
 
   .contact-text{
     margin:45px auto;

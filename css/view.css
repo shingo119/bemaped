@@ -134,7 +134,7 @@ body {
 }
 
 .user_profile {
-    width: 20%;
+    width: 200px;
     height:450px;
     /* border:1px solid #428bca; */
     padding-right:5px;
@@ -145,6 +145,11 @@ body {
 
 .user_profile_main{
   height:390px;
+}
+
+.comment {
+  padding:10px;
+  font-size: 15px;
 }
 
 /* Card styles for rotation */

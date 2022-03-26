@@ -62,11 +62,10 @@ if($val4 == "" || $val4 == null){
 </head>
 <body>
     <div class="main">
+        <a href="index.php"><h1>bemaped</h1></a>
         <div class="inner contact">
             <!-- Form Area -->
             <div class="contact-form">
-                <a href="index.php"><h1>bemaped</h1></a>
-                
                 <div class="grid">
                     <div class="user_profile">
                         <div class="user_profile_main">
@@ -79,17 +78,18 @@ if($val4 == "" || $val4 == null){
                             <div class="user_exp"></div>
                         </div>
                         <a href="#" class="btn_02" id="follow_btn"><?= $follow_btn?></a>
-                    </div>                    
-                    <?= make_iframe_by_video_id($val["video_id"]);?>
+                    </div>
+                    <div><?= make_iframe_by_video_id($val["video_id"]);?></div>
                 </div>
+                <div id="myMap"></div>
             </div>
-
-            <!-- map表示エリア -->
-            <div class="mymap">
-                <div id="myMap" style='width:100%;height:100%;float:left;'></div>
+            <div class="comment">
+                <p>動画タイトル</p>
+                <a href="https://www.youtube.com/watch?v=<?=$val["video_id"]?>" target="_blank" rel="noopener noreferrer"><h2><?=$val["movie_title"]?></h2></a>
+                <p>説明</p>
+                <p><?=$val["comment"]?></p>
             </div>
             <!-- map表示エリア -->
-
         </div><!-- End Inner -->
     </div>
 

@@ -38,7 +38,7 @@ $lon = $_GET["lon"];
                     <!-- Email -->
                     <input type="text" name="movie_url" id="movie-url" required="required" class="form" placeholder="動画URL" />
                     <!-- コメント -->
-                    <textarea type="text" name="comment" id="comment" class="form" placeholder="コメント"></textarea>
+                    <textarea type="text" name="comment" id="comment" class="form" placeholder="説明"></textarea>
                     <!-- Subject -->
                     <input type="text" name="tag" id="tag" class="form" placeholder="＃タグ" />
                     <input type="hidden" id="lat" name="lat" value="<?=$lat?>">
