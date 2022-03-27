@@ -302,7 +302,14 @@ $json_val2 = json_encode($val2);
             latLengthList.forEach(el => latLength < el ? latZoom++:null);
             lonLengthList.forEach(el => lonLength < el ? lonZoom++:null);
             const zoom = Math.min(...[latZoom,lonZoom]);
-            map.changeMap((Number(maxLat) + Number(minLat))/2, (Number(maxLon) + Number(minLon))/2, "load", zoom);
+            <?php
+                if ($sql2 == "SELECT * FROM bemaped_data_table") {
+                    echo 'map.changeMap(lat, lon, "load", 13);';
+                } else {
+                    echo 'map.changeMap((Number(maxLat) + Number(minLat))/2, (Number(maxLon) + Number(minLon))/2, "load", zoom);';
+                }
+            ?>
+            
         }
 
         //****************************************************************************************

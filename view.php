@@ -14,7 +14,7 @@ $status = $stmt->execute();
 $val = $stmt->fetch(); //ユーザー情報を取得
 
 $sql2 = "SELECT * FROM bemaped_data_table WHERE"; //あいまい検索
-$sql2 .= " (6378137 * ACOS(COS(RADIANS(".strval($val["lat"]).")) * COS(RADIANS(lat)) * COS(RADIANS(lon) - RADIANS(".strval($val["lon"]).")) + SIN(RADIANS(".strval($val["lat"]).")) * SIN(RADIANS(lat)))) < 10000";
+$sql2 .= " (6378137 * ACOS(COS(RADIANS(".strval($val["lat"]).")) * COS(RADIANS(lat)) * COS(RADIANS(lon) - RADIANS(".strval($val["lon"]).")) + SIN(RADIANS(".strval($val["lat"]).")) * SIN(RADIANS(lat)))) < 10000 OR lat=".strval($val["lat"])." AND lon=".strval($val["lon"]);
 $stmt2 = $pdo->prepare($sql2);
 $status2 = $stmt2->execute(); //sql文にエラーがないか
 $val2 = $stmt2->fetchall(PDO::FETCH_ASSOC);
@@ -121,11 +121,13 @@ if($val4 == "" || $val4 == null){
 
             let search_word = "<?= $_SESSION["search_word"] ?>";
             let search_data_count = "<?=count($val2)?>";
+            let json_val2 = JSON.parse(JSON.stringify(<?= $json_val2 ?>));
+            console.log(json_val2);
             for (let i = 0; i < search_data_count ; i++) {
-                let json_val2 = JSON.parse(JSON.stringify(<?= $json_val2 ?>));
                 const lat = json_val2[i]["lat"];
                 const lon = json_val2[i]["lon"];
-                if (lat==<?=$val["lat"]?> && lon==<?=$val["lon"]?>) {
+                if (json_val2[i]["id"]==<?=$_GET["movie_id"]?>) {
+                    console.log(1);
                     map.pinLayer(lat, lon, "#0000ff");
                     map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-60px; left:-145px;">' +'<h5 style="font-size: 16px">この動画の場所です</h5></div>');
                     x = map.pinText(lat, lon, " ", " ", " ");
