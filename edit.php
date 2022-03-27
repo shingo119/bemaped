@@ -25,17 +25,18 @@ if ($val["u_id"]!=$_SESSION["id"]) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/ress.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/up_load.css">
+    <link rel="stylesheet" href="css/edit.css">
     <title>Youtubeマッピング画面</title>
 </head>
 <body>
     <div class="main">
         <div class="inner contact">
-            <!-- map表示エリア -->
-            <a href="index.php"><h1>bemaped</h1></a>
-            <div class="mymap">
-                <div id="myMap" style='width:100%;height:40vh;float:left;'></div>
+            <div style="display: flex; justify-content: space-between;">
+                <a href="index.php"><h1>bemaped</h1></a>
+                <div  style="display: flex; align-items: flex-end;" id="delete"><a><h4>マッピングを削除する</h4></a></div>
             </div>
+            <!-- map表示エリア -->
+            <div id="myMap" style='width:100%;height:40vh;float:left;'></div>
             <!-- map表示エリア -->
             <!-- Form -->
             <!-- Left Inputs -->
@@ -115,6 +116,13 @@ if ($val["u_id"]!=$_SESSION["id"]) {
             let scrollHeight = textarea.scrollHeight;
             //textareaの高さに入力内容の高さを設定
             textarea.style.height = scrollHeight + 'px';
+        });
+
+        $("#delete").on('click', function () {
+            var result = window.confirm('本当にこの動画のマッピングを削除しますか？');
+            if (result==true) {
+                window.location.href = "delete.php?movie_id=<?=$_GET["movie_id"]?>";
+            }
         });
     </script>
 </body>
