@@ -23,12 +23,11 @@ $lon = $_GET["lon"];
     <div class="main">
         <div class="inner contact">
             <!-- map表示エリア -->
+            <a href="index.php"><h1>bemaped</h1></a>
             <div class="mymap">
                 <div id="myMap" style='width:100%;height:40vh;float:left;'></div>
             </div>
             <!-- map表示エリア -->
-            <!-- Form Area -->
-            <a href="index.php"><h1>bemaped</h1></a>
             <!-- Form -->
             <!-- Left Inputs -->
             <form action="up_load_act.php" method="POST">

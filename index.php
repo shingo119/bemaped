@@ -275,18 +275,24 @@ $json_val2 = json_encode($val2);
                 minLat = minLat < mlat ? minLat:mlat;
                 minLon = minLon < mlon ? minLon:mlon;
                 map.pinIcon(mlat, mlon, "img/Youtube-pinicon.png", 0.3, 38, 85);
-                map.infoboxHtml(mlat, mlon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-250px; left:-145px;">'+ make_iframe_on_map_by_video_id(json_val2[i]["video_id"]) +'<h5 style="font-size: 16px">' + json_val2[i]["movie_title"] + '</h5></div>');
+                map.infoboxHtml(mlat, mlon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-250px; left:-145px;">'+ json_val2[i]["video_id"] + '</div>');
                 x = map.pinText(mlat, mlon, " ", " ", " ");
                 map.onPin(x, "click", function () {
                     const url = "/bemaped/view.php?movie_id=" + json_val2[i]["id"];
                     window.location.href = `${url}`;
                 });
+                let txt='';
                 // ホバーした時のみ説明を表示する
                 map.onPin(x, "mouseout", function () {
                     $('#info_id'+i).attr('hidden', true);
+                    $('#info_id'+i).empty();
+                    $('#info_id'+i).append(txt);
                 });
                 map.onPin(x, "mouseover", function () {
                     $('#info_id'+i).removeAttr('hidden');
+                    txt=document.getElementById('info_id'+i).innerHTML;
+                    $('#info_id'+i).empty();
+                    $('#info_id'+i).append(make_iframe_on_map_by_video_id(txt));
                 });
             }
             const latLength = (maxLat - minLat)*91;
