@@ -1,7 +1,6 @@
 <?php
 session_start();
 include("funcs.php");
-loginCheck();
 
 $id = $_SESSION["id"];
 $pdo = db_connect();
