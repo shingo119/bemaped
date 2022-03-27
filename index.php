@@ -6,6 +6,7 @@ header("Cache-Control:");//戻るボタンからのフォームの再送信エ�
 header("Pragma:");//戻るボタンからのフォームの再送信エラー回避
 include("funcs.php");
 $user_id = (int)$_GET["user_id"];
+$_SESSION["search_word"]=$_POST["search_word"];
 
 $pdo = db_connect();//1.DB接続します
 $sql = "SELECT * FROM bemaped_users_table WHERE id=:id";

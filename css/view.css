@@ -260,6 +260,11 @@ section {
   margin: 0 auto;
 }
 
+#btns {
+  display: flex;
+  align-items: flex-end;
+}
+
 a.btn_02 {
   display: flex;
   justify-content: center;
