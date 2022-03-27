@@ -40,7 +40,7 @@ if ($val["u_id"]!=$_SESSION["id"]) {
             <!-- map表示エリア -->
             <!-- Form -->
             <!-- Left Inputs -->
-            <form action="edit_act.php" method="POST">
+            <form action="edit_act.php?movie_id=<?=$_GET["movie_id"]?>" method="POST">
                 <div class="input_item" data-wow-delay=".5s">
                     <!-- Name -->
                     <input type="text" name="movie_title" id="movie-title" required="required" class="form" placeholder="動画タイトル" value="<?=$val["movie_title"]?>"/>
