@@ -44,4 +44,4 @@ if($status == false){
     header("Location: index.php");
     exit;
 }
-?>
+// ?>

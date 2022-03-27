@@ -113,4 +113,10 @@ function video_id($movie_url) {
 function make_iframe_by_video_id($data){
   return '<iframe width="800" height="450" src="https://www.youtube.com/embed/'.$data.'" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 }
+
+//テキストのURL対象部分にのみリンクを貼る関数(このサイトを参考に作成：https://wemo.tech/2160)
+function link_url($text){  //対象のテキスト
+  return preg_replace('/((?:https?|ftp):\/\/[-_.!~*\'()a-zA-Z0-9;\/?:@&=+$,%#]+)/', '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>', $text );
+}
+
 ?>

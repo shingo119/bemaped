@@ -87,7 +87,7 @@ if($val4 == "" || $val4 == null){
                 <p>動画タイトル</p>
                 <a href="https://www.youtube.com/watch?v=<?=$val["video_id"]?>" target="_blank" rel="noopener noreferrer"><h2><?=$val["movie_title"]?></h2></a>
                 <p>説明</p>
-                <p><?=$val["comment"]?></p>
+                <p><?=nl2br(link_url($val["comment"]))?></p>
             </div>
             <!-- map表示エリア -->
         </div><!-- End Inner -->
@@ -142,7 +142,6 @@ if($val4 == "" || $val4 == null){
                 }
             }
         }
-
 
         $("#follow_btn").on("click", function(){
             //Ajax（非同期通信）
