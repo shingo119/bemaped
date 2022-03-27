@@ -278,7 +278,7 @@ $json_val2 = json_encode($val2);
                 map.infoboxHtml(mlat, mlon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-250px; left:-145px;">'+ json_val2[i]["video_id"] + '</div>');
                 x = map.pinText(mlat, mlon, " ", " ", " ");
                 map.onPin(x, "click", function () {
-                    const url = "/bemaped/view.php?movie_id=" + json_val2[i]["id"];
+                    const url = "view.php?movie_id=" + json_val2[i]["id"];
                     window.location.href = `${url}`;
                 });
                 let txt='';
