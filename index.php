@@ -23,46 +23,26 @@ if(isset($_POST["search_word"]) && $_POST["search_word"] != " " && $_POST["searc
     $sql2 = "SELECT * FROM bemaped_data_table WHERE"; //あいまい検索
     $sql2 .= " (6378137 * ACOS(COS(RADIANS(".strval($_POST["pin_lat"]).")) * COS(RADIANS(lat)) * COS(RADIANS(lon) - RADIANS(".strval($_POST["pin_lon"]).")) + SIN(RADIANS(".strval($_POST["pin_lat"]).")) * SIN(RADIANS(lat)))) < ".strval($_POST["round"])." AND";
     for ($i = 0; $i < count($split_word); $i++) {
-    $sql2 .= " (movie_title LIKE '%" . $split_word[$i] . "%' OR tag LIKE '%";
-    if ($i == count($split_word) - 1) {
-        $sql2 .= $split_word[$i] . "%')";
-    } else {
-        $sql2 .= $split_word[$i] . "%') AND";
-    }
+        $sql2 .= " (movie_title LIKE '%" . $split_word[$i] . "%' OR tag LIKE '%";
+        if ($i == count($split_word) - 1) {
+            $sql2 .= $split_word[$i] . "%')";
+        } else {
+            $sql2 .= $split_word[$i] . "%') AND";
+        }
     }
     $stmt2 = $pdo->prepare($sql2);
-    $status2 = $stmt2->execute(); //sql文にエラーがないか
-    $val2 = $stmt2->fetchall(PDO::FETCH_ASSOC);
-    $json_val2 = json_encode($val2);
-
-    // 複数ワードでのあいまい検索ができるように記述を変更
-    $sql3 = "SELECT COUNT(*) FROM bemaped_data_table WHERE"; //あいまい検索
-    $sql3 .= " (6378137 * ACOS(COS(RADIANS(".strval($_POST["pin_lat"]).")) * COS(RADIANS(lat)) * COS(RADIANS(lon) - RADIANS(".strval($_POST["pin_lon"]).")) + SIN(RADIANS(".strval($_POST["pin_lat"]).")) * SIN(RADIANS(lat)))) < ".strval($_POST["round"])." AND";
-    for ($i = 0; $i < count($split_word); $i++) {
-    $sql3 .= " (movie_title LIKE '%" . $split_word[$i] . "%' OR tag LIKE '%";
-    if ($i == count($split_word) - 1) {
-        $sql3 .= $split_word[$i] . "%')";
-    } else {
-        $sql3 .= $split_word[$i] . "%') AND";
-    }
-    }$stmt3 = $pdo->prepare($sql3);
-    $status3 = $stmt3->execute(); //sql文にエラーがないか
-    $val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
+} else if (isset($user_id) && $user_id!=0) {
+    $sql2 = "SELECT * FROM bemaped_data_table WHERE u_id=:id";
+    $stmt2 = $pdo->prepare($sql2);
+    $stmt2->bindValue(":id", $user_id, PDO::PARAM_INT);
+} else {
+    $sql2 = "SELECT * FROM bemaped_data_table";
+    $stmt2 = $pdo->prepare($sql2);
 }
+$status2 = $stmt2->execute(); //sql文にエラーがないか
+$val2 = $stmt2->fetchall(PDO::FETCH_ASSOC);
+$json_val2 = json_encode($val2);
 
-$sql4 = "SELECT * FROM bemaped_data_table WHERE u_id=:id";
-$stmt4 = $pdo->prepare($sql4);
-$stmt4->bindValue(":id", $user_id, PDO::PARAM_INT);
-$status4 = $stmt4->execute(); //sql文にエラーがないか
-$val4 = $stmt4->fetchall(PDO::FETCH_ASSOC);
-$json_val4 = json_encode($val4);
-
-// 複数ワードでのあいまい検索ができるように記述を変更
-$sql5 = "SELECT COUNT(*) FROM bemaped_data_table WHERE u_id=:id"; //あいまい検索
-$stmt5 = $pdo->prepare($sql5);
-$stmt5->bindValue(":id", $user_id, PDO::PARAM_INT);
-$status5 = $stmt5->execute(); //sql文にエラーがないか
-$val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
 ?>
 
 <!DOCTYPE html>
@@ -350,15 +330,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 document.getElementById("pin_lon").value = lon;
                 getCoordinate(map);
                 addressSearch(map);
-                let search_word = "<?= $_POST["search_word"] ?>";
-                let search_data_count = "<?=$val3?>";
-                let user_id = "<?=$user_id?>";
-                let user_id_data_count = "<?=$val5?>";
-                if( search_word != ""){
-                    movie(map, search_data_count, JSON.stringify(<?= $json_val2 ?>));
-                } else if ( search_word == "" && user_id != 0){
-                    movie(map, user_id_data_count, JSON.stringify(<?= $json_val4 ?>));
-                }
+                movie(map, <?=count($val2)?>, JSON.stringify(<?= $json_val2 ?>));
             })
         }
 
