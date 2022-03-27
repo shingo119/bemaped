@@ -63,7 +63,7 @@ if($val4 == "" || $val4 == null){
 <body>
     <div class="main">
         <a href="index.php"><h1>bemaped</h1></a>
-        <div class="inner contact">
+        <div class="inner">
             <!-- Form Area -->
             <div class="contact-form">
                 <div class="grid">
