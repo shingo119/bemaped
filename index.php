@@ -6,6 +6,7 @@ header("Cache-Control:");//戻るボタンからのフォームの再送信エ�
 header("Pragma:");//戻るボタンからのフォームの再送信エラー回避
 include("funcs.php");
 $user_id = (int)$_GET["user_id"];
+$_SESSION["search_word"]=$_POST["search_word"];
 
 $pdo = db_connect();//1.DB接続します
 $sql = "SELECT * FROM bemaped_users_table WHERE id=:id";
@@ -22,46 +23,26 @@ if(isset($_POST["search_word"]) && $_POST["search_word"] != " " && $_POST["searc
     $sql2 = "SELECT * FROM bemaped_data_table WHERE"; //あいまい検索
     $sql2 .= " (6378137 * ACOS(COS(RADIANS(".strval($_POST["pin_lat"]).")) * COS(RADIANS(lat)) * COS(RADIANS(lon) - RADIANS(".strval($_POST["pin_lon"]).")) + SIN(RADIANS(".strval($_POST["pin_lat"]).")) * SIN(RADIANS(lat)))) < ".strval($_POST["round"])." AND";
     for ($i = 0; $i < count($split_word); $i++) {
-    $sql2 .= " (movie_title LIKE '%" . $split_word[$i] . "%' OR tag LIKE '%";
-    if ($i == count($split_word) - 1) {
-        $sql2 .= $split_word[$i] . "%')";
-    } else {
-        $sql2 .= $split_word[$i] . "%') AND";
-    }
+        $sql2 .= " (movie_title LIKE '%" . $split_word[$i] . "%' OR tag LIKE '%";
+        if ($i == count($split_word) - 1) {
+            $sql2 .= $split_word[$i] . "%')";
+        } else {
+            $sql2 .= $split_word[$i] . "%') AND";
+        }
     }
     $stmt2 = $pdo->prepare($sql2);
-    $status2 = $stmt2->execute(); //sql文にエラーがないか
-    $val2 = $stmt2->fetchall(PDO::FETCH_ASSOC);
-    $json_val2 = json_encode($val2);
-
-    // 複数ワードでのあいまい検索ができるように記述を変更
-    $sql3 = "SELECT COUNT(*) FROM bemaped_data_table WHERE"; //あいまい検索
-    $sql3 .= " (6378137 * ACOS(COS(RADIANS(".strval($_POST["pin_lat"]).")) * COS(RADIANS(lat)) * COS(RADIANS(lon) - RADIANS(".strval($_POST["pin_lon"]).")) + SIN(RADIANS(".strval($_POST["pin_lat"]).")) * SIN(RADIANS(lat)))) < ".strval($_POST["round"])." AND";
-    for ($i = 0; $i < count($split_word); $i++) {
-    $sql3 .= " (movie_title LIKE '%" . $split_word[$i] . "%' OR tag LIKE '%";
-    if ($i == count($split_word) - 1) {
-        $sql3 .= $split_word[$i] . "%')";
-    } else {
-        $sql3 .= $split_word[$i] . "%') AND";
-    }
-    }$stmt3 = $pdo->prepare($sql3);
-    $status3 = $stmt3->execute(); //sql文にエラーがないか
-    $val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
+} else if (isset($user_id) && $user_id!=0) {
+    $sql2 = "SELECT * FROM bemaped_data_table WHERE u_id=:id";
+    $stmt2 = $pdo->prepare($sql2);
+    $stmt2->bindValue(":id", $user_id, PDO::PARAM_INT);
+} else {
+    $sql2 = "SELECT * FROM bemaped_data_table";
+    $stmt2 = $pdo->prepare($sql2);
 }
+$status2 = $stmt2->execute(); //sql文にエラーがないか
+$val2 = $stmt2->fetchall(PDO::FETCH_ASSOC);
+$json_val2 = json_encode($val2);
 
-$sql4 = "SELECT * FROM bemaped_data_table WHERE u_id=:id";
-$stmt4 = $pdo->prepare($sql4);
-$stmt4->bindValue(":id", $user_id, PDO::PARAM_INT);
-$status4 = $stmt4->execute(); //sql文にエラーがないか
-$val4 = $stmt4->fetchall(PDO::FETCH_ASSOC);
-$json_val4 = json_encode($val4);
-
-// 複数ワードでのあいまい検索ができるように記述を変更
-$sql5 = "SELECT COUNT(*) FROM bemaped_data_table WHERE u_id=:id"; //あいまい検索
-$stmt5 = $pdo->prepare($sql5);
-$stmt5->bindValue(":id", $user_id, PDO::PARAM_INT);
-$status5 = $stmt5->execute(); //sql文にエラーがないか
-$val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
 ?>
 
 <!DOCTYPE html>
@@ -104,13 +85,19 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 </div>
                 </a>
                 <!-- マッピングタグ -->
-                <!-- <a href="up_load.php?sample1=`${lat}`&sample2=`${lon}`"> -->
                 <div class="menu-item" id="mapping" <?=login_flg()?>>
                     <img src="img/red-pin.png" alt="">
                     <p>マッピング</p>
                     <div class="description">青いピンの位置に動画をマッピングする</div>
                 </div>
-                <!-- </a> -->
+                <!-- 自分の動画の表示 -->
+                <a href="index.php?user_id=<?=$_SESSION["id"]?>">
+                <div class="menu-item" id="mymovie" <?=login_flg()?>>
+                    <img src="img/Youtube-icon.png" alt="">
+                    <p>マイ動画</p>
+                    <div class="description">マイ動画</div>
+                </div>
+                </a>
                 <!-- マイページタグ -->
                 <a href="mypage.php">
                 <div class="menu-item" id="mypage" <?=login_flg()?>>
@@ -120,21 +107,21 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 </div>
                 </a>
                 <!-- フォローしてる人を確認するページ -->
-                <a href="follow_users.php">
+                <!-- <a href="follow_users.php">
                 <div class="menu-item" <?=login_flg()?>>
                     <img src="img/megane3.png" alt="">
                     <p>フォロー</p>
                     <div class="description">フォロー</div>
                 </div>
-                </a>
+                </a> -->
                 <!-- フォローされている人を確認するページ -->
-                <a href="follower_users.php">
+                <!-- <a href="follower_users.php">
                 <div class="menu-item" <?=login_flg()?>>
                     <img src="img/hurt-pink.png" alt="">
                     <p>フォロワー</p>
                     <div class="description">フォロワー</div>
                 </div>
-                </a>
+                </a> -->
                 <!-- ログインタグ -->
                 <a href="login.php">
                 <div class="menu-item" id="login" <?=logout_flg()?>>
@@ -288,18 +275,24 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 minLat = minLat < mlat ? minLat:mlat;
                 minLon = minLon < mlon ? minLon:mlon;
                 map.pinIcon(mlat, mlon, "img/Youtube-pinicon.png", 0.3, 38, 85);
-                map.infoboxHtml(mlat, mlon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-250px; left:-145px;">'+ make_iframe_on_map_by_video_id(json_val2[i]["video_id"]) +'<h5 style="font-size: 16px">' + json_val2[i]["movie_title"] + '</h5></div>');
+                map.infoboxHtml(mlat, mlon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-250px; left:-145px;">'+ json_val2[i]["video_id"] + '</div>');
                 x = map.pinText(mlat, mlon, " ", " ", " ");
                 map.onPin(x, "click", function () {
-                    const url = "/bemaped/view.php?movie_id=" + json_val2[i]["id"];
+                    const url = "view.php?movie_id=" + json_val2[i]["id"];
                     window.location.href = `${url}`;
                 });
+                let txt='';
                 // ホバーした時のみ説明を表示する
                 map.onPin(x, "mouseout", function () {
                     $('#info_id'+i).attr('hidden', true);
+                    $('#info_id'+i).empty();
+                    $('#info_id'+i).append(txt);
                 });
                 map.onPin(x, "mouseover", function () {
                     $('#info_id'+i).removeAttr('hidden');
+                    txt=document.getElementById('info_id'+i).innerHTML;
+                    $('#info_id'+i).empty();
+                    $('#info_id'+i).append(make_iframe_on_map_by_video_id(txt));
                 });
             }
             const latLength = (maxLat - minLat)*91;
@@ -309,7 +302,14 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
             latLengthList.forEach(el => latLength < el ? latZoom++:null);
             lonLengthList.forEach(el => lonLength < el ? lonZoom++:null);
             const zoom = Math.min(...[latZoom,lonZoom]);
-            map.changeMap((Number(maxLat) + Number(minLat))/2, (Number(maxLon) + Number(minLon))/2, "load", zoom);
+            <?php
+                if ($sql2 == "SELECT * FROM bemaped_data_table") {
+                    echo 'map.changeMap(lat, lon, "load", 13);';
+                } else {
+                    echo 'map.changeMap((Number(maxLat) + Number(minLat))/2, (Number(maxLon) + Number(minLon))/2, "load", zoom);';
+                }
+            ?>
+            
         }
 
         //****************************************************************************************
@@ -343,15 +343,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
                 document.getElementById("pin_lon").value = lon;
                 getCoordinate(map);
                 addressSearch(map);
-                let search_word = "<?= $_POST["search_word"] ?>";
-                let search_data_count = "<?=$val3?>";
-                let user_id = "<?=$user_id?>";
-                let user_id_data_count = "<?=$val5?>";
-                if( search_word != ""){
-                    movie(map, search_data_count, JSON.stringify(<?= $json_val2 ?>));
-                } else if ( search_word == "" && user_id != 0){
-                    movie(map, user_id_data_count, JSON.stringify(<?= $json_val4 ?>));
-                }
+                movie(map, <?=count($val2)?>, JSON.stringify(<?= $json_val2 ?>));
             })
         }
 
@@ -442,7 +434,7 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
         }
 
         $('#mapping').on('click', function () {
-            window.location.href = `up_load.php?sample1=${lat}&sample2=${lon}`;
+            window.location.href = `up_load.php?lat=${lat}&lon=${lon}`;
         })
 
         let description_flag = 0;
@@ -453,7 +445,6 @@ $val5 = $stmt5->fetch(PDO::FETCH_COLUMN);
             }else{
                 $('.disclaimer').fadeOut();
             }
-            
         })
 
         $('#fadeOut_btn').on('click', function () {

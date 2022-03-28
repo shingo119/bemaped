@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   width: 70%;
-  height: 100vh;
+  /* height: 100vh; */
   margin: 0 auto;
 }
 
@@ -72,6 +72,7 @@ h1 {
     -webkit-transition: all 0.4s;
     -moz-transition: all 0.4s;
     transition: all 0.4s;
+    border-radius: 5px;
   }
 
   .form:hover{
@@ -84,11 +85,10 @@ h1 {
     border:1px solid #8BC3A3;
   }
 
-  /* .textarea{
-    height: 200px;
-    max-height: 200px;
-    max-width: 100%;
-  } */
+  #comment{
+    resize: none;
+    height: 100px;
+  }
   
 /* Generic Button Styles */
 

@@ -1,7 +1,6 @@
 <?php
 session_start();
 include("funcs.php");
-// loginCheck();
 
 $id = $_SESSION["id"];
 $pdo = db_connect();
@@ -13,20 +12,12 @@ $stmt->bindValue(":movie_id", $movie_id, PDO::PARAM_INT);
 $status = $stmt->execute();
 $val = $stmt->fetch(); //ユーザー情報を取得
 
-if(isset($_SESSION["search_word"])){
-$search_word = $_SESSION["search_word"]; //検索ワードを今のページからPOSTで取得
-$sql2 = "SELECT * FROM `bemaped_data_table` WHERE movie_title LIKE :search_word OR tag LIKE :search_word"; //あいまい検索
+$sql2 = "SELECT * FROM bemaped_data_table WHERE"; //あいまい検索
+$sql2 .= " (6378137 * ACOS(COS(RADIANS(".strval($val["lat"]).")) * COS(RADIANS(lat)) * COS(RADIANS(lon) - RADIANS(".strval($val["lon"]).")) + SIN(RADIANS(".strval($val["lat"]).")) * SIN(RADIANS(lat)))) < 10000 OR lat=".strval($val["lat"])." AND lon=".strval($val["lon"]);
 $stmt2 = $pdo->prepare($sql2);
-$stmt2->bindValue(":search_word", "%{$search_word}%", PDO::PARAM_STR); //検索ワードをバインド変数化
 $status2 = $stmt2->execute(); //sql文にエラーがないか
 $val2 = $stmt2->fetchall(PDO::FETCH_ASSOC);
 $json_val2 = json_encode($val2);
-$sql3 = "SELECT COUNT(*) FROM bemaped_data_table WHERE movie_title LIKE :search_word OR tag LIKE :search_word"; //あいまい検索
-$stmt3 = $pdo->prepare($sql3);
-$stmt3->bindValue(":search_word", "%{$search_word}%", PDO::PARAM_STR); //検索ワードをバインド変数化
-$status3 = $stmt3->execute(); //sql文にエラーがないか
-$val3 = $stmt3->fetch(PDO::FETCH_COLUMN);
-}
 
 $followed = $_SESSION["id"];
 $be_followed = $val["u_id"];
@@ -36,7 +27,6 @@ $stmt4->bindValue(":followed", $followed, PDO::PARAM_INT);
 $stmt4->bindValue(":be_followed",$be_followed, PDO::PARAM_INT);
 $status4 = $stmt4->execute();
 $val4 = $stmt4->fetch(PDO::FETCH_ASSOC);
-console_log($status4);
 $follow_btn = "";
 if($val4 == "" || $val4 == null){
     $follow_btn = "フォローする";
@@ -62,11 +52,10 @@ if($val4 == "" || $val4 == null){
 </head>
 <body>
     <div class="main">
-        <div class="inner contact">
+        <a href="index.php"><h1>bemaped</h1></a>
+        <div class="inner">
             <!-- Form Area -->
             <div class="contact-form">
-                <a href="index.php"><h1>bemaped</h1></a>
-                
                 <div class="grid">
                     <div class="user_profile">
                         <div class="user_profile_main">
@@ -78,18 +67,28 @@ if($val4 == "" || $val4 == null){
                             </div>
                             <div class="user_exp"></div>
                         </div>
-                        <a href="#" class="btn_02" id="follow_btn"><?= $follow_btn?></a>
-                    </div>                    
-                    <?= make_iframe_by_video_id($val["video_id"]);?>
+                        <div id="btns">
+                            <?php
+                                if ($val["u_id"]===$id) {
+                                    echo '<a href="edit.php?movie_id='.$_GET["movie_id"].'" class="btn_02">'.'編集する'.'</a>';
+                                }
+                                else {
+                                    echo '<a href="#" class="btn_02" id="follow_btn">'.$follow_btn.'</a>';
+                                }
+                            ?>
+                        </div>
+                    </div>
+                    <div><?= make_iframe_by_video_id($val["video_id"]);?></div>
                 </div>
+                <div id="myMap"></div>
             </div>
-
-            <!-- map表示エリア -->
-            <div class="mymap">
-                <div id="myMap" style='width:100%;height:100%;float:left;'></div>
+            <div class="comment">
+                <p>動画タイトル</p>
+                <a href="https://www.youtube.com/watch?v=<?=$val["video_id"]?>" target="_blank" rel="noopener noreferrer"><h2><?=$val["movie_title"]?></h2></a>
+                <p>説明</p>
+                <p><?=nl2br(link_url($val["comment"]))?></p>
             </div>
             <!-- map表示エリア -->
-
         </div><!-- End Inner -->
     </div>
 
@@ -109,41 +108,59 @@ if($val4 == "" || $val4 == null){
 
     <!-- アップロードhtmlのメインJS -->
     <script type="text/javascript">
+        function make_iframe_on_map_by_video_id(data){
+            return '<iframe width="315" height="170" src="https://www.youtube.com/embed/'+data+'?autoplay=1&mute=1&version=3&loop=1&playlist='+data+'&fs=0&modestbranding=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+        }
 
         function GetMap() {
 
             const map = new Bmap("#myMap");
             
-            map.startMap(35.712772, 139.750443, "canvasLight", 10);
-
-            //現在地表示
-            map.geolocation(function (data) {
-                //location
-                const lat = data.coords.latitude;
-                const lon = data.coords.longitude;
-                map.pin(lat, lon, "#0000ff");
-            });
+            map.startMap(<?=$val["lat"]?>, <?=$val["lon"]?>, "load", 17);
 
             let search_word = "<?= $_SESSION["search_word"] ?>";
-            let search_data_count = "<?=$val3?>";
-            if( search_word != ""){
-                for (let i = 0; i < search_data_count ; i++) {
-                    let json_val2 = JSON.parse(JSON.stringify(<?= $json_val2 ?>));
-                    // window.addEventListener('DOMContentLoaded', function(){
-                    const lat = json_val2[i]["lat"];
-                    const lon = json_val2[i]["lon"];
+            let search_data_count = "<?=count($val2)?>";
+            let json_val2 = JSON.parse(JSON.stringify(<?= $json_val2 ?>));
+            console.log(json_val2);
+            for (let i = 0; i < search_data_count ; i++) {
+                const lat = json_val2[i]["lat"];
+                const lon = json_val2[i]["lon"];
+                if (json_val2[i]["id"]==<?=$_GET["movie_id"]?>) {
+                    console.log(1);
+                    map.pinLayer(lat, lon, "#0000ff");
+                    map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-60px; left:-145px;">' +'<h5 style="font-size: 16px">この動画の場所です</h5></div>');
+                    x = map.pinText(lat, lon, " ", " ", " ");
+                    map.onPin(x, "mouseout", function () {
+                        $('#info_id'+i).attr('hidden', true);
+                    });
+                    map.onPin(x, "mouseover", function () {
+                        $('#info_id'+i).removeAttr('hidden');
+                    });
+                }
+                else {
                     map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
-                    map.changeMap(lat, lon, "load", 9);
-                    map.onPin(map.pinText(lat, lon, " ", " ", " "), "click", function () {
-                        if (confirm('ページ遷移しますか？')) {
-                            const url = "/bemaped/view.php?movie_id=" + json_val2[i]["id"];
-                            window.location.href = `${url}`;
-                        }
+                    map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-270px; left:-145px;">'+ json_val2[i]["video_id"] + '</div>');
+                    x = map.pinText(lat, lon, " ", " ", " ");
+                    map.onPin(x, "click", function () {
+                        const url = "view.php?movie_id=" + json_val2[i]["id"];
+                        window.location.href = `${url}`;
+                    });
+                    // ホバーした時のみ説明を表示する
+                    let txt='';
+                    map.onPin(x, "mouseout", function () {
+                        $('#info_id'+i).attr('hidden', true);
+                        $('#info_id'+i).empty();
+                        $('#info_id'+i).append(txt);
+                    });
+                    map.onPin(x, "mouseover", function () {
+                        $('#info_id'+i).removeAttr('hidden');
+                        txt=document.getElementById('info_id'+i).innerHTML;
+                        $('#info_id'+i).empty();
+                        $('#info_id'+i).append(make_iframe_on_map_by_video_id(txt));
                     });
                 }
             }
         }
-
 
         $("#follow_btn").on("click", function(){
             //Ajax（非同期通信）
@@ -153,8 +170,6 @@ if($val4 == "" || $val4 == null){
             params.append('be_followed', <?= $val["u_id"]?>);
             //axiosでAjax送信
             axios.post('follow_act.php',params).then(function (response) {
-                console.log(response.data);//通信OK
-                console.log("ajax_post.php/通信OK");
                 if(response.data == "" || response.data == null){
                     let div = document.getElementById("follow_btn");
                     div.innerHTML = "フォローを外す";
