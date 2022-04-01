@@ -34,9 +34,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- JQuery --> 
 
-    <!-- Firebase読み込み -->
-    <script type="module" src="js/Firebase.js"></script>
-
     <script>
         // スライドトグルのjQuery
         $('#ohSocial').on('click', function () {

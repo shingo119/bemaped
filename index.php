@@ -221,9 +221,6 @@ $json_val2 = json_encode($val2);
     <!-- 山崎先生のBmapQueryライブラリの読み込み -->
     <script src="js/BmapQuery.js"></script>
     
-    <!-- FirebaseのAPI読み込み -->
-    <script type="module" src="js/Firebase.js"></script>
-
     <!-- mainJSを読み込み -->
     <script>
 
@@ -287,12 +284,14 @@ $json_val2 = json_encode($val2);
                     $('#info_id'+i).attr('hidden', true);
                     $('#info_id'+i).empty();
                     $('#info_id'+i).append(txt);
+                    // console.log($('#info_id'+i));
                 });
                 map.onPin(x, "mouseover", function () {
                     $('#info_id'+i).removeAttr('hidden');
                     txt=document.getElementById('info_id'+i).innerHTML;
                     $('#info_id'+i).empty();
                     $('#info_id'+i).append(make_iframe_on_map_by_video_id(txt));
+                    console.log(txt);
                 });
             }
             const latLength = (maxLat - minLat)*91;
@@ -329,22 +328,20 @@ $json_val2 = json_encode($val2);
             //   マップの種類：↓色々ある
             //   MapType:[load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
             //--------------------------------------------------
-            map.geolocation(function(data) {
-                //location
-                lon = data.coords.longitude;
-                lat = data.coords.latitude;
-                if (<?php if ($_POST["pin_lat"]!='' && $_POST["pin_lon"]!='') {echo 'true';} else {echo 'false';} ?>) {
-                    lat = Number(<?= $_POST["pin_lat"] ?>);
-                    lon = Number(<?= $_POST["pin_lon"] ?>);
-                }
-                map.startMap(lat, lon, "load", 13);
-                pin =map.pinLayer(lat,lon,"#0000ff");
-                document.getElementById("pin_lat").value = lat;
-                document.getElementById("pin_lon").value = lon;
-                getCoordinate(map);
-                addressSearch(map);
-                movie(map, <?=count($val2)?>, JSON.stringify(<?= $json_val2 ?>));
-            })
+            //location
+            lon = 137.94788555922025;
+            lat = 36.11513721807043;
+            if (<?php if ($_POST["pin_lat"]!='' && $_POST["pin_lon"]!='') {echo 'true';} else {echo 'false';} ?>) {
+                lat = Number(<?= $_POST["pin_lat"] ?>);
+                lon = Number(<?= $_POST["pin_lon"] ?>);
+            }
+            map.startMap(lat, lon, "load", 13);
+            pin =map.pinLayer(lat,lon,"#0000ff");
+            document.getElementById("pin_lat").value = lat;
+            document.getElementById("pin_lon").value = lon;
+            getCoordinate(map);
+            addressSearch(map);
+            movie(map, <?=count($val2)?>, JSON.stringify(<?= $json_val2 ?>));
         }
 
         //****************************************************************************************

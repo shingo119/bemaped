@@ -103,9 +103,6 @@ if($val4 == "" || $val4 == null){
     <!-- 山崎先生のBmapQueryライブラリの読み込み -->
     <script src="js/BmapQuery.js"></script>
     
-    <!-- FirebaseのAPI読み込み -->
-    <script type="module" src="js/Firebase.js"></script>
-
     <!-- アップロードhtmlのメインJS -->
     <script type="text/javascript">
         function make_iframe_on_map_by_video_id(data){
@@ -121,12 +118,10 @@ if($val4 == "" || $val4 == null){
             let search_word = "<?= $_SESSION["search_word"] ?>";
             let search_data_count = "<?=count($val2)?>";
             let json_val2 = JSON.parse(JSON.stringify(<?= $json_val2 ?>));
-            console.log(json_val2);
             for (let i = 0; i < search_data_count ; i++) {
                 const lat = json_val2[i]["lat"];
                 const lon = json_val2[i]["lon"];
                 if (json_val2[i]["id"]==<?=$_GET["movie_id"]?>) {
-                    console.log(1);
                     map.pinLayer(lat, lon, "#0000ff");
                     map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-60px; left:-145px;">' +'<h5 style="font-size: 16px">この動画の場所です</h5></div>');
                     x = map.pinText(lat, lon, " ", " ", " ");

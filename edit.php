@@ -74,9 +74,6 @@ if ($val["u_id"]!=$_SESSION["id"]) {
     <!-- 山崎先生のBmapQueryライブラリの読み込み -->
     <script src="js/BmapQuery.js"></script>
     
-    <!-- FirebaseのAPI読み込み -->
-    <script type="module" src="js/Firebase.js"></script>
-
     <!-- アップロードhtmlのメインJS -->
     <script type="text/javascript">
 
@@ -85,6 +82,8 @@ if ($val["u_id"]!=$_SESSION["id"]) {
             map.startMap(Number(<?= $val["lat"] ?>), Number(<?= $val["lon"] ?>), "load", 18);
             lat = Number(<?= $val["lat"] ?>);
             lon = Number(<?= $val["lon"] ?>);
+            document.getElementById("lat").value = lat;
+            document.getElementById("lon").value = lon;
             pin =map.pinLayer(lat,lon,"#0000ff");
             map.onGeocode("click", function (data) {
                 map.pinLayerClear(pin);

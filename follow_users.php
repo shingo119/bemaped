@@ -163,9 +163,6 @@ if(isset($_SESSION["id"])){
     <!-- 山崎先生のBmapQueryライブラリの読み込み -->
     <script src="js/BmapQuery.js"></script>
     
-    <!-- FirebaseのAPI読み込み -->
-    <script type="module" src="js/Firebase.js"></script>
-
     <!-- アップロードhtmlのメインJS -->
     <script type="text/javascript">
 

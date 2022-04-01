@@ -15,6 +15,13 @@ function loginCheck(){
   }
 }
 
+//SQLエラー
+function sql_error($stmt){
+  //execute（SQL実行時にエラーがある場合）
+  $error = $stmt->errorInfo();
+  exit("SQLError:".$error[2]);
+}
+
 //db接続
 function db_connect(){
   try {
