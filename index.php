@@ -225,7 +225,24 @@ $json_val2 = json_encode($val2);
     <script>
 
         function make_iframe_on_map_by_video_id(data){
-            return '<iframe width="315" height="170" src="https://www.youtube.com/embed/'+data+'?autoplay=1&mute=1&version=3&loop=1&playlist='+data+'&fs=0&modestbranding=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+            // return '<iframe width="315" height="170" src="https://www.youtube.com/embed/'+data+'?autoplay=1&mute=1&version=3&loop=1&playlist='+data+'&fs=0&modestbranding=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+            var yturl = "https://img.youtube.com/vi/"+data+"/maxresdefault.jpg";
+            var ytimg = new Image();
+            ytimg.onload=function () {
+                if (ytimg.naturalWidth > 120) {
+                // サムネイル画像ありの処理
+                } else {
+                // サムネイル画像なしの処理
+                ytimg.src="https://img.youtube.com/vi/"+data+"/sddefault.jpg"
+                    if (ytimg.naturalWidth <= 120) {
+                        ytimg.src="https://img.youtube.com/vi/"+data+"/hqdefault.jpg"
+                    }
+                }
+            }
+            ytimg.src = yturl;
+            ytimg.width=315;
+            ytimg.height=170;
+            return ytimg;
         }
 
         //クリックするとそこにピンを打つ
@@ -258,19 +275,11 @@ $json_val2 = json_encode($val2);
         // 動画の表示
         function movie(map,count,str) {
             let json_val2 = JSON.parse(str);
-            let maxLat = -90;
-            let maxLon = -180;
-            let minLat = 90;
-            let minLon = 180;
-            let latZoom = 0;
-            let lonZoom = 0;
+            let locations = [];
             for (let i = 0; i < count ; i++) {
                 const mlat = json_val2[i]["lat"];
                 const mlon = json_val2[i]["lon"];
-                maxLat = maxLat > mlat ? maxLat:mlat;
-                maxLon = maxLon > mlon ? maxLon:mlon;
-                minLat = minLat < mlat ? minLat:mlat;
-                minLon = minLon < mlon ? minLon:mlon;
+                locations[i] = new Microsoft.Maps.Location(mlat, mlon);
                 map.pinIcon(mlat, mlon, "img/Youtube-pinicon.png", 0.3, 38, 85);
                 map.infoboxHtml(mlat, mlon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-200px; left:-145px;"></div>');
                 x = map.pinText(mlat, mlon,  json_val2[i]["movie_title"], " ", " ");
@@ -288,18 +297,14 @@ $json_val2 = json_encode($val2);
                     $('#info_id'+i).append(make_iframe_on_map_by_video_id(json_val2[i]["video_id"]));
                 });
             }
-            const latLength = (maxLat - minLat)*91;
-            const lonLength = (maxLon - minLon)*110;
-            const latLengthList = [36615, 14646, 7323, 3661, 2929, 1464, 732, 366, 146, 73, 29, 14, 7.3, 3.6, 1.4, 0.7]
-            const lonLengthList = [55961, 22384, 11192, 5596, 4476, 2238, 1119, 559, 223, 111, 44, 22, 11, 5, 2.2, 1.1]
-            latLengthList.forEach(el => latLength < el ? latZoom++:null);
-            lonLengthList.forEach(el => lonLength < el ? lonZoom++:null);
-            const zoom = Math.min(...[latZoom,lonZoom]);
             <?php
                 if ($sql2 == "SELECT * FROM bemaped_data_table") {
                     echo 'map.changeMap(lat, lon, "load", 13);';
                 } else {
-                    echo 'map.changeMap((Number(maxLat) + Number(minLat))/2, (Number(maxLon) + Number(minLon))/2, "load", zoom);';
+                    echo 'map.map.setView({
+                                bounds: Microsoft.Maps.LocationRect.fromLocations(locations), //fromLocations or fromShapes
+                                padding: 100
+                            });';
                 }
             ?>
             
@@ -330,6 +335,7 @@ $json_val2 = json_encode($val2);
                 lon = Number(<?= $_POST["pin_lon"] ?>);
             }
             map.startMap(lat, lon, "load", 13);
+            console.log(map.map);
             pin =map.pinLayer(lat,lon,"#0000ff");
             document.getElementById("pin_lat").value = lat;
             document.getElementById("pin_lon").value = lon;

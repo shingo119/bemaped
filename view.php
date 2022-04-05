@@ -106,7 +106,24 @@ if($val4 == "" || $val4 == null){
     <!-- アップロードhtmlのメインJS -->
     <script type="text/javascript">
         function make_iframe_on_map_by_video_id(data){
-            return '<iframe width="315" height="170" src="https://www.youtube.com/embed/'+data+'?autoplay=1&mute=1&version=3&loop=1&playlist='+data+'&fs=0&modestbranding=1"></iframe>';
+            // return '<iframe width="315" height="170" src="https://www.youtube.com/embed/'+data+'?autoplay=1&mute=1&version=3&loop=1&playlist='+data+'&fs=0&modestbranding=1"></iframe>';
+            var yturl = "https://img.youtube.com/vi/"+data+"/maxresdefault.jpg";
+            var ytimg = new Image();
+            ytimg.onload=function () {
+                if (ytimg.naturalWidth > 120) {
+                // サムネイル画像ありの処理
+                } else {
+                // サムネイル画像なしの処理
+                ytimg.src="https://img.youtube.com/vi/"+data+"/sddefault.jpg"
+                    if (ytimg.naturalWidth <= 120) {
+                        ytimg.src="https://img.youtube.com/vi/"+data+"/hqdefault.jpg"
+                    }
+                }
+            }
+            ytimg.src = yturl;
+            ytimg.width=315;
+            ytimg.height=170;
+            return ytimg;
         }
 
         function GetMap() {
