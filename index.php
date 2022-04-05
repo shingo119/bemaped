@@ -272,7 +272,7 @@ $json_val2 = json_encode($val2);
                 minLat = minLat < mlat ? minLat:mlat;
                 minLon = minLon < mlon ? minLon:mlon;
                 map.pinIcon(mlat, mlon, "img/Youtube-pinicon.png", 0.3, 38, 85);
-                map.infoboxHtml(mlat, mlon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-250px; left:-145px;"></div>');
+                map.infoboxHtml(mlat, mlon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-200px; left:-145px;"></div>');
                 x = map.pinText(mlat, mlon,  json_val2[i]["movie_title"], " ", " ");
                 map.onPin(x, "click", function () {
                     const url = "view.php?movie_id=" + json_val2[i]["id"];

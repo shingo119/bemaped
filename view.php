@@ -134,7 +134,7 @@ if($val4 == "" || $val4 == null){
                 }
                 else {
                     map.pinIcon(lat, lon, "img/Youtube-pinicon.png", 0.3, 38, 85);
-                    map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-270px; left:-145px;">'+ json_val2[i]["video_id"] + '</div>');
+                    map.infoboxHtml(lat, lon, '<div id="info_id' + i + '" hidden style="width: 300px; background-color: #fff; position:absolute; top:-200px; left:-145px;">'+ json_val2[i]["video_id"] + '</div>');
                     x = map.pinText(lat, lon, " ", " ", " ");
                     map.onPin(x, "click", function () {
                         const url = "view.php?movie_id=" + json_val2[i]["id"];
